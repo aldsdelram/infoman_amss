@@ -1,8 +1,11 @@
 AMSS::Application.routes.draw do
+<<<<<<< HEAD
   resources :positions
 
   resources :applicants
 
+=======
+>>>>>>> e3f632c2ad50685aab59387ea9183d454616f53a
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

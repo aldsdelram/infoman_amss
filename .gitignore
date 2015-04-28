@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e3f632c2ad50685aab59387ea9183d454616f53a
 .bundle
 db/*.sqlite3
 log/*.log
 tmp/
+<<<<<<< HEAD
 =======
 *.rbc
 capybara-*.html
@@ -40,3 +44,5 @@ bower.json
 # Ignore pow environment settings
 .powenv
 >>>>>>> upstream/master
+=======
+>>>>>>> e3f632c2ad50685aab59387ea9183d454616f53a
