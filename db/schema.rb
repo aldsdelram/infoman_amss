@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150428032552) do
+ActiveRecord::Schema.define(:version => 20150428035324) do
 
   create_table "applicants", :force => true do |t|
     t.string   "lastname"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20150428032552) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "posistion_title"
+    t.string   "position_title"
     t.integer  "position_id"
   end
 

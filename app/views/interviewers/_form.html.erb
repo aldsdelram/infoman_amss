@@ -1,0 +1,34 @@
+<%= form_for(@interviewer) do |f| %>
+  <% if @interviewer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@interviewer.errors.count, "error") %> prohibited this interviewer from being saved:</h2>
+
+      <ul>
+      <% @interviewer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :position_title %><br />
+    <%= f.text_field :position_title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :position_id, "In What Position" %><br />
+    <%= f.collection_select(:position_id, Position.all, :id, :title,
+      {:prompt=>"Select Position"})  %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
