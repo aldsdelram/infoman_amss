@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Lastname:</b>
+  <%= @applicant.lastname %>
+</p>
+
+<p>
+  <b>Firstname:</b>
+  <%= @applicant.firstname %>
+</p>
+
+<p>
+  <b>Middlename:</b>
+  <%= @applicant.middlename %>
+</p>
+
+<p>
+  <b>Bday:</b>
+  <%= @applicant.bday %>
+</p>
+
+<p>
+  <b>Gender:</b>
+  <%= @applicant.gender %>
+</p>
+
+<p>
+  <b>Highest school attainment:</b>
+  <%= @applicant.highest_school_attainment %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @applicant.address %>
+</p>
+
+<p>
+  <b>Email address:</b>
+  <%= @applicant.email_address %>
+</p>
+
+<p>
+  <b>Contact:</b>
+  <%= @applicant.contact %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @applicant.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_applicant_path(@applicant) %> |
+<%= link_to 'Back', applicants_path %>

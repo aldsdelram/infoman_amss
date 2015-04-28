@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+Position.create(:title=> 'Junior Programmer')
+Position.create(:title=> 'Web Designer')
+Position.create(:title=> 'Senior Programmer')
+Position.create(:title=> 'Content')
