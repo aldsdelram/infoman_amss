@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<p>Applicants Info</p>
 
 <p>
   <b>Lastname:</b>
@@ -51,5 +51,12 @@
 </p>
 
 
+<% if flash[:notice] %>
+    <div class="alert">
+        <%= flash[:notice] %>
+    </div>
+<% end %>
+
 <%= link_to 'Edit', edit_applicant_path(@applicant) %> |
-<%= link_to 'Back', applicants_path %>
+<%= link_to 'Destroy', @applicant, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Okey', applicants_url %>
