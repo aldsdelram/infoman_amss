@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  applicant_id: 1
+  interviewer_id: 1
+  sched: 2015-04-28
+
+two:
+  applicant_id: 1
+  interviewer_id: 1
+  sched: 2015-04-28
