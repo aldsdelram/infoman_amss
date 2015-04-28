@@ -1,4 +1,10 @@
 AMSS::Application.routes.draw do
+  resources :schedules
+
+  resources :grades
+
+  resources :exams
+
   resources :interviewers
 
   resources :positions
