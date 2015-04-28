@@ -1,0 +1,75 @@
+header{
+  background: #065;
+  min-height: 40px;
+  position: fixed;
+  top:0;
+  left:0;
+  z-index:10;
+  width: 100%;
+}
+  header .logo, header nav{
+    float:left;
+  }
+
+  header .logo{
+    width: 17%;
+    background: #040;
+    min-height:40px;
+    color: #fff;
+    font-size: 25px;
+  }
+
+    .logo span{
+      vertical-align: middle;
+    }
+
+    .logo span:nth-child(1){
+      color: #ddd;
+    }
+
+    .logo span:nth-child(2){
+      color: #ccc;
+    }
+
+  header nav *{
+    float:left;
+  }
+
+  header nav form input:nth-child(2){
+    width: 270px;
+    height: 40px;
+    border: 0;
+    background: #070;
+    color: #fff;
+  }
+
+  header nav form input:nth-child(3){
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: #090;
+  }
+
+  header nav .nav li > a{
+    padding: 10px 15px;
+    color: #000;
+  }
+
+
+#side{
+  background: #555;
+  min-height: 40em;
+  width: 17%;
+  top: 40px;
+  position: fixed;
+}
+
+#body{
+  float: left;
+  width: 83%;
+  left: 17%;
+  top: 40px;
+  position: absolute;
+  background: #000;
+  z-index: -1;
+}
