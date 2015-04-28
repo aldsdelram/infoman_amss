@@ -1,6 +1,6 @@
 class ChangePosistionTitle < ActiveRecord::Migration
   def self.up
-    rename_column :interviewers, :posistion_title, :position_title
+    rename_column :interviewes, :posistion_title, :position_title
   end
 
   def self.down
