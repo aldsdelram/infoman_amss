@@ -1,4 +1,6 @@
 AMSS::Application.routes.draw do
+  resources :interviewers
+
   resources :positions
 
   resources :applicants
