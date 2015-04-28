@@ -5,11 +5,7 @@ gem 'rails', '3.0.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-<<<<<<< HEAD
 gem 'mysql2', '0.2.6'
-=======
-gem 'mysql2', '~> 0.2.6'
->>>>>>> e3f632c2ad50685aab59387ea9183d454616f53a
 
 # Use unicorn as the web server
 # gem 'unicorn'
