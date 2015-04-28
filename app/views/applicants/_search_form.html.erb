@@ -1,0 +1,9 @@
+	<%= form_tag 'search_applicant', :method=> :get, :class => "form-group form-inline" do %>
+
+		<%= label_tag "Search by:" %>
+		<%= select_tag :category, options_for_select(Applicant::SEARCH_CATEGORIES), :prompt => "Select" , :class => "form-control" %>
+		<%= text_field_tag :firstname, params[:firstname], :class => "form-control" %>
+
+	<%= submit_tag "SEARCH", :class => "btn btn-primary" %>
+
+	<% end %>
