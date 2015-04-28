@@ -6,12 +6,25 @@
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
-<body>
 
-<%= link_to 'HOME', index_url %> |
-<%= link_to 'APPLICANTS MANAGEMENT', applicants_url %>
+<body>
+    <%= render 'layouts/header' %>
+
 
 <%= yield %>
+    <div id="side">
+      <%= render 'layouts/side' %>
 
+      <!-- rodel -->
+      <%= link_to 'HOME', index_url %> |
+      <%= link_to 'APPLICANTS MANAGEMENT', applicants_url %>
+
+    </div>
+
+    <div id="body">
+        <div class="col-md-12">
+          <%= yield %>
+        </div>
+      </div>
 </body>
 </html>
