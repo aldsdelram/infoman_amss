@@ -1,3 +1,5 @@
+/*css rules for header*/
+
 header{
   background: #065;
   min-height: 40px;
@@ -31,31 +33,35 @@ header{
       color: #ccc;
     }
 
-  header nav *{
+  header nav > *{
     float:left;
   }
 
-  header nav form input:nth-child(2){
-    width: 270px;
-    height: 40px;
-    border: 0;
-    background: #070;
-    color: #fff;
-  }
+    header nav form *{
+      float:left;
+    }
 
-  header nav form input:nth-child(3){
-    width: 40px;
-    height: 40px;
-    border: 0;
-    background: #090;
-  }
+    header nav form input:nth-child(2){
+      width: 270px;
+      height: 40px;
+      border: 0;
+      background: #070;
+      color: #fff;
+    }
 
-  header nav .nav li > a{
-    padding: 10px 15px;
-    color: #000;
-  }
+    header nav form input:nth-child(3){
+      width: 40px;
+      height: 40px;
+      border: 0;
+      background: #090;
+    }
 
+    header nav .nav li > a{
+      padding: 10px 15px;
+      color: #000;
+    }
 
+/* CSS rules for side bar */
 #side{
   background: #555;
   min-height: 40em;
@@ -63,6 +69,9 @@ header{
   top: 40px;
   position: fixed;
 }
+
+
+/*CSS Rules for body*/
 
 #body{
   float: left;
