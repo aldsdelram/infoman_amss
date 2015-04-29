@@ -1,7 +1,43 @@
 <h3>SEARCH APPLICANT</h3>
+
 <%= render 'search_form' %>
 
-<% if !@firstname.nil? %>
-	<%= @firstname %>
-	<%= @category %>
+<% if @search.any? %>
+	<h3><%= @search_type %></h3>
+	<table>
+		<tr>
+			<th>Lastname</th>
+			<th>Firstname</th>
+			<th>Middlename</th>
+			<th>Gender</th>
+			<th>Birth date</th>
+			<th>Highest School Attainment</th>
+			<th>Address</th>
+			<th>Email address</th>
+			<th>Contact</th>
+			<th>Position Applied</th>
+		</tr>
+		<% @search.each do |s| %>
+		<tr>
+			<td><%= s.lastname %> </td>
+			<td><%= s.firstname %></td>
+			<td><%= s.middlename %></td>
+			<td><%= s.gender %></td>
+			<td><%= s.bday %></td>
+			<td><%= s.highest_school_attainment %></td>
+			<td><%= s.address %></td>
+			<td><%= s.email_address %></td>
+			<td><%= s.contact %></td>
+			<td><%= s.position.title %></td>
+		</tr>
+		<% end %>
+	</table>
+<% elsif !@search_type.blank? %>
+No Result
+<% end %>
+
+<% if flash[:notice] %>
+    <div class="alert">
+        <%= flash[:notice] %>
+    </div>
 <% end %>
