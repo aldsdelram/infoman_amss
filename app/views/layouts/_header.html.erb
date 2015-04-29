@@ -1,72 +1,58 @@
-<!-- <header class="col-md-12">
-  <div class="logo col-md-2"> infoman|AMSS</div>
-  <nav class="col-md-10">
-    <ul class="nav navbar-nav">
-      <li>
-        <%= link_to "Applicants",applicants_path %>
-      </li>
-      <li>
-        <a href="/members/new">lorem</a>
-      </li>
-      <li class="active">
-        <a href="/loans">ipsum</a>
-      </li>
-      <li>
-        <a href="/payment">dolor</a>
-      </li>
-    </ul>
+<header>
+ <nav class="navbar navbar-fixed-top">
+
+      <div class="col-md-2" id="logo">
+        <div class="navbar-brand">
+          infoman/AMSS
+        </div>
+      </div>
+
+
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav">
+        <li id="search">
+          <%= form_tag 'applicants/search' do%>
+            <%= text_field_tag :applicant_name ,'' ,:placeholder=>"Search Applicant", :class=>"input"%>
+            <%= submit_tag '>', :class=> "submit"%>
+          <% end %>
+        </li>
+
+
+        <li>
+          <%= link_to "Applicants", applicants_path %>
+        </li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+
   </nav>
 </header>
-<div class="clearfix"></div>
- -->
-
-
-
-<header>
-<div class="logo">
-  <span>infoman</span> /
-  <span>AMSS</span>
-</div>
-
-
-<nav>
-
-
-<%= form_tag 'applicants/search' do%>
-  <%= text_field_tag :applicant_name ,'' ,:placeholder=>"Search Applicant"%>
-  <%= submit_tag '>'%>
-<% end %>
-<!-- <form action> -->
-  <!-- <input type='text' placeholder="Search Applicant"> -->
-  <!-- <input type='submit' value="search"> -->
-<!-- </form> -->
-
-
-<ul class="nav navbar-nav">
-  <li>
-    <%= link_to "Applicants",applicants_path %>
-  </li>
-
-
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li class="divider"></li>
-      <li><a href="#">Separated link</a></li>
-      <li class="divider"></li>
-      <li><a href="#">One more separated link</a></li>
-    </ul>
-  </li>
-
-
-
-</ul>
-
-</nav>
-
-</header>
-
-<div class="clearfix"></div>

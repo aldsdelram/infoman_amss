@@ -3,26 +3,29 @@
 <head>
   <title>AMSS</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
 </head>
 
 <body>
+
+<div class = "container-fluid">
+  <div class="row">
     <%= render 'layouts/header' %>
+  </div>
 
-
-<%= yield %>
-    <div id="side">
+  <div class="row">
+    <div class="col-md-2" id="side">
       <%= render 'layouts/side' %>
-
-      <!-- rodel -->
- 
     </div>
 
-    <div id="body">
-        <div class="col-md-12">
-          <%= yield %>
-        </div>
-      </div>
+    <div class="col-md-10">
+       <%= yield %>
+
+    </div>
+  </div>
+</div>
+
+
 </body>
 </html>
