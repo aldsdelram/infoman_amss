@@ -48,11 +48,6 @@
     <%= f.text_field :contact %>
   </div>
   <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </div>
-
-  <div class="field">
     <%= f.label :position_id, "Position" %><br />
     <%= f.collection_select(:position_id, Position.all, :id, :title,
       {:prompt=>"Select Position"})  %>

@@ -2,7 +2,7 @@ class ApplicantsController < ApplicationController
   # GET /applicants
   # GET /applicants.xml
   def index
-    @applicants = Applicant.all
+    @applicant = Applicant.last
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,6 +18,17 @@ class ApplicantsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @applicant }
+    end
+  end
+
+  # GET /applicants/1
+  # GET /applicants/1.xml
+  def show_all
+    @applicants = Applicant.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @applicants }
     end
   end
 
@@ -41,10 +52,11 @@ class ApplicantsController < ApplicationController
   # POST /applicants.xml
   def create
     @applicant = Applicant.new(params[:applicant])
-
+    @applicant.status = 'Pending'
     respond_to do |format|
       if @applicant.save
-        format.html { redirect_to(@applicant, :notice => 'Applicant was successfully created.') }
+        format.html { redirect_to(@applicant, :notice => 'Applicant ' + 
+                    @applicant.firstname + ' was successfully created.') }
         format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
       else
         format.html { render :action => "new" }
@@ -76,8 +88,14 @@ class ApplicantsController < ApplicationController
     @applicant.destroy
 
     respond_to do |format|
-      format.html { redirect_to(applicants_url) }
+      format.html { redirect_to(applicants_show_all_url) }
       format.xml  { head :ok }
     end
   end
+
+  def search_applicant
+    @category = params[:category]
+    @firstname = params[:firstname]
+  end
 end
+

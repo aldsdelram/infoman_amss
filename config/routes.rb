@@ -1,4 +1,11 @@
 AMSS::Application.routes.draw do
+
+  controller :applicants do
+    con = 'applicants/'
+    get con+'show_all' => :show_all
+    get con+'search_applicant' => :search_applicant
+  end
+
   resources :schedules
 
   resources :grades
@@ -60,7 +67,7 @@ AMSS::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "home#index", :as => "index"
 
   # See how all your routes lay out with "rake routes"
 
