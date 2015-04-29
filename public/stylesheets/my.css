@@ -1,61 +1,51 @@
-header{
-  background: #065;
-  min-height: 40px;
-  position: fixed;
-  top:0;
-  left:0;
-  z-index:10;
-  width: 100%;
+body{
+  padding-top: 50px;
 }
-  header .logo, header nav{
-    float:left;
+
+
+/*css rules for header*/
+
+  nav{
+    background: #ddd;
   }
 
-  header .logo{
-    width: 17%;
-    background: #040;
-    min-height:40px;
-    color: #fff;
-    font-size: 25px;
+  header #logo{
+    background: #999;
   }
 
-    .logo span{
-      vertical-align: middle;
-    }
-
-    .logo span:nth-child(1){
-      color: #ddd;
-    }
-
-    .logo span:nth-child(2){
-      color: #ccc;
-    }
-
-  header nav *{
-    float:left;
+  header .navbar{
+    margin: 0;
+    padding: 0;
   }
 
-  header nav form input:nth-child(2){
-    width: 270px;
-    height: 40px;
+  #search *{
+    float: left;
+    margin:0;
+  }
+
+  #search .input{
+    position: relative;
+    width: 250px;
+    height: 50px;
+    background: #777;
     border: 0;
-    background: #070;
-    color: #fff;
+    padding-left: 10px;
   }
 
-  header nav form input:nth-child(3){
-    width: 40px;
-    height: 40px;
+  #search .submit{
+    position:relative;
+    width: 50px;
+    height: 50px;
     border: 0;
-    background: #090;
+    background: #888;
   }
 
-  header nav .nav li > a{
-    padding: 10px 15px;
-    color: #000;
-  }
+#side{
+  background: #eee;
+}
 
 
+/* CSS rules for side bar
 #side{
   background: #555;
   min-height: 40em;
@@ -63,6 +53,9 @@ header{
   top: 40px;
   position: fixed;
 }
+
+
+/*CSS Rules for body
 
 #body{
   float: left;
@@ -73,3 +66,4 @@ header{
   background: #000;
   z-index: -1;
 }
+*/*/*/
