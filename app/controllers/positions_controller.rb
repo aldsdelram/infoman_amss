@@ -3,6 +3,7 @@ class PositionsController < ApplicationController
   # GET /positions.xml
   def index
     @positions = Position.all
+    @new_position = Position.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -56,15 +57,22 @@ class PositionsController < ApplicationController
   # PUT /positions/1
   # PUT /positions/1.xml
   def update
-    @position = Position.find(params[:id])
+    @edit_position = Position.find(params[:id])
 
     respond_to do |format|
-      if @position.update_attributes(params[:position])
-        format.html { redirect_to(@position, :notice => 'Position was successfully updated.') }
+        puts "respond" + @edit_position.title
+
+      if @edit_position.update_attributes(params[:position])
+        @edit_error = nil
+        format.html { redirect_to(positions_path, :notice => 'Position was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
+        @positions = Position.all
+        @new_position = Position.new
+
+        @edit_error = 1
+        format.html { render :action => "index"}
+        # format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
       end
     end
   end
