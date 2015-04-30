@@ -1,23 +1,127 @@
-<h1>Listing positions</h1>
+<h1 class="page-header">Showing all Positions</h1>
 
-<table>
-  <tr>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="col-md-6">
+  <table class="table table-hover">
+    <tr>
+      <th> Position Title </th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<% @positions.each do |position| %>
-  <tr>
-    <td><%= position.title %></td>
-    <td><%= link_to 'Show', position %></td>
-    <td><%= link_to 'Edit', edit_position_path(position) %></td>
-    <td><%= link_to 'Destroy', position, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <% @positions.each do |position| %>
+    <tr>
+      <td><%= position.title %></td>
+      <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
+       'data-target' => '#myModal','data-id' => position.id,
+       'data-action' => '/positions/' + position.id.to_s,
+       'data-name' => position.title %></td>
+      <td><%= link_to 'Remove', position, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>
+
+
+<div class="col-md-6">
+
+<%= form_for(@new_position, :html=>{:class=>"form-horizontal"}) do |f| %>
+  <% if @new_position.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@new_position.errors.count, "error") %> prohibited this position from being saved:</h2>
+
+      <ul>
+      <% @new_position.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= f.label :title, "New Position Title:", :class=>"control-label col-md-4"%>
+    <div class="col-md-6">
+      <%= f.text_field :title, :class=>"form-control"%>
+    </div>
+    <div class="actions form-group">
+      <%= f.submit "Add", :class=>"btn btn-success col-md-2"%>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
 <% end %>
-</table>
 
-<br />
 
-<%= link_to 'New Position', new_position_path %>
+</div>
+
+<div class="clearfix"></div>
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Position</h4>
+      </div>
+      <div class="modal-body">
+          <% unless @edit_position %>
+            <% puts "wahahahahhahahhaa" %>
+            <% @edit_position = Position.last%>
+          <% end %>
+            <% puts @edit_position.title %>
+
+          <% if @edit_position.errors.any? %>
+              <div id="error_explanation" class="alert alert-danger">
+                <h4><%= pluralize(@edit_position.errors.count, "error") %> prohibited position "<%= @edit_position.title %>" from being saved:</h4>
+
+                <ul>
+                <% @edit_position.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+          <%= form_for(@edit_position, :html=> {:id=>"edit_form"}) do |f| %>
+          <div class="field">
+            <%= f.label :title %><br />
+            <%= f.text_field :title, :id=>"myInput" %>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit :class=>"btn btn-primary" %><%end%>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @edit_error %>
+  <script type="text/javascript">
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+  </script>
+<% end %>
+
+
+<script type="text/javascript">
+var data_id = 0
+var data_action = "";
+
+$(document).on('click', 'a', function(event, ui) {
+    data_id = $(this).data('id');
+    data_action = $(this).data('action')
+    data_title = $(this).data('name')
+});
+
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+  document.getElementById("edit_form").action = data_action
+  document.getElementById("myInput").value = data_title
+})
+</script>
