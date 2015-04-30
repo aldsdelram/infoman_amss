@@ -8,8 +8,14 @@
       <th></th>
     </tr>
 
+
   <% @positions.each do |position| %>
-    <tr>
+    <% if session['updated'] == position %>
+      <%session['updated'] = nil%>
+      <tr class="success">
+    <% else %>
+      <tr>
+    <% end %>
       <td><%= position.title %></td>
       <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
        'data-target' => '#myModal','data-id' => position.id,
@@ -22,10 +28,22 @@
 </div>
 
 
-
-
 <!-- right side -->
 <div class="col-md-6">
+
+  <% if notice%>
+
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3> <%= notice %> </h3>
+  </div>
+
+  <% end %>
+
+
+
   <h1 class="text-left">Add</h1>
     <%= render 'new_position' %>
   <h1 class="text-justify">Edit</h1>
@@ -47,7 +65,9 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%unless @edit_error %>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <% end %>
           <h4 class="modal-title" id="myModalLabel">Edit Position</h4>
         </div>
 
@@ -78,7 +98,11 @@
         </div>
 
         <div class="modal-footer">
+          <%if @edit_error %>
+          <%= link_to "Back", positions_path, :class=>"btn btn-default"%>
+          <%else%>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%end%>
           <%= f.submit :class=>"btn btn-primary" %><%end%>
           <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
@@ -113,4 +137,16 @@
     document.getElementById("edit_form").action = data_action
     document.getElementById("myInput").value = data_title
   })
+
+
+  <% if @edit_error %>
+    $('#myModal').modal({
+      backdrop: 'static'
+    })
+
+    $('#myModal').on('hide.bs.modal', function (e) {
+
+    })
+  <% end %>
+
 </script>
