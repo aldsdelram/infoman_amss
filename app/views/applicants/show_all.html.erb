@@ -14,6 +14,7 @@
     <th>Address</th>
     <th>Email address</th>
     <th>Contact</th>
+    <th>Lastname</th>
     <th></th>
     <th></th>
     <th></th>
@@ -30,6 +31,7 @@
     <td><%= applicant.address %></td>
     <td><%= applicant.email_address %></td>
     <td><%= applicant.contact %></td>
+    <td><%= applicant.image_name %></td>
     <td><%= link_to 'Show', applicant %></td>
     <td><%= link_to 'Edit', edit_applicant_path(applicant) %></td>
     <td><%= link_to 'Destroy', applicant, :confirm => 'Are you sure?', :method => :delete %></td>

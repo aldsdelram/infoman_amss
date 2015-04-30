@@ -30,6 +30,8 @@ GEM
     activesupport (3.0.9)
     arel (2.0.10)
     builder (2.1.2)
+    carrierwave (0.5.8)
+      activesupport (~> 3.0)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     i18n (0.5.4)
@@ -40,6 +42,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mysql2 (0.2.6)
     mysql2 (0.2.6-x86-mingw32)
     polyglot (0.3.5)
     rack (1.2.8)
@@ -74,5 +77,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  carrierwave
   mysql2 (= 0.2.6)
   rails (= 3.0.9)

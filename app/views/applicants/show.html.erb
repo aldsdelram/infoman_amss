@@ -1,5 +1,8 @@
 <p>Applicants Info</p>
-
+<p>
+    <%= label_tag "Picture" %><br />
+    <%= image_tag "#{@applicant.image_name}" , :size => "200x200" %>
+</p>
 <p>
   <b>Lastname:</b>
   <%= @applicant.lastname %>
@@ -58,5 +61,5 @@
 <% end %>
 
 <%= link_to 'Edit', edit_applicant_path(@applicant) %> |
-<%= link_to 'Destroy', @applicant, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Destroy', @applicant, :confirm => 'Are you sure?', :method => :delete, :action => :destroy %> |
 <%= link_to 'Okey', applicants_url %>
