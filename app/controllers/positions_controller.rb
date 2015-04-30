@@ -56,13 +56,14 @@ class PositionsController < ApplicationController
 
       if @edit_position.update_attributes(params[:position])
         @edit_error = nil
-        format.html { redirect_to(positions_path, :notice => 'Position was successfully updated.') }
+        session['updated'] = @edit_position
+        format.html { redirect_to(positions_path, :notice => 'Position was successfully updated.')}
         format.xml  { head :ok }
       else
         @positions = Position.all
         @new_position = Position.new
 
-        @edit_error = 1
+        @edit_error = @edit_position.clone
         format.html { render :action => "index"}
         # format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
       end
