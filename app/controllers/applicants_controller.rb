@@ -89,6 +89,7 @@ class ApplicantsController < ApplicationController
   def destroy
     puts "destroy"
     @applicant = Applicant.find(params[:id])
+    
     @applicant.destroy
 
     respond_to do |format|
