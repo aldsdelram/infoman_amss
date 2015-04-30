@@ -11,9 +11,13 @@
     </div>
   <% end %>
   <div class="field">
-    
+    <% if @applicant.image_name.nil? %>
+    <% preview = "new_applicant.png" %>
+    <% else %>
+    <% preview = @applicant.image_name %>
+    <% end %>
     <%= label_tag "Picture" %><br />
-    <%= image_tag "new_applicant.png" , :size => "200x200", :id => "preview-photo" %>
+    <%= image_tag preview , :size => "200x200", :crop => :fill, :id => "preview-photo" %>
     <input type='file', name = "applicant[image]", accept="image/*", onchange="readURL(this);" />
   </div>
   <div class="field">
@@ -30,15 +34,15 @@
   </div>
   <div class="field">
     <%= f.label :bday %><br />
-    <%= f.date_select :bday %>
+    <%= f.date_select :bday, :start_year => Date.today.year - 15, :end_year => Date.today.year - 100 %>
   </div>
   <div class="field">
     <%= f.label :gender %><br />
-    <%= f.text_field :gender %>
+    <%= f.select(:gender, ["Male", "Female"], {:prompt => "Select gender"}) %>
   </div>
   <div class="field">
     <%= f.label :highest_school_attainment %><br />
-    <%= f.text_field :highest_school_attainment %>
+    <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"], {:prompt => "Select"}) %>
   </div>
   <div class="field">
     <%= f.label :address %><br />
@@ -67,6 +71,7 @@
 <script type="text/javascript">
 
 function readURL(input) {
+
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -74,7 +79,6 @@ function readURL(input) {
             $('#preview-photo')
                 .attr('src', e.target.result);
         };
-
         reader.readAsDataURL(input.files[0]);
     }
 }

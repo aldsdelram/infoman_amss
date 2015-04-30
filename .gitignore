@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e3f632c2ad50685aab59387ea9183d454616f53a
 .bundle
 db/*.sqlite3
 log/*.log
 tmp/
-<<<<<<< HEAD
-=======
+
 *.rbc
 capybara-*.html
 .rspec
@@ -21,7 +16,7 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
-
+/public/images/upload_images/*
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 config/secrets.yml
@@ -43,6 +38,3 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
->>>>>>> upstream/master
-=======
->>>>>>> e3f632c2ad50685aab59387ea9183d454616f53a
