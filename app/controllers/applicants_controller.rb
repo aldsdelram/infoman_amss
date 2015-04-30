@@ -51,11 +51,14 @@ class ApplicantsController < ApplicationController
   # POST /applicants
   # POST /applicants.xml
   def create
+    puts params[:image] 
     @applicant = Applicant.new(params[:applicant])
     @applicant.status = 'Pending'
+    @applicant.image_name =  upload_image(params[:applicant][:image])
+
     respond_to do |format|
       if @applicant.save
-        format.html { redirect_to(@applicant, :notice => 'Applicant ' + 
+        format.html { redirect_to(@applicant, :notice => 'Applicant ' +
                     @applicant.firstname + ' was successfully created.') }
         format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
       else
@@ -84,6 +87,7 @@ class ApplicantsController < ApplicationController
   # DELETE /applicants/1
   # DELETE /applicants/1.xml
   def destroy
+    puts "destroy"
     @applicant = Applicant.find(params[:id])
     @applicant.destroy
 
@@ -137,6 +141,17 @@ class ApplicantsController < ApplicationController
     respond_to do |format|
       format.html { render :action => 'search_applicant' }
     end
+  end
+
+  def upload_image(image)
+    require 'fileutils'
+
+    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}."+image.content_type.split('/').last
+    file_path = File.join(Rails.root, 'public', 'images', 'upload_images', file_name)
+    File.open(file_path, 'wb') do |f|
+      f.write image.read
+    end
+    return "upload_images/"+file_name
   end
 
 end

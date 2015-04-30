@@ -1,11 +1,12 @@
 AMSS::Application.routes.draw do
 
+  
   controller :applicants do
     con = 'applicants/'
     get con+'show_all' => :show_all
-    get con+'search_applicant' => :search_applicant
+    get 'search_applicant' => :search_applicant
   end
-
+  
   resources :schedules
 
   resources :grades
@@ -17,6 +18,8 @@ AMSS::Application.routes.draw do
   resources :positions
 
   resources :applicants
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

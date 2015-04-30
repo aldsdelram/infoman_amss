@@ -1,5 +1,7 @@
 class Applicant < ActiveRecord::Base
 belongs_to :position
+attr_accessor :image
+
 
 SEARCH_CATEGORIES = ["FIRSTNAME", "LASTNAME", "SCHOOL"]
 
