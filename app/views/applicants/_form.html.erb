@@ -1,3 +1,4 @@
+
 <%= form_for @applicant, :html => {:multipart => true} do |f| %>
   <% if @applicant.errors.any? %>
     <div id="error_explanation">
@@ -16,10 +17,13 @@
     <% else %>
     <% preview = @applicant.image_name %>
     <% end %>
+    
     <%= label_tag "Picture" %><br />
-    <%= image_tag preview , :size => "200x200", :crop => :fill, :id => "preview-photo" %>
-    <input type='file', name = "applicant[image]", accept="image/*", onchange="readURL(this);" />
+    <canvas id="myCanvas" width="200" height="200"></canvas>
+    <input id="base64" type="hidden" value="" name="base64"/>
+    <input type='file', name = "applicant[image]", accept="image/*", onchange="readURL(this);", id = "uploader" />
   </div>
+  
   <div class="field">
     <%= f.label :lastname %><br />
     <%= f.text_field :lastname %>
@@ -71,17 +75,42 @@
 <script type="text/javascript">
 
 function readURL(input) {
-
+    
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $('#preview-photo')
+            $('#myCanvas')
                 .attr('src', e.target.result);
+            var canvas = document.getElementById('myCanvas');
+            var context = canvas.getContext('2d');
+            var x = 0;
+            var y = 0;
+            var width = 200;
+            var height = 200;
+            var imageObj = new Image();
+
+            imageObj.onload = function() {
+              context.drawImage(imageObj, x, y, width, height);
+              $('#base64').val(canvas.toDataURL());
+            };
+              imageObj.src = e.target.result;
+            }
         };
         reader.readAsDataURL(input.files[0]);
     }
-}
+
+    var canvas = document.getElementById('canvas'),
+    context = canvas.getContext('2d');
+
+    function make_base(path)
+    {
+      base_image = new Image();
+      base_image.src = path;
+      base_image.onload = function(){
+        context.drawImage(base_image, 200, 200);
+      }
+    }
 </script>
 
 

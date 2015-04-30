@@ -51,10 +51,11 @@ class ApplicantsController < ApplicationController
   # POST /applicants
   # POST /applicants.xml
   def create
-    puts params[:image] 
+    puts params[:image]
+    puts params[:base64]
     @applicant = Applicant.new(params[:applicant])
     @applicant.status = 'Pending'
-    @applicant.image_name =  upload_image(params[:applicant][:image])
+    @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
 
     respond_to do |format|
       if @applicant.save
@@ -89,7 +90,7 @@ class ApplicantsController < ApplicationController
   def destroy
     puts "destroy"
     @applicant = Applicant.find(params[:id])
-    
+
     @applicant.destroy
 
     respond_to do |format|
@@ -144,13 +145,15 @@ class ApplicantsController < ApplicationController
     end
   end
 
-  def upload_image(image)
+  def upload_image(image, base64)
     require 'fileutils'
+    data =  base64
+    image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
 
     file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}."+image.content_type.split('/').last
     file_path = File.join(Rails.root, 'public', 'images', 'upload_images', file_name)
     File.open(file_path, 'wb') do |f|
-      f.write image.read
+      f.write image_data
     end
     return "upload_images/"+file_name
   end
