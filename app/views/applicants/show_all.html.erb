@@ -1,43 +1,42 @@
 <h1 class="page-header">Showing all Applicants</h1>
 
+<div class="container-fluid">
+  <div class="row masonry">
+  <% @applicants.each do |applicant| %>
 
+    <% name = applicant.firstname + ' ' +
+              applicant.middlename.first.upcase + '. ' +
+              applicant.lastname%>
 
+        <div class="item">
+          <div class="thumbnail">
+            <%= image_tag applicant.image_name, :width=>'100%', :height=>'100%',
+             :alt=>applicant.firstname + ' ' + applicant.lastname,
+             :title=> applicant.firstname + ' ' + applicant.lastname%>
 
-<% @applicants.each do |applicant| %>
+            <div class="caption">
 
-  <% name = applicant.firstname + ' ' +
-            applicant.middlename.first.upcase + '. ' +
-            applicant.lastname%>
+              <h3><%=name%></h3>
 
-    <div class="row">
-      <div class="col-sm-6 col-md-3">
-        <div class="thumbnail">
-          <%= image_tag applicant.image_name, :width=>'100%', :height=>'100%',
-           :alt=>applicant.firstname + ' ' + applicant.lastname,
-           :title=> applicant.firstname + ' ' + applicant.lastname%>
+              <p> <strong><%=applicant.position.title %></strong> <small><%= applicant.status %></small>
+                  <br />
+                  <email> <%= applicant.email_address%></email> <br />
+                  <contact> <%= applicant.contact %> </contact>
+              </p>
 
-          <div class="caption">
+              <p> <%= applicant.bday.strftime("%B %d, %Y") %>
+                  <address><%= applicant.address %></address>
 
-            <h3><%=name%></h3>
+              </p>
 
-            <p> <strong><%=applicant.position.title %></strong> <small><%= applicant.status %></small>
-                <br />
-                <email> <%= applicant.email_address%></email> <br />
-                <contact> <%= applicant.contact %> </contact>
-            </p>
-
-            <p> <%= applicant.bday.strftime("%B %d, %Y") %>
-                <address><%= applicant.address %></address>
-
-            </p>
-
-            <p>
-              <%= link_to 'Show Info', applicant , :class=>"btn btn-primary"%>
-              <%= link_to 'Edit', edit_applicant_path(applicant), :class=>"btn btn-warning" %>
-              <%= link_to 'Destroy', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
-            </p>
+              <p>
+                <%= link_to 'Show Info', applicant , :class=>"btn btn-primary"%>
+                <%= link_to 'Edit', edit_applicant_path(applicant), :class=>"btn btn-warning" %>
+                <%= link_to 'Destroy', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-<% end %>
+  <% end %>
+  </div>
+</div>
