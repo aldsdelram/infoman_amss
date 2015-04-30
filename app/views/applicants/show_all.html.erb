@@ -1,62 +1,43 @@
-<h1>Showing all Applicants</h1>
+<h1 class="page-header">Showing all Applicants</h1>
 
 
 
 
 <% @applicants.each do |applicant| %>
 
+  <% name = applicant.firstname + ' ' +
+            applicant.middlename.first.upcase + '. ' +
+            applicant.lastname%>
+
     <div class="row">
-      <div class="col-sm-6 col-md-4">
+      <div class="col-sm-6 col-md-3">
         <div class="thumbnail">
-          <img src="..." alt="...">
+          <%= image_tag applicant.image_name, :width=>'100%', :height=>'100%',
+           :alt=>applicant.firstname + ' ' + applicant.lastname,
+           :title=> applicant.firstname + ' ' + applicant.lastname%>
+
           <div class="caption">
-            <h3>Thumbnail label</h3>
-            <p>...</p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+
+            <h3><%=name%></h3>
+
+            <p> <strong><%=applicant.position.title %></strong> <small><%= applicant.status %></small>
+                <br />
+                <email> <%= applicant.email_address%></email> <br />
+                <contact> <%= applicant.contact %> </contact>
+            </p>
+
+            <p> <%= applicant.bday.strftime("%B %d, %Y") %>
+                <address><%= applicant.address %></address>
+
+            </p>
+
+            <p>
+              <%= link_to 'Show Info', applicant , :class=>"btn btn-primary"%>
+              <%= link_to 'Edit', edit_applicant_path(applicant), :class=>"btn btn-warning" %>
+              <%= link_to 'Destroy', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-
-
 <% end %>
-
-
-<table>
-  <tr>
-    <th>Lastname</th>
-    <th>Firstname</th>
-    <th>Middlename</th>
-    <th>Bday</th>
-    <th>Gender</th>
-    <th>Highest school attainment</th>
-    <th>Address</th>
-    <th>Email address</th>
-    <th>Contact</th>
-    <th>Lastname</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @applicants.each do |applicant| %>
-  <tr>
-    <td><%= applicant.lastname %></td>
-    <td><%= applicant.firstname %></td>
-    <td><%= applicant.middlename %></td>
-    <td><%= applicant.bday %></td>
-    <td><%= applicant.gender %></td>
-    <td><%= applicant.highest_school_attainment %></td>
-    <td><%= applicant.address %></td>
-    <td><%= applicant.email_address %></td>
-    <td><%= applicant.contact %></td>
-    <td><%= applicant.image_name %></td>
-    <td><%= link_to 'Show', applicant %></td>
-    <td><%= link_to 'Edit', edit_applicant_path(applicant) %></td>
-    <td><%= link_to 'Destroy', applicant, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
