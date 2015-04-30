@@ -1,12 +1,12 @@
 AMSS::Application.routes.draw do
 
-  
+
   controller :applicants do
     con = 'applicants/'
     get con+'show_all' => :show_all
     get 'search_applicant' => :search_applicant
   end
-  
+
   resources :schedules
 
   resources :grades
@@ -15,7 +15,7 @@ AMSS::Application.routes.draw do
 
   resources :interviewers
 
-  resources :positions
+  resources :positions, :only =>[:index, :create, :update, :destroy]
 
   resources :applicants
 
