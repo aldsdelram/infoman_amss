@@ -14,28 +14,15 @@ class PositionsController < ApplicationController
   # GET /positions/1
   # GET /positions/1.xml
   def show
-    @position = Position.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @position }
-    end
   end
 
   # GET /positions/new
   # GET /positions/new.xml
   def new
-    @position = Position.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @position }
-    end
   end
 
   # GET /positions/1/edit
   def edit
-    @position = Position.find(params[:id])
   end
 
   # POST /positions
@@ -45,10 +32,12 @@ class PositionsController < ApplicationController
 
     respond_to do |format|
       if @position.save
-        format.html { redirect_to(@position, :notice => 'Position was successfully created.') }
-        format.xml  { render :xml => @position, :status => :created, :location => @position }
+        format.html { redirect_to(positions_path, :notice => 'Position was successfully created.') }
+        format.xml  { render :xml => positions_path, :status => :created, :location => @position }
       else
-        format.html { render :action => "new" }
+        @positions = Position.all
+        @new_position = @position.clone
+        format.html { render :action => "index" }
         format.xml  { render :xml => @position.errors, :status => :unprocessable_entity }
       end
     end
@@ -58,6 +47,9 @@ class PositionsController < ApplicationController
   # PUT /positions/1.xml
   def update
     @edit_position = Position.find(params[:id])
+    unless @current
+      @current = @edit_position.clone
+    end
 
     respond_to do |format|
         puts "respond" + @edit_position.title
