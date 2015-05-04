@@ -1,4 +1,4 @@
-<%= form_for(@interviewer) do |f| %>
+<%= form_for @interviewer, :html => {:multipart => true} do |f| %>
   <% if @interviewer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@interviewer.errors.count, "error") %> prohibited this interviewer from being saved:</h2>
@@ -12,6 +12,14 @@
   <% end %>
 
   <div class="field">
+    <%= label_tag "Picture" %><br />
+    <canvas id="myCanvas"></canvas>
+    <input id="base64" type="hidden" value="" name="base64"/>
+    <input id="imgName" type="hidden" value="" name="imgName"/>
+    <input type='file', name = "interviewer[image]", accept="image/*", onchange="readURL(this);", id = "uploader"/>
+  </div>
+
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
@@ -21,14 +29,61 @@
     <%= f.text_field :position_title %>
   </div>
 
-  <div class="field">
-    <%= f.label :position_id, "In What Position" %><br />
-    <%= f.collection_select(:position_id, Position.all, :id, :title,
-      {:prompt=>"Select Position"})  %>
-  </div>
-
-
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+
+  $(window).load(function(){
+      <% if @interviewer.image_name.nil? %>
+        showPreview( <%="'#{image_path('new_applicant.png')}'"%> )
+      <% elsif !File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}") %>
+        showPreview( <%="'#{image_path('404.jpg')}'"%> )
+      <% else %>
+      showPreview( <%="'#{image_path(@interviewer.image_name)}'"%> )
+      <% end %>
+    });
+
+  function readURL(input) {
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var x = 0;
+        var y = 0;
+        var width = 500;
+        var height = 500;
+        var imageObj = new Image();
+
+        $('#imgName').val($('#uploader').val());
+
+        imageObj.onload = function() {
+          context.drawImage(imageObj, x, y, width, height);
+          $('#base64').val(canvas.toDataURL());
+        };
+          imageObj.src = e.target.result;
+        }
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+
+  function showPreview(path){
+    var img = new Image();
+    var can = document.getElementById('myCanvas');
+    var ctx = can.getContext('2d');
+    $('#imgName').val(<%= "'#{@interviewer.image_name}'" %>);
+
+    img.onload = function(){
+      can.width = 500;
+      can.height = 500;
+      ctx.drawImage(img, 0, 0, can.width, can.height);
+    }
+    img.src = path;
+  }
+</script>

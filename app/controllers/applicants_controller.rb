@@ -164,14 +164,17 @@ class ApplicantsController < ApplicationController
     require 'fileutils'
     data =  base64
     image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
-
+    who = 'applicants'
     file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}."+image.content_type.split('/').last
-    file_path = File.join(Rails.root, 'public', 'images', 'upload_images', file_name)
+    file_path = File.join(Rails.root, 'public', 'images', 'upload_images', who, file_name)
     File.open(file_path, 'wb') do |f|
       f.write image_data
     end
-    return "upload_images/"+file_name
+    return "upload_images/#{who}/"+file_name
   end
 
+  def assign_interviewer
+    @applicant = Applicant.find(params[:id])
+  end
 end
 

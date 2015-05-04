@@ -1,0 +1,49 @@
+<h2>Assign Interviewer for Applicant <%= @applicant.firstname %></h2>
+
+<div class="container-fluid row">
+<div class="col-md-5">
+<br /><br />
+  <div class="thumbnail col-md-6 col-md-offset-3">
+    <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+      <%= image_tag @applicant.image_name, :width=>'100%', :height=>'100%',
+     :alt=>@applicant.firstname + ' ' + @applicant.lastname,
+     :title=> @applicant.firstname + ' ' + @applicant.lastname%>
+    <% else %>
+      <%= image_tag('404.jpg', :width=>'100%', :height=>"100%") %>
+    <% end %>
+
+    <div class="caption">
+
+      <h3><%= @name %></h3>
+
+      <p> <strong><%=@applicant.position.title %></strong> <small><%= @applicant.status %></small>
+          <br />
+          <email> <%= @applicant.email_address%></email> <br />
+          <contact> <%= @applicant.contact %> </contact>
+      </p>
+
+      <p> <%= @applicant.bday.strftime("%B %d, %Y") %>
+          <address><%= @applicant.address %></address>
+      </p>
+    </div>
+  </div>
+
+</div>
+<div class="col-md-6">
+<br />
+<%= form_tag :action => :assign_interviewer, :class => "form-group form-inline" do%>
+	<p>
+		<%= label_tag 'SELECT INTERVIEWER: ' %>
+		<%= select_tag :interviewer, options_for_select(Interviewer.all.collect {|x| [x.name]}), :include_blank => "Select one", :class => "form-control", :value => "", :id => "interviewer", :onchange => "showInfo(6);" %>
+	</p>
+
+<% end %>
+</div>
+
+<script type="text/javascript">
+	function showInfo(interviewer_id){
+		<% @t = Interviewer.find(6) %>
+		var val = document.getElementById('interviewer');
+		alert(val.value);
+	};
+</script>

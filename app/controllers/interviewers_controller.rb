@@ -41,6 +41,7 @@ class InterviewersController < ApplicationController
   # POST /interviewers.xml
   def create
     @interviewer = Interviewer.new(params[:interviewer])
+    @interviewer.image_name =  upload_image(params[:interviewer][:image], params[:base64])
 
     respond_to do |format|
       if @interviewer.save
@@ -58,6 +59,13 @@ class InterviewersController < ApplicationController
   def update
     @interviewer = Interviewer.find(params[:id])
 
+    if @interviewer.image_name != params[:imgName]
+      if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
+        File.delete("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
+      end
+      @interviewer.image_name =  upload_image(params[:interviewer][:image], params[:base64])
+    end
+
     respond_to do |format|
       if @interviewer.update_attributes(params[:interviewer])
         format.html { redirect_to(@interviewer, :notice => 'Interviewer was successfully updated.') }
@@ -73,6 +81,9 @@ class InterviewersController < ApplicationController
   # DELETE /interviewers/1.xml
   def destroy
     @interviewer = Interviewer.find(params[:id])
+    if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
+      File.delete("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
+    end
     @interviewer.destroy
 
     respond_to do |format|
@@ -80,4 +91,18 @@ class InterviewersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def upload_image(image, base64)
+    require 'fileutils'
+    data =  base64
+    image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
+    who = 'interviewers'
+    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}."+image.content_type.split('/').last
+    file_path = File.join(Rails.root, 'public', 'images', 'upload_images', who, file_name)
+    File.open(file_path, 'wb') do |f|
+      f.write image_data
+    end
+    return "upload_images/#{who}/"+file_name
+  end
+
 end

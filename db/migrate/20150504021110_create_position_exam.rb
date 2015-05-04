@@ -7,5 +7,6 @@ class CreatePositionExam < ActiveRecord::Migration
   end
 
   def self.down
+  	 drop_table :positions_exams
   end
 end

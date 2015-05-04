@@ -1,5 +1,7 @@
 class Applicant < ActiveRecord::Base
 belongs_to :position
+has_and_belongs_to_many :interviewers
+
 attr_accessor :image
 
 

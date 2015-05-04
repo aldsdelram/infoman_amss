@@ -17,7 +17,7 @@
     <canvas id="myCanvas"></canvas>
     <input id="base64" type="hidden" value="" name="base64"/>
     <input id="imgName" type="hidden" value="" name="imgName"/>
-    <input type='file', name = "applicant[image]", accept="image/*", onchange="readURL(this);", id = "uploader"/>
+    <input type='file', name = "applicant[image]", accept="image/*", id = "uploader"/>
   </div>
   
   <div class="field">
@@ -112,7 +112,7 @@ function showPreview(path){
   var can = document.getElementById('myCanvas');
   var ctx = can.getContext('2d');
   $('#imgName').val(<%= "'#{@applicant.image_name}'" %>);
-  
+
   img.onload = function(){
     can.width = 500;
     can.height = 500;

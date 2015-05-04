@@ -1,8 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<%= label_tag "Picture" %><br />
+<% if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}") %>
+  <%= image_tag "#{@interviewer.image_name}" , :size => "200x200" %>
+<% else %>
+  <%= image_tag('404.jpg' , :size => "200x200") %>
+<% end %>
 <p>
   <b>Name:</b>
   <%= @interviewer.name %>
+</p>
+<p>
+  <b>Position Title:</b>
+  <%= @interviewer.position_title %>
 </p>
 
 
