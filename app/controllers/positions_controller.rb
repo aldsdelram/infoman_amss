@@ -14,6 +14,12 @@ class PositionsController < ApplicationController
   # GET /positions/1
   # GET /positions/1.xml
   def show
+    @position = Position.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @position}
+    end
   end
 
   # GET /positions/new

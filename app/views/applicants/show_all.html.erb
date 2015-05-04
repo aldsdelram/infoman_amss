@@ -4,9 +4,11 @@
   <div class="row masonry">
   <% @applicants.each do |applicant| %>
 
-    <% name = applicant.firstname + ' ' +
-              applicant.middlename.first.upcase + '. ' +
-              applicant.lastname%>
+    <% name = applicant.firstname + ' ';
+        unless applicant.middlename.blank?
+              name += (applicant.middlename.first.upcase + '. ')
+        end
+      name += applicant.lastname %>
 
         <div class="item">
           <div class="thumbnail">
