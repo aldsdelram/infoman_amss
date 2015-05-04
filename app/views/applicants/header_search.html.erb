@@ -1,0 +1,23 @@
+<h2> Search query: <%= params[:applicant_name] %></h2>
+<% if @search.any? %>
+	<table class="table">
+		<tr>
+			<th>Lastname</th>
+			<th>Firstname</th>
+			<th>Middlename</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	<% @search.each do |s| %>
+		<tr>
+		 <td> <%= s.lastname %> </td>
+		 <td> <%= s.firstname %> </td>
+		 <td> <%= s.middlename %> </td>
+		 <td>	<%= link_to 'Show Info', s , :class=>"btn btn-primary"%> </td>
+	   <td> <%= link_to 'Edit', edit_applicant_path(s), :class=>"btn btn-warning" %> </td>
+	   <td> <%= link_to 'Destroy', s, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%> </td>
+		</tr>
+	<% end %>
+	</table>
+<% end%>

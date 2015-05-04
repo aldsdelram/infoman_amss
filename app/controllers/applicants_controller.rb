@@ -51,8 +51,6 @@ class ApplicantsController < ApplicationController
   # POST /applicants
   # POST /applicants.xml
   def create
-    puts params[:image]
-    puts params[:base64]
     @applicant = Applicant.new(params[:applicant])
     @applicant.status = 'Pending'
     @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
@@ -73,6 +71,12 @@ class ApplicantsController < ApplicationController
   # PUT /applicants/1.xml
   def update
     @applicant = Applicant.find(params[:id])
+    if @applicant.image_name != params[:imgName]
+      if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
+        File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
+      end
+      @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
+    end
 
     respond_to do |format|
       if @applicant.update_attributes(params[:applicant])
@@ -90,7 +94,9 @@ class ApplicantsController < ApplicationController
   def destroy
     puts "destroy"
     @applicant = Applicant.find(params[:id])
-
+    if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
+      File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
+    end
     @applicant.destroy
 
     respond_to do |format|
@@ -142,6 +148,15 @@ class ApplicantsController < ApplicationController
     #end by_date
     respond_to do |format|
       format.html { render :action => 'search_applicant' }
+    end
+  end
+
+  def header_search
+    @search = Applicant.find(:all, :conditions => ["firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ?",
+     "%#{params[:applicant_name]}%", "%#{params[:applicant_name]}%", "%#{params[:applicant_name]}%"] )
+
+    respond_to do |format|
+      format.html { render :action => 'header_search' }
     end
   end
 

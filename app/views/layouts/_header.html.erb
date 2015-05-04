@@ -13,7 +13,7 @@
 
       <ul class="nav navbar-nav">
         <li id="search">
-          <%= form_tag 'applicants/search' do%>
+          <%= form_tag applicants_header_search_path, :method => :get do%>
             <%= text_field_tag :applicant_name ,'' ,:placeholder=>"Search Applicant", :class=>"input"%>
             <%= submit_tag '>', :class=> "submit"%>
           <% end %>

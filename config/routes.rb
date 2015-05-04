@@ -5,6 +5,7 @@ AMSS::Application.routes.draw do
     con = 'applicants/'
     get con+'show_all' => :show_all
     get 'search_applicant' => :search_applicant
+    get con+'header_search' => :header_search
   end
 
   resources :schedules
