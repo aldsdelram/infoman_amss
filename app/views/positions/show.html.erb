@@ -1,10 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Description:</b>
-  <%= @position.title %>
-</p>
 
+<h1 class="page-header"><%= @position.title %></h1>
 
-<%= link_to 'Edit', edit_position_path(@position) %> |
+<div class="row">
+  <div class="col-md-6">
+    <h3> Examinations for this position </h3>
+
+    <% @position.exams do |pos|%>
+      hello
+    <% end %>
+
+  </div>
+
+  <div class-"col-md-6">
+  <h3> List of Examinations </h3>
+    <% Exam.all do |exam|%>
+      hello
+    <% end %>
+  </div>
+
+</div>
 <%= link_to 'Back', positions_path %>

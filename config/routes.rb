@@ -1,3 +1,4 @@
+
 AMSS::Application.routes.draw do
 
 
@@ -16,7 +17,7 @@ AMSS::Application.routes.draw do
 
   resources :interviewers
 
-  resources :positions, :only =>[:index, :create, :update, :destroy]
+  resources :positions, :only =>[:index, :create, :update, :destroy, :show]
 
   resources :applicants
 

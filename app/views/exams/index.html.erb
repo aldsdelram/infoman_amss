@@ -1,9 +1,172 @@
+<h1 class="page-header">Showing all Examinations</h1>
+
+<div class="col-md-6">
+  <table class="table table-hover table-responsive">
+    <tr>
+      <th> Exam Title </th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+
+  <% @exams.each do |exam| %>
+    <% if session['updated'] == exam %>
+      <%session['updated'] = nil%>
+      <tr class="success">
+    <% else %>
+      <tr>
+    <% end %>
+      <td><%= exam.title %></td>
+      <td><%= link_to 'Show Exams', exam %> </td>
+      <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
+       'data-target' => '#myModal','data-id' => exam.id,
+       'data-action' => '/exams/' + exam.id.to_s,
+       'data-name' => exam.title %></td>
+      <td><%= link_to 'Remove', exam, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>
+
+
+<!-- right side -->
+<div class="col-md-6">
+
+  <% if notice%>
+
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3> <%= notice %> </h3>
+  </div>
+
+  <% end %>
+
+
+
+  <h1 class="text-left">Add</h1>
+    <%= render 'new_exam' %>
+  <h1 class="text-justify">Edit</h1>
+    <p> Just click the "edit" link besides the position you want to update.</p>
+  <h1 class="text-justify">Delete</h1>
+    <p> Like in updating, just click the "remove: link besides the position you want to remove.</p>
+</div>
+
+
+
+
+
+
+<div class="clearfix"></div>
+
+<% if  Exam.any? %>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <%unless @edit_error %>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <% end %>
+          <h4 class="modal-title" id="myModalLabel">Edit Examination</h4>
+        </div>
+
+
+        <div class="modal-body">
+          <% unless @edit_exam %>
+            <% puts "wahahahahhahahhaa" %>
+            <% @edit_exam = Exam.last%>
+          <% end %>
+            <% puts @edit_exam.title %>
+
+          <% if @edit_exam.errors.any? %>
+            <div id="error_explanation" class="alert alert-danger">
+              <h4>Position "<%= @edit_exam.title %>" can't be saved:</h4>
+
+              <ul>
+                <% @edit_exam.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= form_for(@edit_exam, :html=> {:id=>"edit_form"}) do |f| %>
+          <div class="field">
+            <%= f.label :title, "New Exam Position", :id=>"label"%><br />
+            <%= f.text_field :title, :id=>"myInput" %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <%if @edit_error %>
+          <%= link_to "Back", exams_path, :class=>"btn btn-default"%>
+          <%else%>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%end%>
+          <%= f.submit :class=>"btn btn-primary" %><%end%>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+
+      </div>  <!-- end of modal content -->
+    </div> <!-- end of modal-dialog -->
+  </div> <!-- end of modal -->
+<% end %>
+<!-- Scripts for modal -->
+<% if @edit_error %>
+  <script type="text/javascript">
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+  </script>
+<% end %>
+
+
+<script type="text/javascript">
+  var data_id = 0
+  var data_action = "";
+
+  $(document).on('click', 'a', function(event, ui) {
+      data_id = $(this).data('id');
+      data_action = $(this).data('action')
+      data_title = $(this).data('name')
+  });
+
+
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    document.getElementById("edit_form").action = data_action
+    document.getElementById("myInput").value = data_title
+  })
+
+
+  <% if @edit_error %>
+    $('#myModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+
+    $('#myModal').on('hide.bs.modal', function (e) {
+
+    })
+  <% end %>
+
+</script>
+
+
+
+
+
+
+
+<!--
+
 <h1>Listing exams</h1>
 
 <table>
   <tr>
     <th>Title</th>
-    <th>Position</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,7 +175,6 @@
 <% @exams.each do |exam| %>
   <tr>
     <td><%= exam.title %></td>
-    <td><%= exam.position_id %></td>
     <td><%= link_to 'Show', exam %></td>
     <td><%= link_to 'Edit', edit_exam_path(exam) %></td>
     <td><%= link_to 'Destroy', exam, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -23,3 +185,4 @@
 <br />
 
 <%= link_to 'New Exam', new_exam_path %>
+ -->

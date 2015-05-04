@@ -6,6 +6,7 @@
       <th> Position Title </th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
 
 
@@ -17,6 +18,7 @@
       <tr>
     <% end %>
       <td><%= position.title %></td>
+      <td><%= link_to 'Show Exams', position %> </td>
       <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
        'data-target' => '#myModal','data-id' => position.id,
        'data-action' => '/positions/' + position.id.to_s,
@@ -141,7 +143,8 @@
 
   <% if @edit_error %>
     $('#myModal').modal({
-      backdrop: 'static'
+      backdrop: 'static',
+      keyboard: false
     })
 
     $('#myModal').on('hide.bs.modal', function (e) {

@@ -49,25 +49,51 @@ body{
   height: 200px;
 }
 
-/* CSS rules for side bar
-#side{
-  background: #555;
-  min-height: 40em;
-  width: 17%;
-  top: 40px;
-  position: fixed;
+.masonry {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+    -moz-column-gap: 1em;
+    -webkit-column-gap: 1em;
+    column-gap: 1em;
 }
 
-
-/*CSS Rules for body
-
-#body{
-  float: left;
-  width: 83%;
-  left: 17%;
-  top: 40px;
-  position: absolute;
-  background: #000;
-  z-index: -1;
+.item {
+    background-color: #eee;
+    display: inline-block;
+    margin: 0 0 1em;
+    width: 100%;
 }
-*/*/*/
+
+@media only screen and (min-width: 100px) {
+    .masonry {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    .masonry {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
+}
+
+@media only screen and (min-width: 700px) {
+    .masonry {
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+        column-count: 3;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .masonry {
+        -moz-column-count: 4;
+        -webkit-column-count: 4;
+        column-count: 4;
+    }
+}
+
