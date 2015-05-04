@@ -87,4 +87,14 @@ class PositionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def assign
+    @exam = Exam.find(params[:exam_id])
+    @position = Position.find(params[:id])
+
+    @position.exams << @exam
+    respond_to do |format|
+      format.html { redirect_to @position, :notice=>"#{@exam.title} successfully added."}
+    end
+  end
 end
