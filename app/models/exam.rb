@@ -1,5 +1,5 @@
 class Exam < ActiveRecord::Base
-  belongs_to :position
+  has_and_belongs_to_many :positions
 
-  validates :description, :presence => true, :uniqueness=>true
+  validates :title, :presence => true, :uniqueness=>true
 end

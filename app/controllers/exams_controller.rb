@@ -3,6 +3,7 @@ class ExamsController < ApplicationController
   # GET /exams.xml
   def index
     @exams = Exam.all
+    @new_exam = Exam.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,10 +45,12 @@ class ExamsController < ApplicationController
 
     respond_to do |format|
       if @exam.save
-        format.html { redirect_to(@exam, :notice => 'Exam was successfully created.') }
-        format.xml  { render :xml => @exam, :status => :created, :location => @exam }
+        format.html { redirect_to(exams_url, :notice => 'Exam was successfully created.') }
+        format.xml  { render :xml => exams_url, :status => :created, :location => @exam }
       else
-        format.html { render :action => "new" }
+        @exams = Exam.all
+        @new_exam = @exam.clone
+        format.html { render :action => "index" }
         format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
       end
     end
@@ -56,15 +59,21 @@ class ExamsController < ApplicationController
   # PUT /exams/1
   # PUT /exams/1.xml
   def update
-    @exam = Exam.find(params[:id])
+    @edit_exam = Exam.find(params[:id])
 
     respond_to do |format|
-      if @exam.update_attributes(params[:exam])
-        format.html { redirect_to(@exam, :notice => 'Exam was successfully updated.') }
+      if @edit_exam.update_attributes(params[:exam])
+        @edit_error = nil
+        session['updated'] = @edit_exam
+        format.html { redirect_to(exams_url, :notice => 'Exam was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
+        @exams = Exam.all
+        @new_exam = Exam.new
+
+        @edit_error = @edit_exam.clone
+        format.html { render :action => "index" }
+        #format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
       end
     end
   end
