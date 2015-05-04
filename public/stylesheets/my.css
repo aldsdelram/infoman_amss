@@ -44,7 +44,6 @@ body{
   background: #eee;
 }
 
-
 #myCanvas{
   width: 200px;
   height: 200px;
@@ -139,4 +138,3 @@ body{
         column-count: 4;
     }
 }
-
