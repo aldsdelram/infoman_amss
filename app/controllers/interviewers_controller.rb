@@ -42,6 +42,7 @@ class InterviewersController < ApplicationController
   def create
     @interviewer = Interviewer.new(params[:interviewer])
     @interviewer.image_name =  upload_image(params[:interviewer][:image], params[:base64])
+    @interviewer.department_id = params[:department_id]
 
     respond_to do |format|
       if @interviewer.save
@@ -58,6 +59,7 @@ class InterviewersController < ApplicationController
   # PUT /interviewers/1.xml
   def update
     @interviewer = Interviewer.find(params[:id])
+    @interviewer.department_id = params[:department_id]
 
     if @interviewer.image_name != params[:imgName]
       if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
@@ -97,7 +99,7 @@ class InterviewersController < ApplicationController
     data =  base64
     image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
     who = 'interviewers'
-    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}."+image.content_type.split('/').last
+    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
     file_path = File.join(Rails.root, 'public', 'images', 'upload_images', who, file_name)
     File.open(file_path, 'wb') do |f|
       f.write image_data

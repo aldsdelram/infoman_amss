@@ -4,6 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Position</th>
+    <th>Department ID</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,6 +14,7 @@
   <tr>
     <td><%= interviewer.name %></td>
     <td><%= interviewer.position_title %></td>
+    <td><%= interviewer.department_id %></td>
     <td><%= link_to 'Show', interviewer %></td>
     <td><%= link_to 'Edit', edit_interviewer_path(interviewer) %></td>
     <td><%= link_to 'Destroy', interviewer, :confirm => 'Are you sure?', :method => :delete %></td>

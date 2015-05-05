@@ -1,14 +1,18 @@
 
 AMSS::Application.routes.draw do
 
+  resources :departments
+
   get 'positions/:id/exams/assign/:exam_id' => 'positions#assign', :as => :assign
 
   controller :applicants do
     con = 'applicants/'
     get con+'show_all' => :show_all
+    post con+'show_all' => :show_all
     get 'search_applicant' => :search_applicant
     get con+'header_search' => :header_search
     get 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
+  	get con+'get_info' => :get_info
   end
 
   resources :schedules

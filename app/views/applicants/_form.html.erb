@@ -143,6 +143,7 @@ function showPreview(path){
     can.width = 500;
     can.height = 500;
     ctx.drawImage(img, 0, 0, can.width, can.height);
+    $('#base64').val(can.toDataURL());
   }
   img.src = path;
 }

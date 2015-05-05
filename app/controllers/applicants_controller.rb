@@ -25,6 +25,17 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.xml
   def show_all
     @applicants = Applicant.all
+    @toShow = params[:toShow]
+    case @toShow
+    	when "all"
+    		@applicants = Applicant.all
+    	when "pending"
+    		@applicants = Applicant.find(:all, :conditions => ["status = 'Pending'"])
+    	when "hired"
+    		@applicants = Applicant.find(:all, :conditions => ["status = 'Hired'"])
+    	when "failed"
+    		@applicants = Applicant.find(:all, :conditions => ["status = 'Failed'"])
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -165,7 +176,7 @@ class ApplicantsController < ApplicationController
     data =  base64
     image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
     who = 'applicants'
-    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}."+image.content_type.split('/').last
+    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
     file_path = File.join(Rails.root, 'public', 'images', 'upload_images', who, file_name)
     File.open(file_path, 'wb') do |f|
       f.write image_data
@@ -175,6 +186,16 @@ class ApplicantsController < ApplicationController
 
   def assign_interviewer
     @applicant = Applicant.find(params[:id])
+    
+  end
+
+  def get_info
+  	puts "================AJAX=============="+params[:name]
+  	if request.xhr?
+    	render :json => {
+    											:info => Interviewer.where(name: "#{params[:name]}").first
+    									}
+    end
   end
 end
 
