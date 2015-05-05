@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150505064209) do
+ActiveRecord::Schema.define(:version => 20150505024817) do
 
   create_table "applicants", :force => true do |t|
     t.string   "lastname"
@@ -40,15 +40,17 @@ ActiveRecord::Schema.define(:version => 20150505064209) do
     t.datetime "updated_at"
   end
 
-  create_table "exams", :force => true do |t|
-    t.string   "title"
+  create_table "exam_position_assignments", :force => true do |t|
+    t.integer  "position_id"
+    t.integer  "exam_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "exams_positions", :id => false, :force => true do |t|
-    t.integer "position_id"
-    t.integer "exam_id"
+  create_table "exams", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "grades", :force => true do |t|

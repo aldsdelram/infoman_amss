@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= flash[:notice] %></p>
 
 
 <h1 class="page-header"><%= @position.title %></h1>
@@ -6,16 +6,33 @@
 <div class="row">
   <div class="col-md-6 text-justify">
     <h3> Examinations for this position </h3>
-
-    <% @position.exams.each do |pos|%>
-      <%= pos.title %>
-    <% end %>
+    <ul class="list-group">
+      <% @position.exams.order(:title).each do |exam|%>
+        <li class="list-group-item">
+          <font size=5 class="unassign"><%=link_to '-', unassign_path(@position, exam), :class=>"btn btn-danger" %></font>
+          <%= exam.title %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 
   <div class="col-md-6 text-justify exams">
+  <% if @epa %>
+    <% if @epa.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+          <h4>"<%= @epa.exam.title %>" can't be assign:</h4>
+          <ul>
+            <% @epa.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+
     <h3> Showing all Examinations </h3>
       <ul class="list-group">
-        <% Exam.all.each do |exam|%>
+        <% @exam_list.each do |exam|%>
           <li class="list-group-item"><font size=5><%=link_to '+', assign_path(@position, exam) %></font> <%= exam.title %></li>
         <% end %>
       </ul>
