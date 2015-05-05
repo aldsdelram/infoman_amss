@@ -15,6 +15,10 @@ class PositionsController < ApplicationController
   # GET /positions/1.xml
   def show
     @position = Position.find(params[:id])
+    @exam_list = Exam.where("id NOT IN (" +
+        "SELECT exam_id " +
+        "FROM exam_position_assignments " +
+        "WHERE position_id = ?)", @position)
 
     respond_to do |format|
       format.html
@@ -92,9 +96,26 @@ class PositionsController < ApplicationController
     @exam = Exam.find(params[:exam_id])
     @position = Position.find(params[:id])
 
-    @position.exams << @exam
+    @epa = ExamPositionAssignment.new
+    @epa.exam = @exam
+    @epa.position = @position
+
     respond_to do |format|
-      format.html { redirect_to @position, :notice=>"#{@exam.title} successfully added."}
+      @position = Position.find(params[:id])
+      @exam_list = Exam.where("id NOT IN (" +
+        "SELECT exam_id " +
+        "FROM exam_position_assignments " +
+        "WHERE position_id = ?)", @position)
+
+      if@epa.save
+        format.html { redirect_to @position, :notice=>"#{@exam.title} successfully added."}
+      else
+        format.html { render :action => "show"}
+      end
     end
+  end
+
+  def unassign
+
   end
 end

@@ -1,5 +1,6 @@
 class Exam < ActiveRecord::Base
-  has_and_belongs_to_many :positions
+  has_many :exam_position_assignment
+  has_many :positions, :through => :exam_position_assignment
 
   validates :title, :presence => true, :uniqueness=>true
 end
