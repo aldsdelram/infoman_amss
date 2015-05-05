@@ -98,9 +98,10 @@ body{
     }
 }
 
-.unassign a{
-    transition: ease-in 1s;
-    -moz-transition: ease-in 1s;
+.unassign:hover a:before{
+  -webkit-transition: all 3s;
+  transition: all 3s;
+
 }
 
 .unassign:hover a:after{
