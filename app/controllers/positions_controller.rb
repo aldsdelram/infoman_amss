@@ -116,6 +116,17 @@ class PositionsController < ApplicationController
   end
 
   def unassign
+    @exam = Exam.find(params[:exam_id])
+    @position = Position.find(params[:id])
 
+    @epa = ExamPositionAssignment.where(:position_id => @position, :exam_id => @exam)
+
+    respond_to do |format|
+       if @epa.last.destroy
+         format.html { redirect_to @position}
+       else
+         format.html { render :action => "show"}
+       end
+     end
   end
 end

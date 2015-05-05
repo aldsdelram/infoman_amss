@@ -9,8 +9,8 @@
     <ul class="list-group">
       <% @position.exams.order(:title).each do |exam|%>
         <li class="list-group-item">
+          <font size=5 class="unassign"><%=link_to '-', unassign_path(@position, exam), :class=>"btn btn-danger" %></font>
           <%= exam.title %>
-
         </li>
       <% end %>
     </ul>

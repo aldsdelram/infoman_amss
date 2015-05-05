@@ -1,6 +1,7 @@
 
 AMSS::Application.routes.draw do
 
+  get 'positions/:id/exams/unassign/:exam_id' => 'positions#unassign', :as => :unassign
   get 'positions/:id/exams/assign/:exam_id' => 'positions#assign', :as => :assign
 
   controller :applicants do
