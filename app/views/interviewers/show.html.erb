@@ -14,6 +14,10 @@
   <b>Position Title:</b>
   <%= @interviewer.position_title %>
 </p>
+<p>
+  <b>Department:</b>
+  <%= @interviewer.department.department_name %>
+</p>
 
 
 <%= link_to 'Edit', edit_interviewer_path(@interviewer) %> |

@@ -93,7 +93,7 @@ class InterviewersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
+  
   def upload_image(image, base64)
     require 'fileutils'
     data =  base64

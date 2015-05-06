@@ -186,15 +186,25 @@ class ApplicantsController < ApplicationController
 
   def assign_interviewer
     @applicant = Applicant.find(params[:id])
-    
+  end
+
+  def get_interviewer
+  	if request.xhr?
+  		@department_id = Department.find(:first, :conditions => ["department_name = ?", params[:department_name]]).id
+    	render :json => {
+						:interviewers => Interviewer.find(:all, :conditions => ["department_id = ?", @department_id])
+						}
+    end
   end
 
   def get_info
   	puts "================AJAX=============="+params[:name]
   	if request.xhr?
+      info = Interviewer.where(name: "#{params[:name]}").first
+      info.image_name = view_context.image_path(info.image_name)
     	render :json => {
-    											:info => Interviewer.where(name: "#{params[:name]}").first
-    									}
+						:info => info
+						}
     end
   end
 end

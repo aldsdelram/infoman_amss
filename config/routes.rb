@@ -15,6 +15,7 @@ AMSS::Application.routes.draw do
     get con+'header_search' => :header_search
     get 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
   	get con+'get_info' => :get_info
+  	get con+'get_interviewer' => :get_interviewer
   end
 
   resources :schedules

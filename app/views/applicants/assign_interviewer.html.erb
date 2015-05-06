@@ -29,33 +29,83 @@
   </div>
 
 </div>
-<div class="col-md-6">
-<br />
-<%= form_tag :action => :assign_interviewer, :class => "form-group form-inline" do%>
-	<p>
-		<%= label_tag 'SELECT INTERVIEWER: ' %>
-		<%= select_tag :interviewer, options_for_select(Interviewer.all.collect {|x| [x.name]}), :include_blank => "Select one", :class => "form-control", :value => "", :id => "interviewer", :onchange => "showInfo();" %>
-	</p>
 
-<% end %>
+<div class="col-md-6">
+	<br />
+	<%= form_tag :action => :assign_interviewer, :class => "form-group form-inline" do%>
+		<p>
+			<%= label_tag 'SELECT Department: ' %>
+			<%= select_tag :department_id, options_for_select(Department.all.collect {|x| [x.department_name]}), :include_blank => "Select one", :class => "form-control", :value => "", :id => "Department", :onchange => "loadInterviewer();" %>
+		</p>
+		<p>
+			<%= label_tag 'SELECT INTERVIEWER: ' %>
+			<%= select_tag :interviewer, nil, :include_blank => "Select department first", :class => "form-control", :value => "", :id => "interviewer", :onchange => "showInfo();" %>
+		</p>
+	<% end %>
+	<div class="col-md-12">
+		<div class="col-md-6">
+			<%= image_tag "", :id => "interviewer_picture", :size => "200x200" %>
+		</div>
+		<div class="col-md-6">
+			<div id = "name"></div>
+			<div id = "position_title"></div>
+		</div>
+	</div>
+
 </div>
 
 <script type="text/javascript">
 	function showInfo(){
 		var val = document.getElementById('interviewer');
-
-		$.ajax({
-				url: "<%= applicants_get_info_path %>",
-				type: "GET",
-			dataType: "json",
-				data: { name: val.value },
-			complete: function() {},
-			 success: function(data, textStatus, xhr){
-			 	console.log(data.info.interviewer.name);
-			 },
-			   error: function() {
-			   	alert("AJAX ERROR"+val.value);
-			   } 
-		});
+		if(val.value != ""){
+			$.ajax({
+					url: "<%= applicants_get_info_path %>",
+					type: "GET",
+				dataType: "json",
+					data: { name: val.value },
+				complete: function() {},
+				 success: function(data, textStatus, xhr){
+				 		document.getElementById("interviewer_picture").src = data.info.interviewer.image_name;
+				 		$("#name").text("Fullname: "+data.info.interviewer.name);
+				 		$("#position_title").text("Position Title: "+data.info.interviewer.position_title);
+				 },
+				   error: function() {
+				   	alert("AJAX ERROR"+val.value);
+				   }
+			});
+		}
 	};
+
+	function loadInterviewer(){
+		var val = document.getElementById('Department');
+		var $select = $("#interviewer");
+		$select.empty();
+		console.log(val.value);
+		if(val.value != ""){
+			$.ajax({
+					url: "<%= applicants_get_interviewer_path %>",
+					type: "GET",
+				dataType: "json",
+					data: { department_name: val.value },
+				complete: function() {},
+				 success: function(data, textStatus, xhr){
+				 	var el = document.createElement("option");
+				 			el.textContent = "Select one";
+					    el.value = "";
+					    $select.append(el);
+				 	for(var i in data.interviewers){
+				 		console.log(data.interviewers[i].interviewer.name);
+				 		el = document.createElement("option");
+				 		el.textContent = data.interviewers[i].interviewer.name;
+					    el.value = data.interviewers[i].interviewer.name;
+					    $select.append(el);
+				 	};
+				 },
+				   error: function() {
+				   	alert("AJAX ERROR"+val.value);
+				   }
+			});
+		}
+	};
+
 </script>
