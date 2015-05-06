@@ -6,7 +6,6 @@
       <th> Exam Title </th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
 
 
@@ -18,7 +17,6 @@
       <tr>
     <% end %>
       <td><%= exam.title %></td>
-      <td><%= link_to 'Show Exams', exam %> </td>
       <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
        'data-target' => '#myModal','data-id' => exam.id,
        'data-action' => '/exams/' + exam.id.to_s,
