@@ -1,3 +1,51 @@
+<h1 class="page-header">Applicants Management Dashboard</h1>
+
+
 <br /><%= link_to 'ADD NEW APPLICANT', new_applicant_path %> |
 <%= link_to 'SHOW ALL APPLICANTS', applicants_show_all_path %> |
 <%= link_to 'SEARCH APPLICANT', search_applicant_path %>
+
+
+<div class="col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Table showing all applicants</div>
+      <table class="table table-hover table-responsive" id="myTable" >
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Position</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @applicants.each do |applicant| %>
+          <% name = applicant.firstname + ' ';
+              unless applicant.middlename.blank?
+                    name += (applicant.middlename.first.upcase + '. ')
+              end
+            name += applicant.lastname %>
+
+          <tr>
+            <td><%= name %></td>
+            <td><%= applicant.position.title %></td>
+            <td><%= applicant.status %></td>
+            <td><%= link_to "Show Info", applicant %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  $(function(){
+    $("#myTable").tablesorter({
+      sortList: [[0,0]],
+    });
+  });
+</script>

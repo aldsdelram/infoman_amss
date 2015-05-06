@@ -2,7 +2,7 @@ class ApplicantsController < ApplicationController
   # GET /applicants
   # GET /applicants.xml
   def index
-    @applicant = Applicant.last
+    @applicants = Applicant.all
 
     respond_to do |format|
       format.html # index.html.erb
