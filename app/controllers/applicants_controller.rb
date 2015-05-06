@@ -2,7 +2,7 @@ class ApplicantsController < ApplicationController
   # GET /applicants
   # GET /applicants.xml
   def index
-    @applicant = Applicant.last
+    @applicants = Applicant.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -163,8 +163,24 @@ class ApplicantsController < ApplicationController
   end
 
   def header_search
-    @search = Applicant.find(:all, :conditions => ["firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ?",
-     "%#{params[:applicant_name]}%", "%#{params[:applicant_name]}%", "%#{params[:applicant_name]}%"] )
+    @query = params[:applicant_name]
+    # @sql = "SELECT *" +
+    #        "FROM applicants" +
+    #        "WHERE CONCAT_WS(\' \',firstname,middlename,lastname) LIKE '%#{@query}%'" +
+    #        " OR CONCAT_WS(\' \',firstname,lastname) LIKE '%#{@query}%'"
+
+    # @search = Applicant.where("CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
+      # " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%")
+
+    @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
+      " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%"],
+        :page=>params[:page],
+        :order=>"lastname asc",
+        :per_page=> 5
+      )
+
+    # @search = Applicant.find_by_sql(@sql)
+
 
     respond_to do |format|
       format.html { render :action => 'header_search' }
