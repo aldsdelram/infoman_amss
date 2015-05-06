@@ -2,7 +2,12 @@ class ExamsController < ApplicationController
   # GET /exams
   # GET /exams.xml
   def index
-    @exams = Exam.all
+    #@exams = Exam.all
+    @exams = Exam.paginate(
+        :page=>params[:page],
+        :order=>"title asc",
+        :per_page=> 2
+      )
     @new_exam = Exam.new
 
     respond_to do |format|
