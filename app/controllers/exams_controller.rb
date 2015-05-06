@@ -1,15 +1,18 @@
 class ExamsController < ApplicationController
+
+  $per_page = 10
+
   # GET /exams
   # GET /exams.xml
   def index
+    puts "per page =====> " + @per_page.to_s
     #@exams = Exam.all
     @exams = Exam.paginate(
         :page=>params[:page],
         :order=>"title asc",
-        :per_page=> 2
+        :per_page=> $per_page
       )
     @new_exam = Exam.new
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
@@ -50,10 +53,19 @@ class ExamsController < ApplicationController
 
     respond_to do |format|
       if @exam.save
-        format.html { redirect_to(exams_url, :notice => 'Exam was successfully created.') }
+
+        # page = Exam.all(:order => "title").index(@exam) / $per_page
+        # page += 1
+        page = find_page(@exam)
+
+        format.html { redirect_to(exams_path(:page=> page), :notice => 'Exam was successfully created.') }
         format.xml  { render :xml => exams_url, :status => :created, :location => @exam }
       else
-        @exams = Exam.all
+         @exams = Exam.paginate(
+          :page=>params[:page],
+          :order=>"title asc",
+          :per_page=> $per_page
+          )
         @new_exam = @exam.clone
         format.html { render :action => "index" }
         format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
@@ -70,10 +82,18 @@ class ExamsController < ApplicationController
       if @edit_exam.update_attributes(params[:exam])
         @edit_error = nil
         session['updated'] = @edit_exam
-        format.html { redirect_to(exams_url, :notice => 'Exam was successfully updated.') }
+
+        page = find_page(@edit_exam)
+
+
+        format.html { redirect_to(exams_path(:page=>page), :notice => 'Exam was successfully updated.') }
         format.xml  { head :ok }
       else
-        @exams = Exam.all
+          @exams = Exam.paginate(
+          :page=>params[:page],
+          :order=>"title asc",
+          :per_page=> $per_page
+          )
         @new_exam = Exam.new
 
         @edit_error = @edit_exam.clone
@@ -93,5 +113,12 @@ class ExamsController < ApplicationController
       format.html { redirect_to(exams_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+  def find_page(object)
+    page = Exam.all(:order => "title").index(object) / $per_page
+    page += 1
+    page
   end
 end

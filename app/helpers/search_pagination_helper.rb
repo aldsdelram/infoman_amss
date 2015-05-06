@@ -17,6 +17,10 @@ module SearchPaginationHelper
       end
     end
 
+    def gap
+        %(<li class="disabled"><a>&hellip;</a></li>)
+    end
+
     def html_container(html)
         tag(:ul, html, :class=>"pagination")
     end
