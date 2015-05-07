@@ -3,9 +3,11 @@ class ApplicantsController < ApplicationController
   # GET /applicants.xml
   def index
     @applicants = Applicant.all
+    @datatable = ApplicantsIndex
 
-    respond_to do |format|
+     respond_to do |format|
       format.html # index.html.erb
+      format.js { render :json => @datatable.query(params).to_json }
       format.xml  { render :xml => @applicants }
     end
   end

@@ -5,6 +5,7 @@
 <%= link_to 'SHOW ALL APPLICANTS', applicants_show_all_path %> |
 <%= link_to 'SEARCH APPLICANT', search_applicant_path %>
 
+<%# javascript_include_datatable %>
 
 <div class="col-md-8">
   <div class="panel panel-primary">
@@ -44,14 +45,29 @@
 
 
 
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="panel panel-primary">
+      <div class="panel-heading">Table showing all applicants</div>
+        <div class="panel-body table-responsive">
+          <%= datatable %>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+<!--
 <script type="text/javascript">
 
 $(document).ready( function () {
-    $('#myTable').DataTable({
-      "deferRender": true,
-      "pageLength": 5,
-      "lengthMenu": [ 3, 5, 10 ],
-      "order": [[ 1, 'asc' ], [ 0, 'asc' ]]
+    $('#datatable').DataTable({
+
     });
+
 } );
 </script>
+-->
