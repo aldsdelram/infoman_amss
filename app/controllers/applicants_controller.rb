@@ -224,4 +224,3 @@ class ApplicantsController < ApplicationController
     end
   end
 end
-

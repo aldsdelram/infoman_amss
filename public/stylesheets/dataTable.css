@@ -47,6 +47,13 @@ table.dataTable{
   float: left;
 }
 
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
 .dataTables_wrapper .dataTables_filter {
   float: right;
   text-align: right;
@@ -54,6 +61,7 @@ table.dataTable{
 
 .dataTables_wrapper .dataTables_filter input {
   margin-left: 0.5em;
+  min-width: 200px;
 }
 
 .dataTables_wrapper .dataTables_info {
