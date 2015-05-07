@@ -9,7 +9,8 @@
 <div class="col-md-8">
   <div class="panel panel-primary">
     <div class="panel-heading">Table showing all applicants</div>
-      <table class="table table-hover table-responsive" id="myTable" >
+      <div class="panel-body">
+      <table class="table table-hover table-responsive table-condensed dataTable" id="myTable" >
         <thead>
           <tr>
             <th>Full Name</th>
@@ -36,6 +37,7 @@
         <% end %>
         </tbody>
       </table>
+      </div>
   </div>
 </div>
 
@@ -43,9 +45,13 @@
 
 
 <script type="text/javascript">
-  $(function(){
-    $("#myTable").tablesorter({
-      sortList: [[0,0]],
+
+$(document).ready( function () {
+    $('#myTable').DataTable({
+      "deferRender": true,
+      "pageLength": 5,
+      "lengthMenu": [ 3, 5, 10 ],
+      "order": [[ 1, 'asc' ], [ 0, 'asc' ]]
     });
-  });
+} );
 </script>
