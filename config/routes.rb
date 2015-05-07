@@ -14,6 +14,7 @@ AMSS::Application.routes.draw do
     get 'search_applicant' => :search_applicant
     get con+'header_search' => :header_search
     get 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
+    post 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
   	get con+'get_info' => :get_info
   	get con+'get_interviewer' => :get_interviewer
   end

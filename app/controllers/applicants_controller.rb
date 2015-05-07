@@ -202,6 +202,16 @@ class ApplicantsController < ApplicationController
 
   def assign_interviewer
     @applicant = Applicant.find(params[:id])
+    respond_to do |format|
+      if params[:commit]
+       interviewer = Interviewer.where(name: "#{params[:interviewer]}").first
+       puts "======== ASSIGNED => "+params[:interviewer]+" => id: "+interviewer.to_s
+       interviewer.applicants << @applicant
+       format.html { redirect_to applicants_show_all_url }
+      else
+        format.html { render :action => 'assign_interviewer' }
+      end
+    end
   end
 
   def get_interviewer
