@@ -5,74 +5,74 @@
 <%= link_to 'SHOW ALL APPLICANTS', applicants_show_all_path %> |
 <%= link_to 'SEARCH APPLICANT', search_applicant_path %>
 
-<%# javascript_include_datatable %>
-
-<div class="col-md-8">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Table showing all applicants</div>
-      <div class="panel-body">
-      <table class="table table-hover table-responsive table-condensed dataTable" id="myTable" >
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Position</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-        <% @applicants.each do |applicant| %>
-          <% name = applicant.firstname + ' ';
-              unless applicant.middlename.blank?
-                    name += (applicant.middlename.first.upcase + '. ')
-              end
-            name += applicant.lastname %>
-
-          <tr>
-            <td><%= name %></td>
-            <td><%= applicant.position.title %></td>
-            <td><%= applicant.status %></td>
-            <td><%= link_to "Show Info", applicant %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-      </div>
-  </div>
-</div>
-
-
-
-
-<div class="clearfix"></div>
-
+<%# javascr'ipt_include_datatable %>
 <div class="row">
-  <div class="panel panel-primary">
-      <div class="panel-heading">Table showing all applicants</div>
-        <div class="panel-body table-responsive">
-          <%= datatable %>
+  <div id="dashboard">
+    <div class="grid-sizer"></div>
+
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 dItem">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Table showing all applicants</div>
+          <div class="panel-body">
+            <div class="clear"></div>
+            <%= datatable %>
+            <div class="clear>"></div>
+          </div>
         </div>
     </div>
 
+    <div class="col-xs-12 col-sm-12 col-md-3 dItem">
+        <div class="panel panel-info">
+          <div class="panel-heading">Latest Applicant</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-sm-6 col-xs-6">
+                <%= image_tag @latest_applicant.image_name, :class=>"img-responsive"%>
+              </div>
+              <div class="col-md-12 col-sm-6 col-xs-6">
+                <h3 style="display:inline">
+                    <%= @latest_applicant.firstname + ' ' +
+                        @latest_applicant.lastname %>
+                    <h4 class="label label-default" style="display:inline">
+                      <%= link_to "Show Info", @latest_applicant %>
+                    </h4>
+                </h3>
 
+                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
 
-
-
+  </div>
 </div>
 
 <script type="text/javascript">
   $('#datatable').addClass('table table-condensed table-hover')
-</script>
-
-<!--
-<script type="text/javascript">
-
-$(document).ready( function () {
-    $('#datatable').DataTable({
-
+  $('#dashboard').masonry({
+      columnWidth: '.grid-sizer',
+      itemSelector: '.dItem',
+      percentPosition : true,
     });
-
-} );
 </script>
--->
+
+<script type="text/javascript">
+  function mason(){
+    $('#dashboard').masonry({
+      columnWidth: '.grid-sizer',
+      itemSelector: '.dItem',
+      percentPosition : true,
+    });
+  }
+    mason();
+  $('#datatable').on('draw.dt', function(){
+    setTimeout(mason,1)
+  } );
+</script>

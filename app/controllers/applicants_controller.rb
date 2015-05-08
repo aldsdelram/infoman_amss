@@ -4,6 +4,8 @@ class ApplicantsController < ApplicationController
   def index
     @applicants = Applicant.all
     @datatable = ApplicantsIndex
+    @latest_applicant = Applicant.last
+
 
      respond_to do |format|
       format.html # index.html.erb
