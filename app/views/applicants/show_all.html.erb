@@ -44,17 +44,28 @@
                   <email> <%= applicant.email_address%></email> <br />
                   <contact> <%= applicant.contact %> </contact>
               </p>
-
+              <% if applicant.interviewers.blank? %>
               <p> <%= applicant.bday.strftime("%B %d, %Y") %>
                   <address><%= applicant.address %></address>
               </p>
-
+              <% end %>
+              <p>
+              <% if !applicant.interviewers.blank? %>
+                Assigned interviewer: <%= applicant.interviewers.first.name %>
+                Department: <%= Department.find(applicant.interviewers.first.department_id).department_name %>
+              <% end %>
+              </p>
               <p class="text-center">
                 <%= link_to 'Show Info', applicant , :class=>"btn btn-primary"%>
                 <%= link_to 'Edit', edit_applicant_path(applicant), :class=>"btn btn-warning" %>
                 <%= link_to 'Remove', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
                 <p></p>
-                <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>
+                <% if applicant.interviewers.blank? %>
+                  <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>  
+                <% else %>
+                  <%= link_to 'Reassign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>
+                  <%= link_to 'Assign Interview Schedule', schedules_new_path(applicant), :class => "btn btn-success col-md-12" %>
+                <% end %>
                 <span class="clearfix"></span>
               </p>
             </div>

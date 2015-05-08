@@ -3,6 +3,10 @@ AMSS::Application.routes.draw do
 
   resources :departments
 
+  get 'interviewers/show_all' => 'interviewers#show_all'
+
+  get 'schedules/new/:id' => 'schedules#new', :as => 'schedules/new'
+
   get 'positions/:id/exams/unassign/:exam_id' => 'positions#unassign', :as => :unassign
 
   get 'positions/:id/exams/assign/:exam_id' => 'positions#assign', :as => :assign

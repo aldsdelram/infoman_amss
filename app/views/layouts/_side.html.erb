@@ -2,14 +2,23 @@
 <h2><%= link_to 'HOME', index_url %></h2>
 <h2>Applicants</h2>
   <ul>
-    <li><%=link_to "Manage Applicants", applicants_path%></li>
+    <li><%=link_to "Manage Applicants", applicants_path %></li>
     <li><%=link_to "Add new Applicant", new_applicant_path%></li>
+    <li><%= link_to 'Show All Applicants', applicants_show_all_path %></li>
     <li><%=link_to "Search Applicant", search_applicant_path%></li>
   </ul>
 <h2>Interviewer</h2>
 	<ul>
 		<li><%=link_to "Manage Interviewers", interviewers_path%></li>
+    <li><%=link_to "Add new Interviewer", new_interviewer_path%></li>
+    <li><%=link_to "Show all Interviewers", interviewers_show_all_path %></li>
 	</ul>
+
+<h2>Schedules</h2>
+<ul>
+  <li><%= link_to "Show Schedules", schedules_path %></li>
+</ul>
+
 <h2>Maintenance</h2>
   <ul>
     <li><%= link_to "Position", positions_path %></li>

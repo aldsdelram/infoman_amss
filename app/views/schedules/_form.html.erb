@@ -10,20 +10,16 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :applicant_id %><br />
-    <%= f.text_field :applicant_id %>
+  <div class="jumbotron col-md-10">
+  <div class="col-md-12">
+  <h2>Pick Date</h2>
+    <%= f.date_select :sched, :order => [:day, :month, :year], :class => "btn btn-default dropdown-toggle" %>
   </div>
-  <div class="field">
-    <%= f.label :interviewer_id %><br />
-    <%= f.text_field :interviewer_id %>
+  &nbsp;
+  <div class="actions col-md-12">
+    <%= f.submit 'schedule', :class => "btn btn-success" %>
+    <%= link_to 'Cancel', schedules_path, :class => "btn btn-danger" %>
   </div>
-  <div class="field">
-    <%= f.label :sched %><br />
-    <%= f.date_select :sched %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <p></p>
   </div>
 <% end %>

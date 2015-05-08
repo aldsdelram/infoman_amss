@@ -25,6 +25,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/new.xml
   def new
     @schedule = Schedule.new
+    @applicant = Applicant.find(params[:id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +42,7 @@ class SchedulesController < ApplicationController
   # POST /schedules.xml
   def create
     @schedule = Schedule.new(params[:schedule])
+    puts params[@applicant.firstname]+"==========================="
 
     respond_to do |format|
       if @schedule.save

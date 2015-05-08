@@ -181,7 +181,6 @@ class ApplicantsController < ApplicationController
 
     # @search = Applicant.find_by_sql(@sql)
 
-
     respond_to do |format|
       format.html { render :action => 'header_search' }
     end
@@ -204,10 +203,14 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.find(params[:id])
     respond_to do |format|
       if params[:commit]
-       interviewer = Interviewer.where(name: "#{params[:interviewer]}").first
-       puts "======== ASSIGNED => "+params[:interviewer]+" => id: "+interviewer.to_s
-       interviewer.applicants << @applicant
-       format.html { redirect_to applicants_show_all_url }
+        interviewer = Interviewer.where(name: "#{params[:interviewer]}").first
+        if !@applicant.interviewers.first.blank?
+          interviewer_old = @applicant.interviewers.first
+          applicant = interviewer_old.applicants.find(@applicant.id)
+          interviewer_old.applicants.delete(applicant)
+        end
+        interviewer.applicants << @applicant
+        format.html { redirect_to applicants_show_all_url }
       else
         format.html { render :action => 'assign_interviewer' }
       end
