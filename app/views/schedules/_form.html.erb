@@ -12,6 +12,8 @@
   <% end %>
   <div class="jumbotron col-md-10">
   <div class="col-md-12">
+  <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
+  <%= f.text_field :interviewer_id, :value => @applicant.interviewers.first.id, :hidden => true %>
   <h2>Pick Date</h2>
     <%= f.date_select :sched, :order => [:day, :month, :year], :class => "btn btn-default dropdown-toggle" %>
   </div>

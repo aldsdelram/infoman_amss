@@ -20,8 +20,6 @@
     <input type='file' name = "applicant[image]" accept="image/*" onchange="readURL(this);" id = "uploader" class="btn" />
   </div>
 
-
-
   <div class="col-md-6">
 
     <div class="field form-group">
@@ -57,7 +55,16 @@
     <div class="field form-group">
       <%= f.label :highest_school_attainment, :class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"], {:prompt => "Select"}, :class=>"form-control" ) %>
+        <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"], 
+        {:prompt => "Select"}, :class=>"form-control" ) %>
+      </div>
+    </div>
+    <div class="field form-group">
+      <%= f.label "School", :class=>"control-label col-md-3"%>
+      <div class="col-md-9">
+        <%= f.select(:school_id, School.all.collect {|s| [ s.school_with_abbreviation, s.id ] } + 
+        [ [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ] ],
+         {:include_blank => 'Please select a category'}, {:class=>"form-control"}) %>
       </div>
     </div>
     <div class="field form-group">
@@ -94,57 +101,100 @@
   </div>
 <% end %>
 </div>
-<script type="text/javascript">
-    $(window).load(function(){
-      <% if @applicant.image_name.nil? %>
-        showPreview( <%="'#{image_path('new_applicant.png')}'"%> )
-      <% elsif !File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
-        showPreview( <%="'#{image_path('404.jpg')}'"%> )
-      <% else %>
-      showPreview( <%="'#{image_path(@applicant.image_name)}'"%> )
+
+<div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Create new school</h3>
+      </div>
+      <div class="modal-body">
+      <%= form_tag do %>
+        <p>
+          <%= label_tag "School Name" %>
+          <%= text_field_tag :school_name, nil, :class => "form-control" %>
+        </p>
+        <p>
+          <%= label_tag "Abbreviation" %>
+          <%= text_field_tag :abbreviation, nil, :class => "form-control" %>
+          </p>
+      </div>
+      <div class="modal-footer"> 
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <%= submit_tag "Create", :class => "btn btn-primary" %>
+      </div>
       <% end %>
-    });
+    </div>
+  </div>
+</div>
 
 
-function readURL(input) {
+<script type="text/javascript">
+  $(window).load(function(){
+    <% if @applicant.image_name.nil? %>
+      showPreview( <%="'#{image_path('new_applicant.png')}'"%> )
+    <% elsif !File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+      showPreview( <%="'#{image_path('404.jpg')}'"%> )
+    <% else %>
+    showPreview( <%="'#{image_path(@applicant.image_name)}'"%> )
+    <% end %>
+  });
 
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
+  function readURL(input) {
 
-    reader.onload = function (e) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
 
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-      var x = 0;
-      var y = 0;
-      var width = 500;
-      var height = 500;
-      var imageObj = new Image();
+      reader.onload = function (e) {
 
-      $('#imgName').val($('#uploader').val());
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var x = 0;
+        var y = 0;
+        var width = 500;
+        var height = 500;
+        var imageObj = new Image();
 
-      imageObj.onload = function() {
-        context.drawImage(imageObj, x, y, width, height);
-        $('#base64').val(canvas.toDataURL());
-      };
-        imageObj.src = e.target.result;
-      }
-  };
-  reader.readAsDataURL(input.files[0]);
-}
+        $('#imgName').val($('#uploader').val());
 
-function showPreview(path){
-  var img = new Image();
-  var can = document.getElementById('myCanvas');
-  var ctx = can.getContext('2d');
-  $('#imgName').val(<%= "'#{@applicant.image_name}'" %>);
-
-  img.onload = function(){
-    can.width = 500;
-    can.height = 500;
-    ctx.drawImage(img, 0, 0, can.width, can.height);
-    $('#base64').val(can.toDataURL());
+        imageObj.onload = function() {
+          context.drawImage(imageObj, x, y, width, height);
+          $('#base64').val(canvas.toDataURL());
+        };
+          imageObj.src = e.target.result;
+        }
+    };
+    reader.readAsDataURL(input.files[0]);
   }
-  img.src = path;
-}
+
+  function showPreview(path){
+    var img = new Image();
+    var can = document.getElementById('myCanvas');
+    var ctx = can.getContext('2d');
+    $('#imgName').val(<%= "'#{@applicant.image_name}'" %>);
+
+    img.onload = function(){
+      can.width = 500;
+      can.height = 500;
+      ctx.drawImage(img, 0, 0, can.width, can.height);
+      $('#base64').val(can.toDataURL());
+    }
+    img.src = path;
+  }
+
+  function show_add_new_shool(){
+      $('#modal-content').modal({
+          show: true
+      });
+  }
+
+  $('#modal-content').on('shown.bs.modal', function () {
+    $("#txtname").focus();
+  });
+
+  // show the modal onload
+  $('#modal-content').modal({
+      show: true
+  });
 </script>

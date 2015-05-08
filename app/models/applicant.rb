@@ -3,6 +3,8 @@ belongs_to :position
 
 has_one :schedule
 
+has_one :school
+
 has_and_belongs_to_many :interviewers
 
 attr_accessor :image

@@ -42,8 +42,8 @@ class SchedulesController < ApplicationController
   # POST /schedules.xml
   def create
     @schedule = Schedule.new(params[:schedule])
-    puts params[@applicant.firstname]+"==========================="
-
+    @applicant = Applicant.find(params[:schedule][:applicant_id])
+    
     respond_to do |format|
       if @schedule.save
         format.html { redirect_to(@schedule, :notice => 'Schedule was successfully created.') }
