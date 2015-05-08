@@ -3,6 +3,10 @@ AMSS::Application.routes.draw do
 
   resources :departments
 
+  get 'interviewers/show_all' => 'interviewers#show_all'
+
+  get 'schedules/new/:id' => 'schedules#new', :as => 'schedules/new'
+
   get 'positions/:id/exams/unassign/:exam_id' => 'positions#unassign', :as => :unassign
 
   get 'positions/:id/exams/assign/:exam_id' => 'positions#assign', :as => :assign
@@ -14,6 +18,7 @@ AMSS::Application.routes.draw do
     get 'search_applicant' => :search_applicant
     get con+'header_search' => :header_search
     get 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
+    post 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
   	get con+'get_info' => :get_info
   	get con+'get_interviewer' => :get_interviewer
   end

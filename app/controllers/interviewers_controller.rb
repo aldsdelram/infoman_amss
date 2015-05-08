@@ -79,6 +79,15 @@ class InterviewersController < ApplicationController
     end
   end
 
+  def show_all
+    @interviewers = Interviewer.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @interviewers }
+    end
+  end
+
   # DELETE /interviewers/1
   # DELETE /interviewers/1.xml
   def destroy
