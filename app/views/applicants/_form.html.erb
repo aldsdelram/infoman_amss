@@ -69,7 +69,7 @@
             <%options << [s.school_with_abbreviation, s.id] %>
           <%end %>
           <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
-         <%= select_tag "school_id", options_for_select(options),
+         <%= select_tag "school_id", options_for_select(options, :selected => @school_session),
           :include_blank => "Select One", :id => "school" %>
       </div>
     </div>
@@ -126,7 +126,9 @@
 <script type="text/javascript">
 
   $(window).load(function(){
-    <% if @applicant.image_name.nil? %>
+    <% if @image_data != nil %>
+      showPreview( "<%= @image_data %>" )
+    <% elsif @applicant.image_name.nil? %>
       showPreview( <%="'#{image_path('new_applicant.png')}'"%> )
     <% elsif !File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
       showPreview( <%="'#{image_path('404.jpg')}'"%> )

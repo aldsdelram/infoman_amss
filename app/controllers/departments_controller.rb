@@ -1,8 +1,17 @@
 class DepartmentsController < ApplicationController
   # GET /departments
   # GET /departments.xml
+
+  $per_page = 10 
+
   def index
-    @departments = Department.all
+    @departments = Department.paginate(
+      :page=>params[:page],
+      :order=>"department_name asc",
+      :per_page=> $per_page
+    )
+
+    @new_department = Department.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,10 +53,19 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to(@department, :notice => 'Department was successfully created.') }
+
+        page = find_page(@department)
+
+        format.html { redirect_to(departments_path(:page=> page), :notice => 'Department was successfully created.') }
         format.xml  { render :xml => @department, :status => :created, :location => @department }
       else
-        format.html { render :action => "new" }
+        @departments = Department.paginate(
+          :page=>params[:page],
+          :order=>"department_name asc",
+          :per_page=> $per_page
+          )
+        @new_department = @department.clone
+        format.html { render :action => "index" }
         format.xml  { render :xml => @department.errors, :status => :unprocessable_entity }
       end
     end
@@ -56,14 +74,26 @@ class DepartmentsController < ApplicationController
   # PUT /departments/1
   # PUT /departments/1.xml
   def update
-    @department = Department.find(params[:id])
+    @edit_department = Department.find(params[:id])
 
     respond_to do |format|
-      if @department.update_attributes(params[:department])
-        format.html { redirect_to(@department, :notice => 'Department was successfully updated.') }
+      if @edit_department.update_attributes(params[:department])
+        @edit_error = nil
+        session['updated'] = @edit_department
+
+        page = find_page(@edit_department)
+        format.html { redirect_to(departments_path(:page=>page), :notice => 'Department was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        @departments = Department.paginate(
+        :page=>params[:page],
+        :order=>"department_name asc",
+        :per_page=> $per_page
+        )
+        @new_department = Department.new
+
+        @edit_error = @edit_department.clone
+        format.html { render :action => "index" }
         format.xml  { render :xml => @department.errors, :status => :unprocessable_entity }
       end
     end
@@ -79,5 +109,12 @@ class DepartmentsController < ApplicationController
       format.html { redirect_to(departments_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+  def find_page(object)
+    page = Department.all(:order => "department_name").index(object) / $per_page
+    page += 1
+    page
   end
 end

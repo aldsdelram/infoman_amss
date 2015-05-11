@@ -55,7 +55,7 @@ class SchoolsController < ApplicationController
 
         page = find_page(@school)
 
-        format.html { redirect_to(@school, :notice => 'School was successfully created.') }
+        format.html { redirect_to(schools_path(:page=> page), :notice => 'School was successfully created.') }
         format.xml  { render :xml => @school, :status => :created, :location => @school }
       else
 

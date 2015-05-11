@@ -73,6 +73,7 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.new(params[:applicant])
     @create_school = nil
     @school = School.new
+    @image_data = params[:base64]
     respond_to do |format|
       if params[:cancel] == "Cancel"
         @school = School.new
@@ -91,13 +92,14 @@ class ApplicantsController < ApplicationController
         end
       else
         @applicant.status = 'Pending'
-        @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
+        @applicant.image_name = upload_image(params[:applicant][:image], params[:base64])
         if @applicant.save
           School.find(params[:school_id]).applicants << @applicant
           format.html { redirect_to(@applicant, :notice => 'Applicant ' +
                       @applicant.firstname + ' was successfully created.') }
           format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
         else
+          @school_session = params[:school_id]
           format.html { render :action => "new" }
           format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
         end

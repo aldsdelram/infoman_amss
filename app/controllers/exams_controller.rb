@@ -1,6 +1,6 @@
 class ExamsController < ApplicationController
 
-  $per_page = 10
+  $per_page = 10 
 
   # GET /exams
   # GET /exams.xml

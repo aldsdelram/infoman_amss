@@ -1,23 +1,153 @@
-<h1>Listing departments</h1>
+<h1 class="page-header">Showing all Departments</h1>
 
-<table>
-  <tr>
-    <th>Department name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="col-md-6">
+  <table class="table table-hover table-responsive">
+    <tr>
+      <th> Department Name </th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<% @departments.each do |department| %>
-  <tr>
-    <td><%= department.department_name %></td>
-    <td><%= link_to 'Show', department %></td>
-    <td><%= link_to 'Edit', edit_department_path(department) %></td>
-    <td><%= link_to 'Remove', department, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <% @departments.each do |department| %>
+    <% if session['updated'] == department %>
+      <%session['updated'] = nil%>
+      <tr class="success">
+    <% else %>
+      <tr>
+    <% end %>
+      <td><%= department.department_name %></td>
+      <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
+       'data-target' => '#myModal','data-id' => department.id,
+       'data-action' => '/departments/' + department.id.to_s,
+       'data-name' => department.department_name %></td>
+      <td><%= link_to 'Remove', department, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= paginate @departments %>
+</div>
+
+<!-- right side -->
+<div class="col-md-6">
+
+  <% if notice%>
+
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3> <%= notice %> </h3>
+  </div>
+
+  <% end %>
+
+
+
+  <h1 class="text-left">Add</h1>
+    <%= render 'new_department' %>
+  <h1 class="text-justify">Edit</h1>
+    <p> Just click the "edit" link besides the department you want to update.</p>
+  <h1 class="text-justify">Delete</h1>
+    <p> Like in updating, just click the "remove: link besides the department you want to remove.</p>
+</div>
+
+
+
+
+
+
+<div class="clearfix"></div>
+
+<% if  Department.any? %>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <%unless @edit_error %>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <% end %>
+          <h4 class="modal-title" id="myModalLabel">Edit Department</h4>
+        </div>
+
+
+        <div class="modal-body">
+          <% unless @edit_department %>
+            <% puts "wahahahahhahahhaa" %>
+            <% @edit_department = Department.last%>
+          <% end %>
+            <% puts @edit_department.department_name %>
+
+          <% if @edit_department.errors.any? %>
+            <div id="error_explanation" class="alert alert-danger">
+              <h4>Department "<%= @edit_department.department_name %>" can't be saved:</h4>
+
+              <ul>
+                <% @edit_department.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= form_for(@edit_department, :html=> {:id=>"edit_form"}) do |f| %>
+          <div class="field">
+            <%= f.label :department_name, "New Department", :id=>"label"%><br />
+            <%= f.text_field :department_name, :id=>"myInput" %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <%if @edit_error %>
+          <%= link_to "Back", departments_path, :class=>"btn btn-default"%>
+          <%else%>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%end%>
+          <%= f.submit :class=>"btn btn-primary" %><%end%>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+
+      </div>  <!-- end of modal content -->
+    </div> <!-- end of modal-dialog -->
+  </div> <!-- end of modal -->
 <% end %>
-</table>
+<!-- Scripts for modal -->
+<% if @edit_error %>
+  <script type="text/javascript">
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+  </script>
+<% end %>
 
-<br />
 
-<%= link_to 'New Department', new_department_path %>
+<script type="text/javascript">
+  var data_id = 0
+  var data_action = "";
+
+  $(document).on('click', 'a', function(event, ui) {
+      data_id = $(this).data('id');
+      data_action = $(this).data('action')
+      data_title = $(this).data('name')
+  });
+
+
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    document.getElementById("edit_form").action = data_action
+    document.getElementById("myInput").value = data_title
+  })
+
+
+  <% if @edit_error %>
+    $('#myModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+
+    $('#myModal').on('hide.bs.modal', function (e) {
+
+    })
+  <% end %>
+
+</script>

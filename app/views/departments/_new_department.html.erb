@@ -1,0 +1,24 @@
+<%= form_for(@new_department, :html=>{:class=>"form-horizontal"}) do |f| %>
+  <% if @new_department.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4>This department can't be saved:</h4>
+
+      <ul>
+        <% @new_department.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= f.label :department_name, "New Department:", :class=>"control-label col-md-4 col-sm-3 col-xs-4"%>
+    <div class="col-md-6 col-sm-6 col-xs-6">
+      <%= f.text_field :department_name, :class=>"form-control"%>
+    </div>
+    <div class="actions form-group">
+      <%= f.submit "Add", :class=>"btn btn-success col-md-2 col-sm-2 col-xs-2"%>
+    </div>
+  </div>
+
+<% end %>
