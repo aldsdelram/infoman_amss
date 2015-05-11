@@ -3,9 +3,9 @@
 <!-- Custom Search -->
 	<h3>Custom search</h3>
 	<%= label_tag "Search by:" %>
-	<%= select_tag :category, options_for_select(Applicant::SEARCH_CATEGORIES), 
+	<%= select_tag :category, options_for_select(Applicant::SEARCH_CATEGORIES, params[:category]),
 		:include_blank => "Search Menu" , :class => "form-control" %>
-	<%= text_field_tag :search_query,nil, :class => "form-control" %>
+	<%= text_field_tag :search_query, params[:search_query], :class => "form-control" %>
 	<%= submit_tag "SEARCH", :name => "custom", :class => "btn btn-primary" %>
 <!-- end Custom Search -->
 

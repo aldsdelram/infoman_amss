@@ -172,13 +172,13 @@ class ApplicantsController < ApplicationController
       if !params[:search_query].blank?
         if !@category.blank?
           case @category
-            when "FIRSTNAME"
+            when '0'
               @search = Applicant.find(:all, :conditions => ["firstname LIKE ?", "%#{params[:search_query]}%"])
-            when "LASTNAME"
+            when '1'
               @search = Applicant.find(:all, :conditions => ["lastname LIKE ?", "%#{params[:search_query]}%"])
-            when "SCHOOL"
-              @search = Applicant.find(:all, :conditions => ["highest_school_attainment LIKE ?",
-               "%#{params[:search_query]}%"])
+            when '2'
+              @search = Applicant.joins(:school).find(:all, :conditions => ["school_name LIKE ? OR abbreviation LIKE ?",
+               "%#{params[:search_query]}%","%#{params[:search_query]}%"])
           end
           @search_type = @category+" SEARCH RESULTS"
         else

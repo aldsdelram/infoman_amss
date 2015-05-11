@@ -1,37 +1,56 @@
-<h3>SEARCH APPLICANT</h3>
+<h1 class="page-header">SEARCH APPLICANT</h3>
 
 <%= render 'search_form' %>
 
+
 <% if @search.any? %>
-	<h3><%= @search_type %></h3>
-	<table>
-		<tr>
-			<th>Lastname</th>
-			<th>Firstname</th>
-			<th>Middlename</th>
-			<th>Gender</th>
-			<th>Birth date</th>
-			<th>Highest School Attainment</th>
-			<th>Address</th>
-			<th>Email address</th>
-			<th>Contact</th>
-			<th>Position Applied</th>
-		</tr>
-		<% @search.each do |s| %>
-		<tr>
-			<td><%= s.lastname %> </td>
-			<td><%= s.firstname %></td>
-			<td><%= s.middlename %></td>
-			<td><%= s.gender %></td>
-			<td><%= s.bday %></td>
-			<td><%= s.highest_school_attainment %></td>
-			<td><%= s.address %></td>
-			<td><%= s.email_address %></td>
-			<td><%= s.contact %></td>
-			<td><%= s.position.title %></td>
-		</tr>
-		<% end %>
-	</table>
+	<h3> Search Result </h3>
+	<% @search.each do |applicant| %>
+
+		 <% name = applicant.firstname + ' ';
+        unless applicant.middlename.blank?
+              name += (applicant.middlename.first.upcase + '. ')
+        end
+      name += applicant.lastname %>
+    <div class="panel">
+			<div class="media">
+			  <div class="media-left" style="width: 10%; height:10%">
+			  	<%= link_to applicant do %>
+            <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
+              <%= image_tag applicant.image_name, :width=> '100%',
+             :alt=>applicant.firstname + ' ' + applicant.lastname,
+             :title=> applicant.firstname + ' ' + applicant.lastname,
+             :class=> "media-object"%>
+            <% else %>
+              <%= image_tag('404.jpg', :width=>'10%', :height=>"10%", :class=>"media-object") %>
+            <% end %>
+			    <% end %>
+			  </div>
+
+			  <div class="media-body">
+
+			    <h3 class="media-heading" style="display:inline">
+			    	<%= name %>
+			    	<h5 style="display:inline"><span class="label label-default"><%= applicant.status %></span></h5>
+			    </h3>
+			    <div class="clearfix">&nbsp;</div>
+			    <p>
+			    <%= applicant.position.title %> <br/>
+			    <% if applicant.school.nil? %>
+			    	Does not have school yet
+			    <% else %>
+			    <%= applicant.school.school_name %>
+			    <% end %>
+			    <br />
+				 	<%= link_to 'Show Info', applicant , :class=>"btn btn-primary"%>
+			    <%= link_to 'Edit', edit_applicant_path(applicant), :class=>"btn btn-warning" %>
+			   <%= link_to 'Remove', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
+			   </p>
+			  </div>
+			</div>
+			<div class="clearfix">&nbsp;</div>
+		</div>
+	<% end %>
 <% elsif !@search_type.blank? %>
 No Result
 <% end %>
