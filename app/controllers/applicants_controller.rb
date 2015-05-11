@@ -49,6 +49,9 @@ class ApplicantsController < ApplicationController
   # GET /applicants/new.xml
   def new
     @applicant = Applicant.new
+    #school_id = {hashes: "school_id"}
+    #@applicant = {hashes: "school_id"}
+    @school = School.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,23 +62,39 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1/edit
   def edit
     @applicant = Applicant.find(params[:id])
+    @school = School.new
   end
 
   # POST /applicants
   # POST /applicants.xml
   def create
     @applicant = Applicant.new(params[:applicant])
-    @applicant.status = 'Pending'
-    @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
-
+    @create_school = nil
     respond_to do |format|
-      if @applicant.save
-        format.html { redirect_to(@applicant, :notice => 'Applicant ' +
-                    @applicant.firstname + ' was successfully created.') }
-        format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
+      if params[:cancel] == "Cancel"
+        @school = School.new
+        format.html {render :action => "new" }
+      elsif params[:new_school] == 'Create new school'
+        @school = School.new(params[:school])
+        if @school.save
+          @create_school = "success";
+          format.html {render :action => "new" }
+          format.xml  { render :xml => @school, :status => :created, :location => @school }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
+        end
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
+        @applicant.status = 'Pending'
+        @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
+        if @applicant.save
+          format.html { redirect_to(@applicant, :notice => 'Applicant ' +
+                      @applicant.firstname + ' was successfully created.') }
+          format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -229,7 +248,6 @@ class ApplicantsController < ApplicationController
   end
 
   def get_info
-  	puts "================AJAX=============="+params[:name]
   	if request.xhr?
       info = Interviewer.where(name: "#{params[:name]}").first
       info.image_name = view_context.image_path(info.image_name)

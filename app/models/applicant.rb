@@ -3,7 +3,8 @@ belongs_to :position
 
 has_one :schedule
 
-has_one :school
+has_one :applicant_school_assignment
+has_one :school, :through => :applicant_school_assignment
 
 has_and_belongs_to_many :interviewers
 

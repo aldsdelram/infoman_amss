@@ -42,7 +42,10 @@
               <p> <strong><%=applicant.position.title %></strong> <small><%= applicant.status %></small>
                   <br />
                   <email> <%= applicant.email_address%></email> <br />
-                  <contact> <%= applicant.contact %> </contact>
+                  <contact> <%= applicant.contact %> </contact> <br />
+                  <% if !applicant.school.blank? %>
+                  <school> <%= applicant.school.school_name %> </school>
+                  <% end %>
               </p>
               <% if applicant.interviewers.blank? %>
               <p> <%= applicant.bday.strftime("%B %d, %Y") %>
