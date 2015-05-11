@@ -88,6 +88,7 @@ class ApplicantsController < ApplicationController
         @applicant.status = 'Pending'
         @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
         if @applicant.save
+          School.find(params[:school_id]).applicants << @applicant
           format.html { redirect_to(@applicant, :notice => 'Applicant ' +
                       @applicant.firstname + ' was successfully created.') }
           format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }

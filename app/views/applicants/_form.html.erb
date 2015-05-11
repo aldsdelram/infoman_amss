@@ -67,7 +67,7 @@
             <%options << [s.school_with_abbreviation, s.id] %>
           <%end %>
           <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
-         <%= select_tag "school_id", options_for_select(options) %>
+         <%= select_tag "school_id", options_for_select(options), :include_blank => "Select One" %>
       </div>
     </div>
     <div class="field form-group">
