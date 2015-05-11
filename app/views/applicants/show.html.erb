@@ -1,74 +1,39 @@
-<p>Applicants Info</p>
-<p>
-    <%= label_tag "Picture" %><br />
-    <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
-      <%= image_tag "#{@applicant.image_name}" , :size => "200x200" %>
-    <% else %>
-      <%= image_tag('404.jpg' , :size => "200x200") %>
-    <% end %>
-</p>
-<p>
-  <b>Lastname:</b>
-  <%= @applicant.lastname %>
-</p>
+<h1 class="page-header">Applicant's Information</h1>
 
-<p>
-  <b>Firstname:</b>
-  <%= @applicant.firstname %>
-</p>
+<div class="col-md-6 ">
+  <div class="panel panel-primary ap_info">
+    <div class="panel-heading">
+      <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+        <%= image_tag "#{@applicant.image_name}" , :size => "200x200" , :class=>"img-circle" %>
+      <% else %>
+        <%= image_tag('404.jpg' , :size => "200x200") %>
+      <% end %>
+      &nbsp;
+    </div>
 
-<p>
-  <b>Middlename:</b>
-  <%= @applicant.middlename %>
-</p>
+    <h1 class="page-header text-right"><%= @applicant.lastname %>,
+        <%= @applicant.firstname %> &nbsp;
+        <%= @applicant.middlename %>
+        </h1>
+    <div class="clearfix"></div>
 
-<p>
-  <b>Bday:</b>
-  <%= @applicant.bday %>
-</p>
-
-<p>
-  <b>Gender:</b>
-  <%= @applicant.gender %>
-</p>
-
-<p>
-  <b>Highest school attainment:</b>
-  <%= @applicant.highest_school_attainment %>
-</p>
-
-<p>
-  <b>School:</b>
-  <%= @applicant.school.school_name %>
-</p>
-
-<p>
-  <b>Address:</b>
-  <%= @applicant.address %>
-</p>
-
-<p>
-  <b>Email address:</b>
-  <%= @applicant.email_address %>
-</p>
-
-<p>
-  <b>Contact:</b>
-  <%= @applicant.contact %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @applicant.status %>
-</p>
-
-
-<% if flash[:notice] %>
+    <div class="panel-body">
+      <p>  <label>Email Address:</label>  <%= @applicant.email_address %>   </p>
+      <p>  <label>Contact Number:</label>       <%= @applicant.contact %>   </p>
+      <p>  <label>Birthday: </label>               <%= @applicant.bday %>   </p>
+      <p>  <label>Gender: </label>               <%= @applicant.gender %>   </p>
+      <p>  <label>Highest School Attainment: </label>
+                              <%= @applicant.highest_school_attainment %>   </p>
+      <p>  <label>Address: </label>
+                                <address><%= @applicant.address %></address></p>
+    </div>
+  </div>
+  <% if flash[:notice] %>
     <div class="alert">
         <%= flash[:notice] %>
     </div>
 <% end %>
-
+</div>
 <%= link_to 'Edit', edit_applicant_path(@applicant) %> |
 <%= link_to 'Remove', @applicant, :confirm => 'Are you sure?', :method => :delete, :action => :destroy %> |
 <%= link_to 'Okey', applicants_url %>

@@ -1,11 +1,9 @@
 <h1 class="page-header">Applicants Management Dashboard</h1>
 
-
-<br /><%= link_to 'ADD NEW APPLICANT', new_applicant_path %> |
+<%= link_to 'ADD NEW APPLICANT', new_applicant_path %> |
 <%= link_to 'SHOW ALL APPLICANTS', applicants_show_all_path %> |
 <%= link_to 'SEARCH APPLICANT', search_applicant_path %>
 
-<%# javascr'ipt_include_datatable %>
 <div class="row">
   <div id="dashboard">
     <div class="grid-sizer"></div>
@@ -21,15 +19,15 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-3 dItem">
+    <div class="col-xs-12 col-sm-6 col-md-3 dItem">
         <div class="panel panel-info">
           <div class="panel-heading">Latest Applicant</div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-12 col-sm-6 col-xs-6">
+              <div class="col-md-12 col-sm-4 col-xs-6">
                 <%= image_tag @latest_applicant.image_name, :class=>"img-responsive"%>
               </div>
-              <div class="col-md-12 col-sm-6 col-xs-6">
+              <div class="col-md-12 col-sm-8 col-xs-6">
                 <h3 style="display:inline">
                     <%= @latest_applicant.firstname + ' ' +
                         @latest_applicant.lastname %>
@@ -38,18 +36,39 @@
                     </h4>
                 </h3>
 
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>
+                  <%= @latest_applicant.position.title %><br />
+                  <%= @latest_applicant.email_address %><br />
+                  <%= @latest_applicant.contact %>
+                  <address>
+                  <%= @latest_applicant.address %>
+                  </address>
+                </p>
                   <div class="clearfix"></div>
               </div>
             </div>
           </div>
         </div>
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9 dItem">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Statistics</div>
+        <div class="panel-body">
+          <div id="stat">
+            <div class="grid-sizer-stat"></div>
+            <div class="sItem app_count">
+              <h1 class="glyphicon glyphicon-home"></h1>
+              <h2><%= Applicant.count %></h2>
+            </div>
+            <div class="sItem"><%= link_to 'testing', show_all_path(:toShow=>'failed'), :method=> :post %></div>
+            <div class="sItem">Item</div>
+            <div class="sItem">Item</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 </div>
@@ -59,7 +78,14 @@
   $('#dashboard').masonry({
       columnWidth: '.grid-sizer',
       itemSelector: '.dItem',
+      percentPosition : true
+    });
+
+  $('#stat').masonry({
+      columnWidth: '.grid-sizer-stat',
+      itemSelector: '.sItem',
       percentPosition : true,
+      gutter: 5
     });
 </script>
 
@@ -68,7 +94,7 @@
     $('#dashboard').masonry({
       columnWidth: '.grid-sizer',
       itemSelector: '.dItem',
-      percentPosition : true,
+      percentPosition : true
     });
   }
     mason();

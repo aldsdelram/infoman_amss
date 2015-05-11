@@ -71,6 +71,7 @@ body{
         -webkit-column-count: 1;
         column-count: 1;
     }
+
 }
 
 @media only screen and (min-width: 400px) {
@@ -115,3 +116,32 @@ body{
 .label a{
   color: #fff;
 }
+
+.app_count{
+  background: #d0ef4a;
+  border: 5px solid;
+}
+
+.ap_info{
+  margin-top: 100px;
+}
+
+.ap_info img{
+  float: left;
+  margin-top: -100px;
+  position: relative;
+}
+
+@media screen and (max-width:767px) {
+  .ap_info{
+    margin-top: 50px;
+  }
+
+  .ap_info img{
+    margin-top: -50px;
+    width: 100px;
+    height: 100px;
+  }
+}
+
+
