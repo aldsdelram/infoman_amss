@@ -20,8 +20,6 @@
     <input type='file' name = "applicant[image]" accept="image/*" onchange="readURL(this);" id = "uploader" class="btn" />
   </div>
 
-
-
   <div class="col-md-6">
 
     <div class="field form-group">
@@ -57,7 +55,19 @@
     <div class="field form-group">
       <%= f.label :highest_school_attainment, :class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"], {:prompt => "Select"}, :class=>"form-control" ) %>
+        <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"], 
+        {:prompt => "Select"}, :class=>"form-control" ) %>
+      </div>
+    </div>
+    <div class="field form-group">
+      <%= f.label "School", :class=>"control-label col-md-3"%>
+      <div class="col-md-9">
+          <% options = [] %>
+          <% School.all.each do |s|%>
+            <%options << [s.school_with_abbreviation, s.id] %>
+          <%end %>
+          <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
+         <%= select_tag "school_id", options_for_select(options), :include_blank => "Select One" %>
       </div>
     </div>
     <div class="field form-group">
@@ -92,59 +102,130 @@
       <%= f.submit :class=>"btn btn-default"%>
     </div>
   </div>
+  
+  <!-- New school -->
+  <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h3>Create new school</h3>
+        </div>
+        <div class="modal-body">
+        <!-- Error -->
+        <% if @school.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h2><%= pluralize(@school.errors.count, "error") %> prohibited this school from being saved:</h2>
+
+            <ul>
+              <% @school.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+          <script type="text/javascript">
+            $('#modal-content').modal({
+              show: true,
+              backdrop: 'static',
+              keyboard: false
+            });
+          </script>
+        <% end %>
+        <!-- end Error -->
+        <%= form_for(@school) do |s| %>
+          <p>
+            <%= s.label "School Name" %>
+            <%= s.text_field :school_name, :class => "form-control", :id => "new_school" %>
+          </p>
+          <p>
+            <%= s.label "Abbreviation" %>
+            <%= s.text_field :abbreviation, :class => "form-control" %>
+            </p>
+        </div>
+
+        <div class="modal-footer"> 
+          <%= s.submit "Cancel", :name => "cancel", :class => "btn" %>
+          <%= s.submit "Create new school", :name => "new_school", :class => "btn btn-primary" %>
+        </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+<!-- end New School -->
 <% end %>
 </div>
+
 <script type="text/javascript">
-    $(window).load(function(){
-      <% if @applicant.image_name.nil? %>
-        showPreview( <%="'#{image_path('new_applicant.png')}'"%> )
-      <% elsif !File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
-        showPreview( <%="'#{image_path('404.jpg')}'"%> )
-      <% else %>
-      showPreview( <%="'#{image_path(@applicant.image_name)}'"%> )
-      <% end %>
-    });
 
+  $(window).load(function(){
+    <% if @applicant.image_name.nil? %>
+      showPreview( <%="'#{image_path('new_applicant.png')}'"%> )
+    <% elsif !File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+      showPreview( <%="'#{image_path('404.jpg')}'"%> )
+    <% else %>
+    showPreview( <%="'#{image_path(@applicant.image_name)}'"%> )
+    <% end %>
+  });
 
-function readURL(input) {
+  function readURL(input) {
 
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
 
-    reader.onload = function (e) {
+      reader.onload = function (e) {
 
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-      var x = 0;
-      var y = 0;
-      var width = 500;
-      var height = 500;
-      var imageObj = new Image();
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var x = 0;
+        var y = 0;
+        var width = 500;
+        var height = 500;
+        var imageObj = new Image();
 
-      $('#imgName').val($('#uploader').val());
+        $('#imgName').val($('#uploader').val());
 
-      imageObj.onload = function() {
-        context.drawImage(imageObj, x, y, width, height);
-        $('#base64').val(canvas.toDataURL());
-      };
-        imageObj.src = e.target.result;
-      }
-  };
-  reader.readAsDataURL(input.files[0]);
-}
-
-function showPreview(path){
-  var img = new Image();
-  var can = document.getElementById('myCanvas');
-  var ctx = can.getContext('2d');
-  $('#imgName').val(<%= "'#{@applicant.image_name}'" %>);
-
-  img.onload = function(){
-    can.width = 500;
-    can.height = 500;
-    ctx.drawImage(img, 0, 0, can.width, can.height);
-    $('#base64').val(can.toDataURL());
+        imageObj.onload = function() {
+          context.drawImage(imageObj, x, y, width, height);
+          $('#base64').val(canvas.toDataURL());
+        };
+          imageObj.src = e.target.result;
+        }
+    };
+    reader.readAsDataURL(input.files[0]);
   }
-  img.src = path;
-}
+
+  function showPreview(path){
+    var img = new Image();
+    var can = document.getElementById('myCanvas');
+    var ctx = can.getContext('2d');
+    $('#imgName').val(<%= "'#{@applicant.image_name}'" %>);
+
+    img.onload = function(){
+      can.width = 500;
+      can.height = 500;
+      ctx.drawImage(img, 0, 0, can.width, can.height);
+      $('#base64').val(can.toDataURL());
+    }
+    img.src = path;
+  }
+
+  function show_add_new_shool(){
+    $('#modal-content').modal({
+        show: true,
+        backdrop: 'static',
+        keyboard: false
+    });
+  };
+
+  $('#modal-content').on('shown.bs.modal', function () {
+    $("#new_school").focus();
+  });
+  
 </script>
+
+<% if @create_school == "success" %>
+  <script type="text/javascript">
+    document.getElementById('school').value = <%= @school.id %>;
+  </script>
+<% end %>

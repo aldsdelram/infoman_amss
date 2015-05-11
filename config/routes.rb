@@ -1,6 +1,8 @@
 
 AMSS::Application.routes.draw do
 
+  resources :schools
+
   resources :departments
 
   get 'interviewers/show_all' => 'interviewers#show_all'
