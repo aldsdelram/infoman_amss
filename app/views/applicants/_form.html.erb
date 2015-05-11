@@ -1,7 +1,6 @@
-<div class="row">
-<%= form_for @applicant, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+
   <% if @applicant.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(@applicant.errors.count, "error") %> prohibited this applicant from being saved:</h2>
 
       <ul>
@@ -11,6 +10,12 @@
       </ul>
     </div>
   <% end %>
+
+<div class="row">
+<%= form_for @applicant, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+
+
+
 
   <div class="field col-md-3 text-center">
     <%= label_tag "Picture" %><br />
@@ -70,7 +75,8 @@
           <%end %>
           <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
          <%= select_tag "school_id", options_for_select(options),
-          :include_blank => "Select One", :id => "school", :required=>true %>
+          :include_blank => "Select One", :id => "school", :required=>true,
+          :class=> "form-control" %>
       </div>
     </div>
     <div class="field form-group">

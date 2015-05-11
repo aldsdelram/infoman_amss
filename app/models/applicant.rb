@@ -13,6 +13,8 @@ attr_accessor :image
 SEARCH_CATEGORIES = ["FIRSTNAME", "LASTNAME", "SCHOOL"]
 
 validates :firstname, :lastname, :gender, :bday, :highest_school_attainment,
-          :address, :email_address, :status, :position_id, 
+          :address, :email_address, :status, :position_id,
           	:presence => true
+
+validates :school, :presence => true
 end
