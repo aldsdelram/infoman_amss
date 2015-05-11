@@ -19,33 +19,51 @@
         </div>
     </div>
 
+
     <div class="col-xs-12 col-sm-6 col-md-3 dItem">
         <div class="panel panel-info">
           <div class="panel-heading">Latest Applicant</div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-12 col-sm-4 col-xs-6">
-                <%= image_tag @latest_applicant.image_name, :class=>"img-responsive"%>
-              </div>
-              <div class="col-md-12 col-sm-8 col-xs-6">
-                <h3 style="display:inline">
-                    <%= @latest_applicant.firstname + ' ' +
-                        @latest_applicant.lastname %>
-                    <h4 class="label label-default" style="display:inline">
-                      <%= link_to "Show Info", @latest_applicant %>
-                    </h4>
-                </h3>
+              <% if @latest_applicant.nil? %>
+                <div class="col-md-12 col-sm-4 col-xs-6">
+                  <%= image_tag @latest_applicant.image_name, :class=>"img-responsive"%>
+                </div>
+                <div class="col-md-12 col-sm-8 col-xs-6">
+                  <h3 style="display:inline">
+                      <%= @latest_applicant.firstname + ' ' +
+                          @latest_applicant.lastname %>
+                      <h4 class="label label-default" style="display:inline">
+                        <%= link_to "Show Info", @latest_applicant %>
+                      </h4>
+                  </h3>
 
-                <p>
-                  <%= @latest_applicant.position.title %><br />
-                  <%= @latest_applicant.email_address %><br />
-                  <%= @latest_applicant.contact %>
-                  <address>
-                  <%= @latest_applicant.address %>
-                  </address>
-                </p>
-                  <div class="clearfix"></div>
-              </div>
+                  <p>
+                    <%= @latest_applicant.position.title %><br />
+                    <%= @latest_applicant.email_address %><br />
+                    <%= @latest_applicant.contact %><br />
+                    <%= @latest_applicant.school.school_name %>
+                    <address>
+                    <%= @latest_applicant.address %>
+                    </address>
+                  </p>
+                    <div class="clearfix"></div>
+                </div>
+              <%else%>
+                <div class="col-md-12 col-sm-4 col-xs-6">
+                  <%= image_tag '/images/new_applicant.png', :class=>"img-responsive"%>
+                </div>
+                <div class="col-md-12 col-sm-8 col-xs-6">
+                  <h3 style="display:inline">
+                    There's no applicant
+                  </h3>
+
+                  <p>
+                    There is nothing to show
+                   </p>
+                    <div class="clearfix"></div>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
