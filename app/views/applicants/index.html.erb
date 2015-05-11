@@ -27,7 +27,11 @@
             <div class="row">
               <% if !@latest_applicant.nil? %>
                 <div class="col-md-12 col-sm-4 col-xs-6">
-                  <%= image_tag @latest_applicant.image_name, :class=>"img-responsive"%>
+                  <% if File.exists?("#{RAILS_ROOT}/public/images/#{@latest_applicant.image_name}") %>
+                    <%= image_tag "#{@latest_applicant.image_name}" , :size => "200x200" , :class=>"img-responsive" %>
+                  <% else %>
+                    <%= image_tag('404.jpg' , :class => "img-responsive") %>
+                  <% end %>
                 </div>
                 <div class="col-md-12 col-sm-8 col-xs-6">
                   <h3 style="display:inline">
