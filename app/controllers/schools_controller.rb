@@ -79,9 +79,9 @@ class SchoolsController < ApplicationController
     respond_to do |format|
       if @edit_school.update_attributes(params[:school])
         @edit_error = nil
-        session['updated'] = @edit_exam
+        session['updated'] = @edit_school
 
-        page = find_page(@edit_exam)
+        page = find_page(@edit_school)
 
         format.html { redirect_to(schools_path(:page=>page), :notice => 'School was successfully updated.') }
         format.xml  { head :ok }

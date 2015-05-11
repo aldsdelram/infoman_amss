@@ -20,7 +20,7 @@
       <td><%= school.abbreviation %></td>
       <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
        'data-target' => '#myModal','data-id' => school.id,
-       'data-action' => '/exams/' + school.id.to_s,
+       'data-action' => '/schools/' + school.id.to_s,
        'data-name' => school.school_name %></td>
       <td><%= link_to 'Remove', school, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
