@@ -14,7 +14,7 @@ AMSS::Application.routes.draw do
   controller :applicants do
     con = 'applicants/'
     get con+'show_all' => :show_all
-    post con+'show_all' => :show_all
+    post con+'show_all' => :show_all, :as => 'show_all'
     get 'search_applicant' => :search_applicant
     get con+'header_search' => :header_search
     get 'assign_interviewer/:id' => :assign_interviewer, :as => con+'assign_interviewer'
