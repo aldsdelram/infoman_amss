@@ -15,6 +15,16 @@
       backdrop: 'static',
       keyboard: false
     });
+
+    var ids = ["applicant_lastname", "applicant_firstname","applicant_middlename",
+    "applicant_gender","applicant_highest_school_attainment","school", "applicant_address",
+    "applicant_email_address", "applicant_contact", "applicant_position_id"];
+
+    $("#new_school").focus();
+    for(var i=0; i<ids.length; i++){
+      $("#"+ids[i]).removeAttr("required");
+    }
+
   </script>
 <% end %>
 <!-- end Error -->
@@ -30,7 +40,14 @@
 </div>
 
 <div class="modal-footer"> 
-  <%= submit_tag "Cancel", :name => "cancel", :class => "btn" %>
+  <%= submit_tag "Cancel", :name => "cancel", :class => "btn", :id=>"btnCancel" %>
   <%= submit_tag "Create new school", :name => "new_school", :class => "btn btn-primary" %>
 </div>
 <% end %>
+
+
+<script type="text/javascript">
+  $('#btnCancel').click(function(){
+    $('#new_school').removeAttr("required");
+}); 
+</script>

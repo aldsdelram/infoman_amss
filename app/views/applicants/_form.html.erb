@@ -1,7 +1,6 @@
-<div class="row">
-<%= form_for @applicant, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+
   <% if @applicant.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(@applicant.errors.count, "error") %> prohibited this applicant from being saved:</h2>
 
       <ul>
@@ -11,6 +10,12 @@
       </ul>
     </div>
   <% end %>
+
+<div class="row">
+<%= form_for @applicant, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+
+
+
 
   <div class="field col-md-3 text-center">
     <%= label_tag "Picture" %><br />
@@ -26,13 +31,13 @@
     <div class="field form-group">
       <%= f.label :lastname ,'Last Name' ,:class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.text_field :lastname, :class=>"form-control" %>
+        <%= f.text_field :lastname, :class=>"form-control" , :required=>true, :autofocus=>true%>
       </div>
     </div>
     <div class="field form-group">
       <%= f.label :firstname,'First Name ', :class=>"control-label col-md-3" %>
       <div class="col-md-9">
-        <%= f.text_field :firstname, :class=>"form-control" %>
+        <%= f.text_field :firstname, :class=>"form-control", :required=>true, :autofocus=>true%>
       </div>
     </div>
     <div class="field form-group">
@@ -52,14 +57,14 @@
       <%= f.label :gender, :class=>"control-label col-md-3"%>
       <div class="col-md-9">
         <%= f.select(:gender, ["Male", "Female"], {:prompt => "Select gender"},
-         :class=>"form-control") %>
+         :class=>"form-control", :required=>true) %>
       </div>
     </div>
     <div class="field form-group">
       <%= f.label :highest_school_attainment, :class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"], 
-        {:prompt => "Select"}, :class=>"form-control" ) %>
+        <%= f.select(:highest_school_attainment, ["Tertiary","Secondary"],
+        {:prompt => "Select"}, :class=>"form-control" , :required=>true) %>
       </div>
     </div>
     <div class="field form-group">
@@ -70,20 +75,21 @@
             <%options << [s.school_with_abbreviation, s.id] %>
           <%end %>
           <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
-         <%= select_tag "school_id", options_for_select(options, :selected => @school_session),
-          :include_blank => "Select One", :id => "school" %>
+          <%= select_tag "school_id", options_for_select(options),
+          :include_blank => "Select One", :id => "school", :required=>true,
+          :class=> "form-control" %>
       </div>
     </div>
     <div class="field form-group">
       <%= f.label :address , :class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.text_area :address, :rows=>4, :cols=>40, :class=>"form-control" %>
+        <%= f.text_area :address, :rows=>4, :cols=>40, :class=>"form-control", :required=>true %>
       </div>
     </div>
     <div class="field form-group">
       <%= f.label :email_address, :class=>"control-label col-md-3" %>
       <div class="col-md-9">
-        <%= f.text_field :email_address, :class=>"form-control", :type=>"email"%>
+        <%= f.text_field :email_address, :class=>"form-control", :type=>"email", :required=>true%>
       </div>
     </div>
     <div class="field form-group">
@@ -96,7 +102,7 @@
       <%= f.label :position_id, "Position", :class=>"control-label col-md-3"%>
       <div class="col-md-9">
       <%= f.collection_select(:position_id, Position.all, :id, :title,
-        {:prompt=>"Select Position"}, :class=>"form-control")  %>
+        {:prompt=>"Select Position"}, :class=>"form-control", :required=>true)  %>
       </div>
     </div>
   </div>
@@ -106,13 +112,12 @@
       <%= f.submit :class=>"btn btn-default"%>
     </div>
   </div>
-  
+
   <!-- New school -->
   <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
           <h3>Create new school</h3>
         </div>
         <div class="modal-body">
@@ -180,6 +185,7 @@
     img.src = path;
   }
 
+
   function show_add_new_shool(){
     $('#modal-content').modal({
         show: true,
@@ -189,9 +195,17 @@
   };
 
   $('#modal-content').on('shown.bs.modal', function () {
+    $('#new_school').attr("required");
+    var ids = ["applicant_lastname", "applicant_firstname","applicant_middlename",
+    "applicant_gender","applicant_highest_school_attainment","school", "applicant_address",
+    "applicant_email_address", "applicant_contact", "applicant_position_id"];
+
     $("#new_school").focus();
+    for(var i=0; i<ids.length; i++){
+      $("#"+ids[i]).removeAttr("required");
+    }
   });
-  
+
 </script>
 
 <% if @create_school == "success" %>
