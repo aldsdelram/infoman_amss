@@ -1,0 +1,30 @@
+<%= form_for(@new_school, :html=>{:class=>"form-horizontal"}) do |f| %>
+  <% if @new_school.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4>This school can't be saved:</h4>
+
+      <ul>
+        <% @new_school.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="field form-group">
+      <%= f.label :school_name, "New School Name:", :class=>"control-label col-md-4 col-sm-3 col-xs-4"%>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <%= f.text_field :school_name, :class=>"form-control"%>
+      </div>
+    </div>
+    <div class="field form-group">
+      <%= f.label :abbreviation, "Abbreviation:", :class=>"control-label col-md-4 col-sm-3 col-xs-4"%>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <%= f.text_field :abbreviation, :class=>"form-control"%>
+      </div>
+    </div>
+    <div class="actions form-group">
+      <%= f.submit "Add", :class=>"btn btn-success col-md-2 col-sm-2 col-xs-2"%>
+    </div>
+
+<% end %>

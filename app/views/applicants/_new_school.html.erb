@@ -1,0 +1,36 @@
+<!-- Error -->
+<% if @school.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <h2><%= pluralize(@school.errors.count, "error") %> prohibited this school from being saved:</h2>
+
+    <ul>
+      <% @school.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <script type="text/javascript">
+    $('#modal-content').modal({
+      show: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+  </script>
+<% end %>
+<!-- end Error -->
+<%= form_tag :action => 'create', :controller => 'applicants' do |s| %>
+  <p>
+    <%= label_tag "School Name" %>
+    <%= text_field_tag :school_name, nil, :class => "form-control", :id => "new_school" %>
+  </p>
+  <p>
+    <%= label_tag "Abbreviation" %>
+    <%= text_field_tag :abbreviation, nil, :class => "form-control" %>
+    </p>
+</div>
+
+<div class="modal-footer"> 
+  <%= submit_tag "Cancel", :name => "cancel", :class => "btn" %>
+  <%= submit_tag "Create new school", :name => "new_school", :class => "btn btn-primary" %>
+</div>
+<% end %>

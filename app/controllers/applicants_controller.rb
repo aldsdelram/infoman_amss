@@ -72,12 +72,15 @@ class ApplicantsController < ApplicationController
   def create
     @applicant = Applicant.new(params[:applicant])
     @create_school = nil
+    @school = School.new
     respond_to do |format|
       if params[:cancel] == "Cancel"
         @school = School.new
         format.html {render :action => "new" }
       elsif params[:new_school] == 'Create new school'
-        @school = School.new(params[:school])
+        @school = School.new
+        @school.school_name = params[:school_name]
+        @school.abbreviation = params[:abbreviation]
         if @school.save
           @create_school = "success";
           format.html {render :action => "new" }
@@ -106,20 +109,37 @@ class ApplicantsController < ApplicationController
   # PUT /applicants/1.xml
   def update
     @applicant = Applicant.find(params[:id])
-    if @applicant.image_name != params[:imgName]
-      if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
-        File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
-      end
-      @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
-    end
-
+    @create_school = nil
     respond_to do |format|
-      if @applicant.update_attributes(params[:applicant])
-        format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
-        format.xml  { head :ok }
+
+      if params[:cancel] == "Cancel"
+          @school = School.new
+          format.html {render :action => "new" }
+      elsif params[:new_school] == 'Create new school'
+          @school = School.new(params[:school])
+          if @school.save
+            @create_school = "success";
+            format.html {render :action => "new" }
+            format.xml  { render :xml => @school, :status => :created, :location => @school }
+          else
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
+          end
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
+        if @applicant.image_name != params[:imgName]
+          if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
+            File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
+          end
+          @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
+        end
+        if @applicant.update_attributes(params[:applicant])
+          School.find(params[:school_id]).applicants << @applicant
+          format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

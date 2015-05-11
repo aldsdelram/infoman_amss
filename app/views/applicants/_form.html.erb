@@ -43,13 +43,15 @@
     <div class="field form-group">
       <%= f.label :bday ,nil ,:class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.date_select :bday, :start_year => Date.today.year - 15, :end_year => Date.today.year - 100 , :type=>"date"%>
+        <%= f.date_select :bday, :start_year => Date.today.year - 15,
+         :end_year => Date.today.year - 100 , :type=>"date"%>
       </div>
     </div>
     <div class="field form-group">
       <%= f.label :gender, :class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.select(:gender, ["Male", "Female"], {:prompt => "Select gender"}, :class=>"form-control") %>
+        <%= f.select(:gender, ["Male", "Female"], {:prompt => "Select gender"},
+         :class=>"form-control") %>
       </div>
     </div>
     <div class="field form-group">
@@ -67,7 +69,8 @@
             <%options << [s.school_with_abbreviation, s.id] %>
           <%end %>
           <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
-         <%= select_tag "school_id", options_for_select(options), :include_blank => "Select One" %>
+         <%= select_tag "school_id", options_for_select(options),
+          :include_blank => "Select One", :id => "school" %>
       </div>
     </div>
     <div class="field form-group">
@@ -112,43 +115,7 @@
           <h3>Create new school</h3>
         </div>
         <div class="modal-body">
-        <!-- Error -->
-        <% if @school.errors.any? %>
-          <div id="error_explanation" class="alert alert-danger">
-            <h2><%= pluralize(@school.errors.count, "error") %> prohibited this school from being saved:</h2>
-
-            <ul>
-              <% @school.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-          <script type="text/javascript">
-            $('#modal-content').modal({
-              show: true,
-              backdrop: 'static',
-              keyboard: false
-            });
-          </script>
-        <% end %>
-        <!-- end Error -->
-        <%= form_for(@school) do |s| %>
-          <p>
-            <%= s.label "School Name" %>
-            <%= s.text_field :school_name, :class => "form-control", :id => "new_school" %>
-          </p>
-          <p>
-            <%= s.label "Abbreviation" %>
-            <%= s.text_field :abbreviation, :class => "form-control" %>
-            </p>
-        </div>
-
-        <div class="modal-footer"> 
-          <%= s.submit "Cancel", :name => "cancel", :class => "btn" %>
-          <%= s.submit "Create new school", :name => "new_school", :class => "btn btn-primary" %>
-        </div>
-        <% end %>
-
+        <%= render 'new_school' %>
       </div>
     </div>
   </div>
@@ -227,5 +194,11 @@
 <% if @create_school == "success" %>
   <script type="text/javascript">
     document.getElementById('school').value = <%= @school.id %>;
+  </script>
+<% end %>
+
+<% if !@applicant.school.blank? %>
+  <script type="text/javascript">
+    document.getElementById('school').value = <%= @applicant.school.id %>;
   </script>
 <% end %>

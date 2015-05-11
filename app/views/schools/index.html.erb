@@ -1,3 +1,172 @@
+<h1 class="page-header">Showing all Schools</h1>
+
+<div class="col-md-6">
+  <table class="table table-hover table-responsive">
+    <tr>
+      <th> School name </th>
+      <th> Abbreviation </th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @schools.each do |school| %>
+    <% if session['updated'] == school %>
+      <%session['updated'] = nil%>
+      <tr class="success">
+    <% else %>
+      <tr>
+    <% end %>
+      <td><%= school.school_name %></td>
+      <td><%= school.abbreviation %></td>
+      <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
+       'data-target' => '#myModal','data-id' => school.id,
+       'data-action' => '/exams/' + school.id.to_s,
+       'data-name' => school.school_name %></td>
+      <td><%= link_to 'Remove', school, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= paginate @schools %>
+</div>
+
+<!-- right side -->
+<div class="col-md-6">
+
+  <% if notice%>
+
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3> <%= notice %> </h3>
+  </div>
+
+  <% end %>
+
+
+
+  <h1 class="text-left">Add</h1>
+    <%= render 'new_school' %>
+  <h1 class="text-justify">Edit</h1>
+    <p> Just click the "edit" link besides the position you want to update.</p>
+  <h1 class="text-justify">Delete</h1>
+    <p> Like in updating, just click the "remove: link besides the position you want to remove.</p>
+</div>
+
+
+
+
+
+
+<div class="clearfix"></div>
+
+<% if  School.any? %>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <%unless @edit_error %>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <% end %>
+          <h4 class="modal-title" id="myModalLabel">Edit Examination</h4>
+        </div>
+
+
+        <div class="modal-body">
+          <% unless @edit_school %>
+            <% puts "wahahahahhahahhaa" %>
+            <% @edit_school = School.last%>
+          <% end %>
+            <% puts @edit_school.school_name %>
+
+          <% if @edit_school.errors.any? %>
+            <div id="error_explanation" class="alert alert-danger">
+              <h4>Position "<%= @edit_school.school_name %>" can't be saved:</h4>
+
+              <ul>
+                <% @edit_school.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= form_for(@edit_school, :html=> {:id=>"edit_form"}) do |f| %>
+          <div class="field">
+            <%= f.label :school_name, "New School", :id=>"label"%><br />
+            <%= f.text_field :school_name, :id=>"myInput" %>
+          </div>
+          <div class="field">
+            <%= f.label :abbreviation, "Abbreviation", :id=>"label"%><br />
+            <%= f.text_field :abbreviation, :id=>"myInput" %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <%if @edit_error %>
+          <%= link_to "Back", schools_path, :class=>"btn btn-default"%>
+          <%else%>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%end%>
+          <%= f.submit :class=>"btn btn-primary" %><%end%>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+
+      </div>  <!-- end of modal content -->
+    </div> <!-- end of modal-dialog -->
+  </div> <!-- end of modal -->
+<% end %>
+<!-- Scripts for modal -->
+<% if @edit_error %>
+  <script type="text/javascript">
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+  </script>
+<% end %>
+
+
+<script type="text/javascript">
+  var data_id = 0
+  var data_action = "";
+
+  $(document).on('click', 'a', function(event, ui) {
+      data_id = $(this).data('id');
+      data_action = $(this).data('action')
+      data_title = $(this).data('name')
+  });
+
+
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    document.getElementById("edit_form").action = data_action
+    document.getElementById("myInput").value = data_title
+  })
+
+
+  <% if @edit_error %>
+    $('#myModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+
+    $('#myModal').on('hide.bs.modal', function (e) {
+
+    })
+  <% end %>
+
+</script>
+
+
+
+
+
+
+
+
+
+<!-- 
 <h1>Listing schools</h1>
 
 <table>
@@ -23,3 +192,4 @@
 <br />
 
 <%= link_to 'New School', new_school_path %>
+ -->
