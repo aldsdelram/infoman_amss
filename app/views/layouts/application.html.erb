@@ -14,13 +14,16 @@
   <%= javascript_include_tag 'jquery-ui-timepicker-addon.js' %>
   <%# javascript_include_tag 'jquery.tablesorter.js' %>
   <%# javascript_include_tag 'jquery.tablesorter.widgets.js' %>
-
-
 </head>
 
 <body>
 
 <div class = "container-fluid">
+
+<% if controller.controller_name == 'sessions' &&
+  controller.action_name == 'new'%>
+  <%= yield %>
+<% else %>
   <div class="row">
     <%= render 'layouts/header' %>
   </div>
@@ -35,8 +38,9 @@
        <%= yield %>
     </div>
   </div>
+<% end %>
 </div>
 
-
 </body>
+
 </html>

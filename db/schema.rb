@@ -12,6 +12,14 @@
 
 ActiveRecord::Schema.define(:version => 20150512033726) do
 
+  create_table "admins", :force => true do |t|
+    t.string   "name"
+    t.string   "hashed_password"
+    t.string   "salt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "applicant_school_assignments", :force => true do |t|
     t.integer  "applicant_id"
     t.integer  "school_id"

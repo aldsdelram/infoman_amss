@@ -1,0 +1,67 @@
+<%= stylesheet_link_tag 'login.css' %>
+<!-- 
+<% if flash[:alert] %>
+  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3> <%= flash[:alert] = "Successfully created..." %> </h3>
+  </div>
+
+<% end %>
+ -->
+
+
+
+
+<div class="col-md-8 col-md-offset-2">
+
+  <h1 id="splash_logo" class="text-center page-header"><span class="glyphicon glyphicon-home"></span><br />infoman / AMSS</h1>
+
+    <div class="col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1">
+      <img src="/images/new_applicant.png" class="img-responsive img-center" id="admin_pic">
+    </div>
+    <div class="col-md-5 col-sm-5">
+      <%= form_tag do %>
+          <div class="form-group">
+            <label for= "name">Name:</label>
+            <%= text_field_tag :name, params[:name], :class=>"form-control"%>
+          </div>
+
+          <div class="form-group">
+            <label for= "password">Password:</label>
+            <%= password_field_tag :password, params[:password], :class=>"form-control"%>
+          </div>
+
+          <div class="form-group">
+            <%= submit_tag "Login", :class=>"btn btn-primary form-control"%>
+          </div>
+      <% end %>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalNotice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Notice</h4>
+      </div>
+      <div class="modal-body">
+        <%= notice %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if notice %>
+  <script type="text/javascript">
+    $('#modalNotice').modal()
+
+  </script>
+<% end %>

@@ -1,0 +1,38 @@
+<% if notice%>
+
+  <div class="alert alert-success alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h3> <%= notice %> </h3>
+  </div>
+
+  <% end %>
+
+<h1>Listing admins</h1>
+
+<table class="table table-default">
+  <tr>
+    <th>Name</th>
+    <th>Hashed password</th>
+    <th>Salt</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @admins.each do |admin| %>
+  <tr>
+    <td><%= admin.name %></td>
+    <td><%= admin.hashed_password %></td>
+    <td><%= admin.salt %></td>
+    <td><%= link_to 'Show', admin %></td>
+    <td><%= link_to 'Edit', edit_admin_path(admin) %></td>
+    <td><%= link_to 'Destroy', admin, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Admin', new_admin_path %>
