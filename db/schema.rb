@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150508083231) do
+ActiveRecord::Schema.define(:version => 20150512011516) do
+
+  create_table "admins", :force => true do |t|
+    t.string   "name"
+    t.string   "hashed_password"
+    t.string   "salt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "applicant_school_assignments", :force => true do |t|
     t.integer  "applicant_id"

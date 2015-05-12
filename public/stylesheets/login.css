@@ -1,0 +1,29 @@
+body{
+  background: #1F9FDB;
+}
+
+#splash_logo{
+  color: white;
+}
+
+#splash_logo span{
+  font-size: 3em;
+}
+
+input{
+  border: 2px solid red;
+}
+
+.img-center {
+  margin:0 auto;
+}
+
+#admin_pic{
+  display: block;
+}
+
+@media screen and (max-width: 767px){
+  #admin_pic{
+    display: none !important;
+  }
+}
