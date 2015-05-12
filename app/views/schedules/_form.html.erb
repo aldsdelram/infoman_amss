@@ -15,13 +15,49 @@
   <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
   <%= f.text_field :interviewer_id, :value => @applicant.interviewers.first.id, :hidden => true %>
   <h2>Pick Date</h2>
-    <%= f.date_select :sched, :order => [:day, :month, :year], :class => "btn btn-default dropdown-toggle" %>
+    <p class="input-group">
+      <%= f.text_field :sched, :id => "datepicker", :class => "form-control"%>
+    </p>
+    <p class="input-group">
+      <%= text_field_tag :sched_time, nil, :id => "timepicker", :class => "form-control"%>
+    </p>
   </div>
   &nbsp;
   <div class="actions col-md-12">
-    <%= f.submit 'schedule', :class => "btn btn-success" %>
+    <%= f.submit 'schedule', :class => "btn btn-success", :id => "submit" %>
     <%= link_to 'Cancel', schedules_path, :class => "btn btn-danger" %>
   </div>
   <p></p>
   </div>
 <% end %>
+
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+        showOn: "button",
+        buttonImage: "<%= image_path('calendar_icon.png') %>",
+        buttonImageOnly: true,
+        buttonText: "Select date",
+        dateFormat: "dd-mm-yy"
+        //minDate: "+0D",
+      });
+    $( "#timepicker" ).timepicker({
+        showOn: "button",
+        buttonImage: "<%= image_path('gliphycon-time.png') %>",
+        buttonImageOnly: true,
+        buttonText: "Select time of interview",
+        timeFormat: "hh:mm tt"
+      });
+     // $( "#submit" ).click(function() {
+     //    alert( $("#datepicker").val() );
+     //  });
+  });
+</script>
+
+<script type="text/javascript"> 
+  $('document').ready(function(){
+    $('img.ui-datepicker-trigger').wrap('<span class="input-group-addon">');
+    var iHeight = $('#datepicker').height();
+    $('img.ui-datepicker-trigger').height(iHeight);
+  })
+</script>
