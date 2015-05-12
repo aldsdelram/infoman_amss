@@ -10,10 +10,6 @@ body{
   font-size: 3em;
 }
 
-input{
-  border: 2px solid red;
-}
-
 .img-center {
   margin:0 auto;
 }
