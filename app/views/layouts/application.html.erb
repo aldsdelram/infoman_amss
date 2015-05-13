@@ -3,6 +3,10 @@
 <head>
   <title>AMSS</title>
 
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta content="ojt project" name="description" />
+  <meta content="infomaninc" name="author" />
+
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
@@ -31,12 +35,12 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2 col-sm-3" id="side">
+    <div class="col-md-2 col-sm-3 col-lg-2" id="side">
 
       <%= render 'layouts/side' %>
     </div>
 
-    <div class="col-md-10 col-sm-9">
+    <div class="col-md-10 col-sm-9 col-lg-10">
        <%= yield %>
     </div>
   </div>

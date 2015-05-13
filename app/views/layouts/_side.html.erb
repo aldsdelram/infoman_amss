@@ -1,28 +1,93 @@
+<div class="row">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
 
-<h2><%= link_to 'HOME', index_url %></h2>
-<h2>Applicants</h2>
-  <ul>
-    <li><%=link_to "Manage Applicants", applicants_path %></li>
-    <li><%=link_to "Add new Applicant", new_applicant_path%></li>
-    <li><%= link_to 'Show All Applicants', applicants_show_all_path %></li>
-    <li><%=link_to "Search Applicant", search_applicant_path%></li>
-  </ul>
-<h2>Interviewer</h2>
-	<ul>
-		<li><%=link_to "Manage Interviewers", interviewers_path%></li>
-    <li><%=link_to "Add new Interviewer", new_interviewer_path%></li>
-    <li><%=link_to "Show all Interviewers", interviewers_show_all_path %></li>
-	</ul>
+    <div class="panel panel-default">
+      <%= link_to index_path do%>
+        <div class="panel-heading" role='tab'>
+            <h4 class="panel-title">
+              Dashboard
+            </h4>
+        </div>
+      <% end %>
+    </div>
 
-<h2>Schedules</h2>
-<ul>
-  <li><%= link_to "Show Schedules", schedules_path %></li>
-</ul>
 
-<h2>Maintenance</h2>
-  <ul>
-    <li><%= link_to "Position", positions_path %></li>
-    <li><%= link_to "School", schools_path %></li>
-    <li><%= link_to "Exams", exams_path %></li>
-    <li><%= link_to "Departments", departments_path %></li>
-  </ul>
+    <div class="panel panel-default">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+      href="#applicants" aria-expanded="false" aria-controls="applicants">
+        <div class="panel-heading btn-primary" role="tab" id="applicant">
+          <h4 class="panel-title">
+            Applicants
+          </h4>
+        </div>
+      </a>
+      <div id="applicants" class="panel-collapse collapse" role="tabpanel"
+      aria-labelledby="Applicants">
+        <div class="list-group">
+          <%= link_to applicants_path do%> <li class="list-group-item"> Manage Applicants</li> <% end %>
+          <%= link_to new_applicant_path do%> <li class="list-group-item"> Add new Applicant</li> <% end %>
+          <%= link_to applicants_show_all_path do%> <li class="list-group-item"> Show all Applicants</li> <% end %>
+          <%= link_to search_applicant_path do%> <li class="list-group-item"> Search Applicant</li> <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+      href="#interviewers" aria-expanded="false" aria-controls="interviewers">
+        <div class="panel-heading btn-primary" role="tab" id="interviewer">
+          <h4 class="panel-title">
+            Interviewer
+          </h4>
+        </div>
+      </a>
+      <div id="interviewers" class="panel-collapse collapse" role="tabpanel"
+      aria-labelledby="interviewer">
+        <div class="list-group">
+          <%= link_to interviewers_path do%> <li class="list-group-item"> Manage Interviewers</li> <% end %>
+          <%= link_to new_interviewer_path do%> <li class="list-group-item"> Add New Interviewer</li> <% end %>
+          <%= link_to interviewers_show_all_path do%> <li class="list-group-item"> Show all interviewers</li> <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+      href="#schedules" aria-expanded="false" aria-controls="schedules">
+        <div class="panel-heading btn-primary" role="tab" id="schedule">
+          <h4 class="panel-title">
+            Schedule
+          </h4>
+        </div>
+      </a>
+      <div id="schedules" class="panel-collapse collapse" role="tabpanel"
+      aria-labelledby="schedule">
+        <div class="list-group">
+          <%= link_to schedules_path do%> <li class="list-group-item"> Show Schedules</li> <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+      href="#maintenance_" aria-expanded="false" aria-controls="maintenance_">
+        <div class="panel-heading btn-primary" role="tab" id="maintenance">
+          <h4 class="panel-title">
+            Maintenance
+          </h4>
+        </div>
+      </a>
+      <div id="maintenance_" class="panel-collapse collapse" role="tabpanel"
+      aria-labelledby="maintenance">
+        <div class="list-group">
+          <%= link_to positions_path do%> <li class="list-group-item"> Positions</li> <% end %>
+          <%= link_to schools_path do%> <li class="list-group-item"> Schools</li> <% end %>
+          <%= link_to exams_path do%> <li class="list-group-item"> Exams</li> <% end %>
+          <%= link_to departments_path do%> <li class="list-group-item"> Departments</li> <% end %>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
