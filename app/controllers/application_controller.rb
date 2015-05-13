@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
     def authorize
       unless Admin.find_by_id(session[:admin_id])
         redirect_to login_url, :notice => "Please Login"
+      else
+        @admin = Admin.find(session[:admin_id])
       end
     end
 end

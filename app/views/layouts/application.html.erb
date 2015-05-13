@@ -7,9 +7,12 @@
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 
+  <%= javascript_include_tag 'jquery-ui.min.js' %>
   <%= javascript_include_tag 'bootstrap.js' %>
   <%= javascript_include_tag 'masonry.pkgd.min.js' %>
   <%= javascript_include_tag 'jquery.dataTables.min.js' %>
+  <%= javascript_include_tag 'idle.js' %>
+  <%= javascript_include_tag 'jquery.foggy.min.js' %>
   <%# javascript_include_tag 'jquery.tablesorter.js' %>
   <%# javascript_include_tag 'jquery.tablesorter.widgets.js' %>
 </head>
@@ -39,6 +42,74 @@
 <% end %>
 </div>
 
+<div id="data"></div>
 </body>
 
+
+<%if @admin %>
+  <div id="backdrop" class="idleBack">
+    <div class="jumbotron vertical-center">
+      <div class="container">
+      <h1> Hey <%= @admin.name %>, </h1>
+      <p> It seems that you've been away for a long time. We just want to inform you that you will be logged-out after
+          some minutes. Just make some action to get back.
+      </p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% unless controller.controller_name == 'sessions' &&
+  controller.action_name == 'new'%>
+
+  <script type="text/javascript">
+  $('document').ready(function() {
+    setIdleTimeout(1800000);
+    setAwayTimeout(36000000);
+    var count = 0;
+
+    document.onIdle=function(){
+          // $('body').foggy({
+          //   blurRadius: 2,
+          //   opacity: 0.8,
+          //   cssFilterSupport: true
+          // });
+        console.log('idle');
+        $('#backdrop').switchClass( "idleBack", "idle", 3000, "easeInOutQuad" );
+      }
+    document.onAway=function(){
+      $.ajax({
+        url: "/logout",
+        method: 'delete',
+        type: 'post',
+        success: function(result) {
+          location.href= '/'
+        }
+      })
+    }
+
+    document.onBack=function(a,b){
+      if(a){
+        $('#backdrop').switchClass( "idle", "idleBack", 3000, "easeInOutQuad" );
+        // $('body').foggy(false)
+      }
+      if(b){
+
+      }
+    }
+  });
+  </script>
+<% end %>
 </html>
+
+<!--
+setAwayTimeout(4000);
+document.onIdle=function(){
+  $("#div_idle").css("opacity","1")};
+document.onAway=function();
+  $("#div_away").css("opacity","1")};
+document.onBack=function(a,b);
+  if(a);
+  $("#div_idle").css("opacity","0.2")}if(b);
+  $("#div_away").css("opacity","0.2")}};
+ -->

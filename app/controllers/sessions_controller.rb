@@ -14,7 +14,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:admin_id] = nil
-    redirect_to login_url
+    if request.xhr?
+      session[:admin_id] = nil
+
+    else
+      session[:admin_id] = nil
+      redirect_to login_url
+    end
   end
 end
