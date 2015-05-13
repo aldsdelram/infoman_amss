@@ -41,9 +41,12 @@ class SchedulesController < ApplicationController
   # POST /schedules
   # POST /schedules.xml
   def create
+    puts "--------------------------------------"
+    params[:schedule][:sched] = params[:schedule][:sched].to_date
     @schedule = Schedule.new(params[:schedule])
+
     @applicant = Applicant.find(params[:schedule][:applicant_id])
-    
+
     respond_to do |format|
       if @schedule.save
         format.html { redirect_to(@schedule, :notice => 'Schedule was successfully created.') }

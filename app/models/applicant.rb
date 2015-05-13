@@ -1,9 +1,11 @@
 class Applicant < ActiveRecord::Base
+
 belongs_to :position
 
 has_one :schedule
 
 has_one :applicant_school_assignment
+
 has_one :school, :through => :applicant_school_assignment
 
 has_and_belongs_to_many :interviewers
@@ -17,4 +19,5 @@ validates :firstname, :lastname, :gender, :bday, :highest_school_attainment,
           	:presence => true
 
 validates :school, :presence => true
+
 end
