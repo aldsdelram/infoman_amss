@@ -66,13 +66,17 @@ ActiveRecord::Schema.define(:version => 20150514054243) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "total_score"
+    t.integer  "passing_score"
   end
 
   create_table "grades", :force => true do |t|
-    t.string   "grade"
+    t.string   "score"
     t.integer  "exam_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "applicant_id"
+    t.text     "remarks"
   end
 
   create_table "interviewers", :force => true do |t|
