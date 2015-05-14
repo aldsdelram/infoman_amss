@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150512033726) do
+ActiveRecord::Schema.define(:version => 20150514054243) do
 
   create_table "admins", :force => true do |t|
     t.string   "name"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(:version => 20150512033726) do
     t.string   "school_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "abbreviation"
+    t.string   "acronym"
   end
 
 end

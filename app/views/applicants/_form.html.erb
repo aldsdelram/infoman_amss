@@ -72,7 +72,7 @@
       <div class="col-md-9">
           <% options = [] %>
           <% School.all.each do |s|%>
-            <%options << [s.school_with_abbreviation, s.id] %>
+            <%options << [s.school_with_acronym, s.id] %>
           <%end %>
           <%options << [ 'Or create a new one', 'new', :onclick => "show_add_new_shool();" ]%>
           <%= select_tag "school_id", options_for_select(options),

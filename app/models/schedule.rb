@@ -18,9 +18,9 @@ class Schedule < ActiveRecord::Base
 
 	def should_not_less_than_present_day
 		if !self.hasError && !self.realNil
-		dateNow = DateTime.now.to_s.split('T')
-		errors.add(:sched, "can't be in the past") if
-			self.sched.to_date < DateTime.parse(dateNow[0]+' '+dateNow[1].split('+')[0])
+			dateNow = DateTime.now.to_s.split('T')
+			errors.add(:sched, "can't be in the past") if
+				DateTime.parse(self.sched.to_s) <= DateTime.parse(dateNow[0])
 		end
 	end
 end 

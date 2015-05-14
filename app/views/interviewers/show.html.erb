@@ -1,24 +1,32 @@
 <p id="notice"><%= notice %></p>
-
-<%= label_tag "Picture" %><br />
-<% if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}") %>
-  <%= image_tag "#{@interviewer.image_name}" , :size => "200x200" %>
-<% else %>
-  <%= image_tag('404.jpg' , :size => "200x200") %>
-<% end %>
-<p>
-  <b>Name:</b>
-  <%= @interviewer.name %>
-</p>
-<p>
-  <b>Position Title:</b>
-  <%= @interviewer.position_title %>
-</p>
-<p>
-  <b>Department:</b>
-  <%= @interviewer.department.department_name %>
-</p>
-
-
-<%= link_to 'Edit', edit_interviewer_path(@interviewer) %> |
-<%= link_to 'Back', interviewers_path %>
+<div class="page-header"><h3>Interviewer Information</h3></div>
+<div class="col-md-12">
+	<div class="col-md-4">
+		<p>
+		  <h3>Name: <%= @interviewer.name %></h3>
+		</p>
+		<p>
+		  <b>Position Title:</b>
+		  <blockquote><%= @interviewer.position_title %></blockquote>
+		</p>
+		<p>
+		  <b>Department:</b>
+		  <blockquote><%= @interviewer.department.department_name %></blockquote>
+		</p>
+	</div>
+	<div class="col-md-8">
+	<br />
+	<%= label_tag "Picture" %><br />	
+		<% if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}") %>
+		  <%= image_tag "#{@interviewer.image_name}" , :size => "200x200" %>
+		<% else %>
+		  <%= image_tag('404.jpg' , :size => "200x200") %>
+		<% end %>
+	</div>
+	
+</div>
+<div class="col-md-12">
+<br />
+<%= link_to 'Edit', edit_interviewer_path(@interviewer), :class => "btn btn-primary col-md-1" %>
+<%= link_to 'Back', interviewers_path, :class => "btn btn-primary col-md-1" %>
+</div>

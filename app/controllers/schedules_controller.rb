@@ -14,6 +14,17 @@ class SchedulesController < ApplicationController
   # GET /schedules/1.xml
   def show
     @schedule = Schedule.find(params[:id])
+    @applicant = Applicant.find(@schedule.applicant_id)
+    sched_time = @applicant.schedule.sched.to_s.split(' ')[1].split(':')
+    if sched_time[0].to_i >= 12
+      @sched_time_p = sched_time[0]+':'+sched_time[1]+':'+sched_time[2]+' PM'
+      if sched_time[0].to_i > 12
+        sched_time[0] = (sched_time[0].to_i-12).to_s
+        @sched_time_p = sched_time[0]+':'+sched_time[1]+':'+sched_time[2]+' PM'
+      end
+    else
+      @sched_time_p = sched_time[0]+':'+sched_time[1]+':'+sched_time[2]+' AM'
+    end
 
     respond_to do |format|
       format.html # show.html.erb

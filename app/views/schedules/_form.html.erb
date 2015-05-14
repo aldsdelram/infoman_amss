@@ -51,7 +51,6 @@
         maxTime: '17:00',
         defaultValue: '9:00'
       });
-    //$('#timepicker').val('9:00')
   });
 </script>
 
@@ -69,5 +68,9 @@
     <% sched_time = @applicant.schedule.sched.to_s.split(' ')[1].split(':') %>
     $('#datepicker').val('<%= sched_date %>');
     $('#timepicker').val("<%= sched_time[0] %>:<%= sched_time[1] %>");
+  </script>
+<% else %>
+  <script type="text/javascript">
+    $('#timepicker').val('9:00');
   </script>
 <% end %>
