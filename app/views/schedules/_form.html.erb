@@ -31,6 +31,26 @@
   </div>
 <% end %>
 
+<div class="clearfix"></div>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<div id='dp'></div>
+
+<script type="text/javascript">
+  $(function(){
+  $('#dp').datepicker({
+      inline: true,
+      showOtherMonths: true,
+      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  });
+});
+</script>
+
+
 <script>
   $(function() {
     $( "#datepicker" ).datepicker({
@@ -38,7 +58,8 @@
         buttonImage: "<%= image_path('calendar_icon.png') %>",
         buttonImageOnly: true,
         buttonText: "Select date",
-        dateFormat: "dd-mm-yy"
+        dateFormat: "dd-mm-yy",
+        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         //minDate: "+0D",
       });
     $( "#timepicker" ).timepicker({
@@ -54,7 +75,7 @@
   });
 </script>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
   $('document').ready(function(){
     $('img.ui-datepicker-trigger').wrap('<span class="input-group-addon">');
     var iHeight = $('#datepicker').height();
