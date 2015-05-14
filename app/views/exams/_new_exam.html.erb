@@ -12,12 +12,31 @@
   <% end %>
 
   <div class="field form-group">
-    <%= f.label :title, "New Examination Title:", :class=>"control-label col-md-4 col-sm-3 col-xs-4"%>
-    <div class="col-md-6 col-sm-6 col-xs-6">
+    <%= f.label :title, "New Examination Title:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
+    <div class="col-md-7 col-sm-7 col-xs-7">
       <%= f.text_field :title, :class=>"form-control"%>
     </div>
-    <div class="actions form-group">
-      <%= f.submit "Add", :class=>"btn btn-success col-md-2 col-sm-2 col-xs-2"%>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :total_score, "Total Score:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
+    <div class="col-md-7 col-sm-7 col-xs-7">
+      <%= f.text_field :total_score, :class=>"form-control", :type=>"number"%>
+    </div>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :passing_score, "Passing Score:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
+    <div class="col-md-7 col-sm-7 col-xs-7">
+      <%= f.text_field :passing_score, :class=>"form-control", :type=> "number"%>
+    </div>
+  </div>
+
+
+   <div class="field form-group">
+    <div class="actions col-md-4 col-md-offset-5
+        col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-5">
+      <%= f.submit "Add", :class=>"btn btn-success col-md-12"%>
     </div>
   </div>
 

@@ -4,6 +4,8 @@
   <table class="table table-hover table-responsive">
     <tr>
       <th> Exam Title </th>
+      <th> Passing Score </th>
+      <th> Total Score </th>
       <th></th>
       <th></th>
     </tr>
@@ -16,10 +18,14 @@
       <tr>
     <% end %>
       <td><%= exam.title %></td>
+      <td><%= exam.passing_score %></td>
+      <td><%= exam.total_score %></td>
       <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
        'data-target' => '#myModal','data-id' => exam.id,
        'data-action' => '/exams/' + exam.id.to_s,
-       'data-name' => exam.title %></td>
+       'data-name' => exam.title,
+       'data-pscore' => exam.passing_score,
+       'data-tscore' => exam.total_score %></td>
       <td><%= link_to 'Remove', exam, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
@@ -90,11 +96,31 @@
               </ul>
             </div>
           <% end %>
-          <%= form_for(@edit_exam, :html=> {:id=>"edit_form"}) do |f| %>
-          <div class="field">
-            <%= f.label :title, "New Exam Position", :id=>"label"%><br />
-            <%= f.text_field :title, :id=>"myInput" %>
+
+          <%= form_for(@edit_exam, :html=> {:id=>"edit_form", :class=>"form-horizontal"}) do |f| %>
+
+          <div class="field form-group">
+            <%= f.label :title, "New Examination Title:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
+            <div class="col-md-7 col-sm-7 col-xs-7">
+              <%= f.text_field :title, :class=>"form-control exam_title", :id=>'myInput'%>
+            </div>
           </div>
+
+
+          <div class="field form-group">
+            <%= f.label :total_score, "Total Score:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
+            <div class="col-md-7 col-sm-7 col-xs-7">
+              <%= f.text_field :total_score, :class=>"form-control exam_tScore", :type=>"number", :id=>'myInput'%>
+            </div>
+          </div>
+
+          <div class="field form-group">
+            <%= f.label :passing_score, "Passing Score:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
+            <div class="col-md-7 col-sm-7 col-xs-7">
+              <%= f.text_field :passing_score, :class=>"form-control exam_pScore", :type=> "number", :id=>'myInput'%>
+            </div>
+          </div>
+
         </div>
 
         <div class="modal-footer">
@@ -103,8 +129,7 @@
           <%else%>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <%end%>
-          <%= f.submit :class=>"btn btn-primary" %><%end%>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          <%= f.submit :class=>"btn btn-primary" %> <%end%> <!-- end of form -->
         </div>
 
       </div>  <!-- end of modal content -->
@@ -122,20 +147,27 @@
 
 
 <script type="text/javascript">
-  var data_id = 0
+  var data_id = 0;
   var data_action = "";
+  var data_pScore = 0;
+  var data_tScore = 0;
 
   $(document).on('click', 'a', function(event, ui) {
       data_id = $(this).data('id');
-      data_action = $(this).data('action')
-      data_title = $(this).data('name')
+      data_action = $(this).data('action');
+      data_title = $(this).data('name');
+      data_tScore = $(this).data('tscore');
+      data_pScore = $(this).data('pscore');
   });
 
 
   $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').focus()
     document.getElementById("edit_form").action = data_action
-    document.getElementById("myInput").value = data_title
+    // document.getElementById("myInput").value = data_title
+    $('.exam_title').val(data_title)
+    $('.exam_pScore').val(data_pScore)
+    $('.exam_tScore').val(data_tScore)
   })
 
 
