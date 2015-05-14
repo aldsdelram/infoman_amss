@@ -10,6 +10,8 @@ has_one :school, :through => :applicant_school_assignment
 
 has_and_belongs_to_many :interviewers
 
+has_many :grades
+
 attr_accessor :image
 
 SEARCH_CATEGORIES = [["FIRSTNAME",0], ["LASTNAME",1], ["SCHOOL",2]]
