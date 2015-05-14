@@ -24,6 +24,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/new
   # GET /schedules/new.xml
   def new
+
     @schedule = Schedule.new
     @applicant = Applicant.find(params[:id])
 
@@ -41,19 +42,46 @@ class SchedulesController < ApplicationController
   # POST /schedules
   # POST /schedules.xml
   def create
-    puts "--------------------------------------"
-    params[:schedule][:sched] = params[:schedule][:sched].to_date
+    @date_and_time = '%m-%d-%Y'
+    time = ""
+    if params[:sched_time] != ""
+      time = params[:sched_time].to_s+':00'
+    end
+    begin
+      date = DateTime.strptime(params[:schedule][:sched], @date_and_time).to_s.split('T')[0]
+      DateTime.parse(date+' '+time+':00')
+    rescue ArgumentError
+      hasError = true;
+    else
+      params[:schedule][:sched] = DateTime.parse(date+' '+time+':00')
+    end
+   
     @schedule = Schedule.new(params[:schedule])
-
     @applicant = Applicant.find(params[:schedule][:applicant_id])
+
+    if params[:schedule][:sched].to_s == ""
+      @schedule.realNil = true
+      @schedule.hasError = false
+    elsif hasError
+      @schedule.realNil = false
+      @schedule.hasError = true
+    else  
+      @schedule.sched = params[:schedule][:sched]
+      if !@applicant.schedule.nil?
+        @applicant.schedule.destroy
+      end
+    end
 
     respond_to do |format|
       if @schedule.save
         format.html { redirect_to(@schedule, :notice => 'Schedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @schedule.errors, :status => :unprocessable_entity }
+        if !hasError
+          @schedule.sched = @schedule.sched.strftime('%d-%m-%Y')
+        end 
+      format.html { render :action => "new" }
+      format.xml  { render :xml => @schedule.errors, :status => :unprocessable_entity }
       end
     end
   end
