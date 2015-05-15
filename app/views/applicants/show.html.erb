@@ -1,42 +1,98 @@
 <h1 class="page-header">Applicant's Information</h1>
+<div class="row">
 
-<div class="col-md-6 ">
-  <div class="panel panel-primary ap_info">
-    <div class="panel-heading">
-      <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
-        <%= image_tag "#{@applicant.image_name}" , :size => "200x200" , :class=>"img-circle" %>
-      <% else %>
-        <%= image_tag('404.jpg' , :size => "200x200") %>
+  <div class="col-md-6 col-xs-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-primary ap_info">
+          <div class="panel-heading">
+            <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+              <%= image_tag "#{@applicant.image_name}" , :size => "200x200" , :class=>"img-circle" %>
+            <% else %>
+              <%= image_tag('404.jpg' , :size => "200x200") %>
+            <% end %>
+            &nbsp;
+          </div>
+
+          <h1 class="page-header text-right"><%= @applicant.lastname %>,
+              <%= @applicant.firstname %> &nbsp;
+              <%= @applicant.middlename %>
+              </h1>
+          <div class="clearfix"></div>
+
+          <div class="panel-body">
+            <p>  <label>Email Address:</label>  <%= @applicant.email_address %>   </p>
+            <p>  <label>Contact Number:</label>       <%= @applicant.contact %>   </p>
+            <p>  <label>Birthday: </label>               <%= @applicant.bday %>   </p>
+            <p>  <label>Gender: </label>               <%= @applicant.gender %>   </p>
+            <p>  <label>Highest School Attainment: </label>
+                                    <%= @applicant.highest_school_attainment %>   </p>
+            <p>  <label>Address: </label>
+                                      <address><%= @applicant.address %></address></p>
+          </div>
+        </div>
+        <% if flash[:notice] %>
+          <div class="alert">
+              <%= flash[:notice] %>
+          </div>
       <% end %>
-      &nbsp;
+      </div>
     </div>
+  </div>
 
-    <h1 class="page-header text-right"><%= @applicant.lastname %>,
-        <%= @applicant.firstname %> &nbsp;
-        <%= @applicant.middlename %>
-        </h1>
-    <div class="clearfix"></div>
+  <div class="col-md-6 col-xs-12">
 
-    <div class="panel-body">
-      <p>  <label>Email Address:</label>  <%= @applicant.email_address %>   </p>
-      <p>  <label>Contact Number:</label>       <%= @applicant.contact %>   </p>
-      <p>  <label>Birthday: </label>               <%= @applicant.bday %>   </p>
-      <p>  <label>Gender: </label>               <%= @applicant.gender %>   </p>
-      <p>  <label>Highest School Attainment: </label>
-                              <%= @applicant.highest_school_attainment %>   </p>
-      <p>  <label>Address: </label>
-                                <address><%= @applicant.address %></address></p>
-      <div class="col-md-4 col-md-offset-8">
-        <%= link_to 'Edit', edit_applicant_path(@applicant) %> |
-        <%= link_to 'Remove', @applicant, :confirm => 'Are you sure?', :method => :delete, :action => :destroy %> |
-        <%= link_to 'Okey', applicants_url %>
+    <div class="col-md-12">
+      <div class="row">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Add Exam</div>
+              <div class="panel-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+          </div>
       </div>
 
     </div>
-  </div>
-  <% if flash[:notice] %>
-    <div class="alert">
-        <%= flash[:notice] %>
+
+    <div class="col-md-12">
+      <div class="row">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Exam List</div>
+            <div class="panel-body">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+        </div>
+      </div>
     </div>
-<% end %>
+
+    <div class="col-md-12">
+      <div class="row">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Options</div>
+            <div class="panel-body">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+        </div>
+      </div>
+      </div>
+  </div>
 </div>
+
+<%= link_to 'Edit', edit_applicant_path(@applicant) %> |
+<%= link_to 'Remove', @applicant, :confirm => 'Are you sure?', :method => :delete, :action => :destroy %> |
+<%= link_to 'Okey', applicants_url %>

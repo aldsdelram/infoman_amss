@@ -31,16 +31,20 @@
   </div>
 <% end %>
 
+
 <script>
   $(function() {
+
     $( "#datepicker" ).datepicker({
         showOn: "button",
         buttonImage: "<%= image_path('calendar_icon.png') %>",
         buttonImageOnly: true,
         buttonText: "Select date",
+        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         dateFormat: "mm-dd-yy",
-        minDate: "+0D",
+        minDate: "+0D"
       });
+
     $( "#timepicker" ).timepicker({
         showOn: "button",
         buttonImage: "<%= image_path('gliphycon-time.png') %>",
@@ -54,7 +58,7 @@
   });
 </script>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
   $('document').ready(function(){
     $('img.ui-datepicker-trigger').wrap('<span class="input-group-addon">');
     var iHeight = $('#datepicker').height();
