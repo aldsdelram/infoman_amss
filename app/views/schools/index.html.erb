@@ -4,7 +4,7 @@
   <table class="table table-hover table-responsive">
     <tr>
       <th> School name </th>
-      <th> Abbreviation </th>
+      <th> Acronym </th>
       <th></th>
       <th></th>
     </tr>
@@ -17,7 +17,7 @@
       <tr>
     <% end %>
       <td><%= school.school_name %></td>
-      <td><%= school.abbreviation %></td>
+      <td><%= school.acronym %></td>
       <td><%= link_to  'Edit', '#', 'data-toggle' => "modal",
        'data-target' => '#myModal','data-id' => school.id,
        'data-action' => '/schools/' + school.id.to_s,
@@ -98,8 +98,8 @@
             <%= f.text_field :school_name, :id=>"myInput" %>
           </div>
           <div class="field">
-            <%= f.label :abbreviation, "Abbreviation", :id=>"label"%><br />
-            <%= f.text_field :abbreviation, :id=>"myInput" %>
+            <%= f.label :acronym, "Abbreviation", :id=>"label"%><br />
+            <%= f.text_field :acronym, :id=>"myInput" %>
           </div>
         </div>
 
@@ -181,7 +181,7 @@
 <% @schools.each do |school| %>
   <tr>
     <td><%= school.school_name %></td>
-    <td><%= school.abbreviation %></td>
+    <td><%= school.acronym %></td>
     <td><%= link_to 'Show', school %></td>
     <td><%= link_to 'Edit', edit_school_path(school) %></td>
     <td><%= link_to 'Remove', school, :confirm => 'Are you sure?', :method => :delete %></td>

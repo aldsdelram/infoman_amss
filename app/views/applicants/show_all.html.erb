@@ -64,10 +64,15 @@
                 <%= link_to 'Remove', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
                 <p></p>
                 <% if applicant.interviewers.blank? %>
-                  <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>  
+                  <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>
                 <% else %>
                   <%= link_to 'Reassign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>
-                  <%= link_to 'Assign Interview Schedule', schedules_new_path(applicant), :class => "btn btn-success col-md-12" %>
+                  <% if applicant.schedule.nil? %>
+                    <% lblSched = 'Assign Interview Schedule' %>
+                  <% else %>
+                    <% lblSched = 'Reassign Interview Schedule' %>
+                  <% end %>
+                  <%= link_to lblSched, schedules_new_path(applicant), :class => "btn btn-success col-md-12" %>
                 <% end %>
                 <span class="clearfix"></span>
               </p>

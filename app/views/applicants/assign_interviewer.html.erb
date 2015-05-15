@@ -39,7 +39,7 @@
 		</p>
 		<p>
 			<%= label_tag 'SELECT INTERVIEWER: ' %>
-			<%= select_tag :interviewer, nil, :include_blank => "Select department first", :class => "form-control", :value => "", :id => "interviewer", :onchange => "showInfo();" %>
+			<%= select_tag :interviewer, nil, :include_blank => "Select department first", :class => "form-control", :value => "", :id => "interviewer_option", :onchange => "showInfo();" %>
 		</p>
 		<p>
 			<%= submit_tag "Assign", :class => "btn btn-success", :style => "display: none", :id => "assign" %>
@@ -64,7 +64,7 @@
 	var btnAssign = document.getElementById("assign");
 
 	function showInfo(){
-		var val = document.getElementById('interviewer');
+		var val = document.getElementById('interviewer_option');
 		if(val.value != ""){
 			$.ajax({
 							url: "<%= applicants_get_info_path %>",
@@ -88,7 +88,7 @@
 
 	function loadInterviewer(){
 		var val = document.getElementById('Department');
-		var $select = $("#interviewer");
+		var $select = $("#interviewer_option");
 		var el = document.createElement("option");
 		$select.empty();
 		img.src = "";

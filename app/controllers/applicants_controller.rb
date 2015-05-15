@@ -81,7 +81,7 @@ class ApplicantsController < ApplicationController
       elsif params[:new_school] == 'Create new school'
         @school = School.new
         @school.school_name = params[:school_name]
-        @school.abbreviation = params[:abbreviation]
+        @school.acronym = params[:acronym]
         if @school.save
           @create_school = "success";
           format.html {render :action => "new" }
@@ -256,6 +256,9 @@ class ApplicantsController < ApplicationController
           interviewer_old = @applicant.interviewers.first
           applicant = interviewer_old.applicants.find(@applicant.id)
           interviewer_old.applicants.delete(applicant)
+          if !@applicant.schedule.nil?
+            @applicant.schedule.destroy
+          end
         end
         interviewer.applicants << @applicant
         format.html { redirect_to applicants_show_all_url }

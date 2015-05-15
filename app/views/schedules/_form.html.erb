@@ -34,25 +34,27 @@
 
 <script>
   $(function() {
+
     $( "#datepicker" ).datepicker({
         showOn: "button",
         buttonImage: "<%= image_path('calendar_icon.png') %>",
         buttonImageOnly: true,
         buttonText: "Select date",
-        dateFormat: "dd-mm-yy",
-        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-        //minDate: "+0D",
+        dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        dateFormat: "mm-dd-yy",
+        minDate: "+0D"
       });
+
     $( "#timepicker" ).timepicker({
         showOn: "button",
         buttonImage: "<%= image_path('gliphycon-time.png') %>",
         buttonImageOnly: true,
         buttonText: "Select time of interview",
-        timeFormat: "hh:mm tt"
+        timeFormat: "HH:mm",
+        minTime: '9:00',
+        maxTime: '17:00',
+        defaultValue: '9:00'
       });
-     // $( "#submit" ).click(function() {
-     //    alert( $("#datepicker").val() );
-     //  });
   });
 </script>
 
@@ -63,3 +65,16 @@
     $('img.ui-datepicker-trigger').height(iHeight);
   })
 </script>
+
+<% if !@applicant.schedule.nil? %>
+  <script type="text/javascript">
+    <% sched_date = @applicant.schedule.sched.to_date.strftime('%m-%d-%Y') %>
+    <% sched_time = @applicant.schedule.sched.to_s.split(' ')[1].split(':') %>
+    $('#datepicker').val('<%= sched_date %>');
+    $('#timepicker').val("<%= sched_time[0] %>:<%= sched_time[1] %>");
+  </script>
+<% else %>
+  <script type="text/javascript">
+    $('#timepicker').val('9:00');
+  </script>
+<% end %>

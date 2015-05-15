@@ -1,20 +1,37 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Applicant:</b>
-  <%= @schedule.applicant_id %>
-</p>
-
-<p>
-  <b>Interviewer:</b>
-  <%= @schedule.interviewer_id %>
-</p>
-
-<p>
-  <b>Sched:</b>
-  <%= @schedule.sched %>
-</p>
-
-
-<%= link_to 'Edit', edit_schedule_path(@schedule) %> |
-<%= link_to 'Back', schedules_path %>
+<h1 class="page-header">Schedule Info</h1>
+<div class="col-md-12">
+	<div class="col-md-6">
+		<h3 class="col-md-12">APPLICANT</h3>
+		<div class="col-md-4">
+			<%= image_tag @applicant.image_name, :size => "150x150" %>
+		</div>
+		<div class="col-md-8">
+			<h4 class="col-md-12">Name:  <%= @applicant.firstname %> </h4>
+			<h4 class="col-md-12">Position applying:<blockquote><%= @applicant.position.title %></blockquote> </h4>
+			<h4 class="col-md-12">School:<blockquote><%= @applicant.school.school_name %></blockquote> </h4>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<h3 class="col-md-12">INTERVIEWER</h3>
+		<div class="col-md-4">
+			<%= image_tag @applicant.interviewers.first.image_name, :size => "150x150" %>
+		</div>
+		<div class="col-md-8">
+			<h4 class="col-md-12">Name: <%= @applicant.interviewers.first.name %> </h4>
+			<h4 class="col-md-12">Department:<blockquote><%= @applicant.interviewers.first.department.department_name %></blockquote></h4>
+			<h4 class="col-md-12">Position:<blockquote><%= @applicant.interviewers.first.position_title %></blockquote></h4>
+		</div>
+	</div>
+</div>
+<div class="page-header"><h3>Schedule</h3></div>
+<div class="col-md-6"><h4>Date:  <b><%= @schedule.sched.to_date.strftime('%B %d, %Y') %></b></h4></div>
+<div class="col-md-6"><h4>Time:  <b><%= @sched_time_p %></b></h4></div>
+<div class="col-md-6"><%=  %></div>
+<div class="col-md-3 col-md-offset-9">
+<% if @create %>
+	<%= link_to 'Back to applicants', applicants_show_all_path, :class => "btn btn-success" %>
+<% else %>
+	<%= link_to 'Back to schedules', schedules_path, :class => "btn btn-success" %>
+<% end %>
+</div>
+<div class="page-header">&nbsp;</div>
