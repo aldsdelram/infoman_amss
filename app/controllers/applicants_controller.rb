@@ -1,4 +1,5 @@
 class ApplicantsController < ApplicationController
+  include ApplicantsHelper
   # GET /applicants
   # GET /applicants.xml
   def index
@@ -70,6 +71,8 @@ class ApplicantsController < ApplicationController
   # POST /applicants
   # POST /applicants.xml
   def create
+    validate_applicant_identity(params[:applicant])
+    raise "PAUSE"
     @applicant = Applicant.new(params[:applicant])
     @create_school = nil
     @school = School.new
