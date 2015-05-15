@@ -1,7 +1,7 @@
 module ApplicantsHelper
 	def validate_applicant_identity(applicant)
 		
-		matched_db_applicant = [{"id", "name", "email_address", "contact", "bday"}]
+		matched_db_applicant = []
 		boolean_matched = []
 		applicant_bday = applicant["bday(1i)"].to_s+'-'+applicant["bday(2i)"].to_s+'-'+applicant["bday(3i)"].to_date
 
