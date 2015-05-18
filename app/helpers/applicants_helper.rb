@@ -3,44 +3,44 @@ module ApplicantsHelper
 		
 		matched_db_applicant = []
 		boolean_matched = []
-		applicant_bday = applicant["bday(1i)"].to_s+'-'+applicant["bday(2i)"].to_s+'-'+applicant["bday(3i)"].to_date
+		applicant_bday = (applicant["bday(1i)"].to_s+'-'+applicant["bday(2i)"].to_s+'-'+applicant["bday(3i)"].to_s).to_date
 
 		Applicant.all.each do |db_applicant|
-			boolean_matched = [db_applicant.to_s ,"false", "false", "false", "false"]
+			boolean_matched = [db_applicant.id.to_s ,"false", "false", "false"]
 			if db_applicant.firstname == applicant[:firstname] &&
-				db_applicant.lastname == applicant[:lastname]
+				db_applicant.lastname == applicant[:lastname] &&
+				applicant_bday == db_applicant.bday
 
 				if applicant[:middlename] != ""
 					if db_applicant.middlename == applicant[:middlename]
-						boolean_matched[0] = "true"
+						boolean_matched[1] = "true"
 					end
 				else
 					boolean_matched[1] = "true"
 				end
+			end
 
-			elsif db_applicant.email_address == applicant[:email_address]
+			if db_applicant.email_address == applicant[:email_address]
 				boolean_matched[2] = "true"
-			elsif db_applicant == applicant[:contact]
+			end
+
+			if db_applicant.contact == applicant[:contact]
 				boolean_matched[3] = "true"
-			elsif applicant_bday == db_applicant.bday
-				boolean_matched[4] = "true"
 			end
 			
-			if boolean_matched.inlude? "true"
+			if boolean_matched.include? "true"
 				matched_db_applicant << boolean_matched
 			end
 		end
 
-		matched_db_applicant.each do |matched|
-			puts matched.id
+		matched = ""
+		matched_db_applicant.each do |print|
+			print.each do |data|
+				matched += data+"\n" 
+			end
+			matched += "\n"
 		end
 
-		raise "Firstname:    "+applicant[:firstname].to_s+
-			"\nLastname:     "+applicant[:lastname].to_s+
-			"\nMiddlename:   "+applicant[:middlename].to_s+
-			"\nBirthday:     "+applicant[:bday].to_s+
-			"\nEmailaddress: "+applicant[:email_address].to_s+
-			"\nContact:      "+applicant[:contact].to_s
-
-	end	
+		return matched_db_applicant
+	end
 end

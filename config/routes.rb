@@ -7,6 +7,8 @@ AMSS::Application.routes.draw do
     delete 'logout' => :destroy
   end
 
+  get 'applicants/matched_db_applicants' => 'applicants#matched_db_applicants', :as => 'applicants/verify'
+
   resources :admins
 
   resources :schools

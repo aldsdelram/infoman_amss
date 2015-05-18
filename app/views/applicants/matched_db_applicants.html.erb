@@ -1,0 +1,56 @@
+
+<h1></h1>
+<%= form_for(@applicant) do |f| %>
+
+<div class="panel panel-primary">
+   <div class="panel-heading"><b>Applicant Details</b></div>
+	<table class="table table-hover table-responsive">
+	    <tr>
+	      <th>Picture</th>
+	      <th>Lastname</th>
+	      <th>Firstname</th>
+	      <th>Middlename</th>
+	      <th>Birth Day</th>
+	      <th>Contact</th>
+	      <th>Email Address</th>
+	    </tr>
+	    <tr>
+	    	<td><%= image_tag(@applicant_new.image_name, :size => "75x75") %></td>
+	    	<td><%= @applicant_new.lastname %></td>
+	    	<td><%= @applicant_new.firstname %></td>
+	    	<td><%= @applicant_new.middlename %></td>
+	    	<td><%= @applicant_new.bday %></td>
+	    	<td><%= @applicant_new.contact %></td>
+	    	<td><%= @applicant_new.email_address %></td>
+	    </tr>
+	</table>
+</div>
+
+<div class="panel panel-danger">
+   <div class="panel-heading" style="color:white"><b>List of applicants that matched</b> (Matched infos are in red)</div>
+	<table class="table table-hover table-responsive">
+		<tr>
+	      <th>Picture</th>
+	      <th>Lastname</th>
+	      <th>Firstname</th>
+	      <th>Middlename</th>
+	      <th>Birth Day</th>
+	      <th>Contact</th>
+	      <th>Email Address</th>
+	    </tr>
+		<% @matched.each do |m| %>
+		    <% db_applicant = Applicant.find(m[0].to_i) %>
+		    <tr>
+		    	<td><%= image_tag(db_applicant.image_name, :size => "75x75") %></td>
+		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.lastname %></td>
+		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.firstname %></td>
+		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.middlename %></td>
+		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.bday %></td>
+		    	<td <% if m[3] == "true" %>style="color:red"<%end%> ><%= db_applicant.contact %></td>
+		    	<td <% if m[2] == "true" %>style="color:red"<%end%> ><%= db_applicant.email_address %></td>
+		    </tr>
+		<% end %>
+	</table>
+</div>
+<%= submit_tag 'Consider as NEW', :name=> 'consider', :class => "btn btn-success col-md-2 col-md-offset-10" %>
+<% end %>

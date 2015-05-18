@@ -2,6 +2,7 @@ class ApplicantsController < ApplicationController
   include ApplicantsHelper
   # GET /applicants
   # GET /applicants.xml
+
   def index
     @applicants = Applicant.all
     @datatable = ApplicantsIndex
@@ -71,13 +72,18 @@ class ApplicantsController < ApplicationController
   # POST /applicants
   # POST /applicants.xml
   def create
-    validate_applicant_identity(params[:applicant])
-    raise "PAUSE"
-    @applicant = Applicant.new(params[:applicant])
+    if params[:consider] == 'Consider as NEW'
+      @applicant = Applicant.new(session[:applicant].attributes)
+      @applicant.school = School.find(session[:school_id])
+    else
+      @applicant = Applicant.new(params[:applicant])
+    end
+
     @create_school = nil
     @school = School.new
     @image_data = params[:base64]
     respond_to do |format|
+
       if params[:cancel] == "Cancel"
         @school = School.new
         format.html {render :action => "new" }
@@ -85,6 +91,7 @@ class ApplicantsController < ApplicationController
         @school = School.new
         @school.school_name = params[:school_name]
         @school.acronym = params[:acronym]
+           
         if @school.save
           @create_school = "success";
           format.html {render :action => "new" }
@@ -94,20 +101,43 @@ class ApplicantsController < ApplicationController
           format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
         end
       else
-        @applicant.status = 'Pending'
-        @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
-        @applicant.school = School.find(params[:school_id])
+        matched_db_applicants = []
+        if params[:consider] != 'Consider as NEW'
+          @applicant.status = 'Pending'
+          @applicant.image_name = upload_image(params[:applicant][:image], params[:base64])
+          @applicant.school = School.find(params[:school_id])
 
-        if @applicant.save
-          # School.find(params[:school_id]).applicants << @applicant
-          format.html { redirect_to(@applicant, :notice => 'Applicant ' +
-                      @applicant.firstname + ' was successfully created.') }
-          format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
-        else
-          @school_session = params[:school_id]
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
+          matched_db_applicants = validate_applicant_identity(params[:applicant])
         end
+        
+        if matched_db_applicants.any?
+          begin
+            params[:applicant][:image].tempfile = nil
+          rescue 
+
+          end
+
+          session[:matched] = matched_db_applicants
+          session[:applicant] = @applicant
+          session[:school_id] = params[:school_id]
+          format.html{redirect_to(applicants_verify_path)}
+          
+        else
+          if @applicant.save
+            session[:applicant] = nil;
+            session[:school_id] = nil;
+            session[:matched] = nil;
+
+            format.html { redirect_to(@applicant, :notice => 'Applicant ' +
+                        @applicant.firstname + ' was successfully created.') }
+            format.xml  { render :xml => @applicant, :status => :created, :location => @applicant }
+          else
+            @school_session = params[:school_id]
+            format.html { render :action => "new" }
+            format.xml  { render :xml => @applicant.errors, :status => :unprocessable_entity }
+          end
+        end
+
       end
     end
   end
@@ -214,7 +244,7 @@ class ApplicantsController < ApplicationController
   end
 
   def header_search
-    @query = params[:applicant_name]
+    @query = params[:applicant_name]  
     # @sql = "SELECT *" +
     #        "FROM applicants" +
     #        "WHERE CONCAT_WS(\' \',firstname,middlename,lastname) LIKE '%#{@query}%'" +
@@ -289,4 +319,11 @@ class ApplicantsController < ApplicationController
 						}
     end
   end
+
+  def matched_db_applicants
+    @applicant = Applicant.new
+    @applicant_new = session[:applicant]
+    @matched = session[:matched]
+  end
+
 end
