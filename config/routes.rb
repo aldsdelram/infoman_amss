@@ -1,6 +1,14 @@
 
 AMSS::Application.routes.draw do
 
+
+
+  # get 'update_grade/:id/exam/:exam_id' => 'applicants#update_grade', :as => :update_grade
+
+  put 'update_grade/:id/exam/:exam_id' => 'applicants#update_grade', :as => :update_grade
+
+  post 'assign_grade/:id' => 'applicants#assign_grade', :as => :assign_grade
+
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
