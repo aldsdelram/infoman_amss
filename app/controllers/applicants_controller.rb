@@ -20,6 +20,10 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.xml
   def show
     @applicant = Applicant.find(params[:id])
+    @exam_list = @applicant.position.exams.where("exam_id NOT IN (" +
+        "SELECT exam_id "+
+        "FROM grades "+
+        "WHERE applicant_id = ?)", @applicant)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -327,4 +331,34 @@ class ApplicantsController < ApplicationController
     @matched = session[:matched]
   end
 
+  def assign_grade
+    @applicant = Applicant.find(params[:id])
+    @exam = Exam.find(params[:exam])
+    @applicant.exams << @exam
+
+    redirect_to @applicant
+  end
+
+  def update_grade
+    @applicant = Applicant.find(params[:id])
+    @exam = Exam.find(params[:exam_id])
+    @grade = @applicant.exams.find(@exam).grades.find_by_applicant_id(@applicant)
+
+    @grades = Grade.find(@grade)
+    @grades.update_attributes(params[:grade])
+    respond_to do |format|
+      if @grades.save
+        format.html { redirect_to @applicant}
+      else
+        @applicant = Applicant.find(params[:id])
+        @exam_list = @applicant.position.exams.where("exam_id NOT IN (" +
+            "SELECT exam_id "+
+            "FROM grades "+
+            "WHERE applicant_id = ?)", @applicant)
+        @edit_grade = @grades
+        @edit_error = true
+        format.html {render 'show'}
+      end
+    end
+  end
 end

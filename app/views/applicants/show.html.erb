@@ -47,13 +47,22 @@
           <div class="panel panel-primary">
             <div class="panel-heading">Add Exam</div>
               <div class="panel-body">
-                <% @exams = @applicant.position.exams %>
-                <% @exams.each do |exam| %>
-                  + <%= exam.title %> <br />
-                <% end %>
+                <%if @applicant.position.exams.count == 0%>
+                  There's no existing exam for this position.
+                <%else%>
+                  <% if @exam_list.count > 0%>
+                    <%= form_tag assign_grade_path(@applicant) do%>
+                      <%= select_tag 'exam', options_from_collection_for_select(@exam_list, 'id', 'title')%>
+                      <%= submit_tag 'add exam'%>
+                    <% end %>
+                  <%else%>
+                    ALL exams for <%= @applicant.position.title %> were taken
+                  <% end %>
+                <%end%>
               </div>
           </div>
       </div>
+
 
     </div>
 
@@ -62,12 +71,28 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Exam List</div>
             <div class="panel-body">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              <table class="table table-default table-responsive">
+                <thead>
+                  <th>Exam Title</th>
+                  <th>Score</th>
+                  <th>Remarks</th>
+                  <th></th>
+                </thead>
+                <%@exams = @applicant.exams%>
+                <%@exams.each do |exam|%>
+                <tr>
+                  <td><%= exam.title %></td>
+                  <% grade = exam.grades.find_by_applicant_id(@applicant) %>
+                  <td><%= grade.score %></td>
+                  <td><%= grade.remarks %></td>
+                  <td><%= link_to  'Grade', '#', 'data-toggle' => "modal",
+       'data-target' => '#gradeModal','data-id' => exam.id,
+       'data-action' => update_grade_path(@applicant,exam),
+       'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
+       'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks %></td>
+                </tr>
+                <% end %>
+              </table>
             </div>
         </div>
       </div>
@@ -90,3 +115,107 @@
 <%= link_to 'Edit', edit_applicant_path(@applicant) %> |
 <%= link_to 'Remove', @applicant, :confirm => 'Are you sure?', :method => :delete, :action => :destroy %> |
 <%= link_to 'Okey', applicants_url %>
+
+
+
+<%if Grade.count > 0%>
+<div class="modal fade" id="gradeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <%unless @edit_error %>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <% end %>
+        <h4 class="modal-title" id="myModalLabel">Grade</h4>
+      </div>
+
+      <div class="modal-body">
+        <% unless @edit_grade %>
+          <% @edit_grade = Grade.first%>
+        <% end %>
+
+        <% if @edit_grade.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h4>Grade can't be saved:</h4>
+
+            <ul>
+              <% @edit_grade.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form_for(@edit_grade, :html=> {:id=>"edit_form", :class=>"form-horizontal"}, :method=>:post) do |f| %>
+        <div class="field form-group">
+          <%= f.label :score, :class=>"control-label col-md-3"%>
+          <div class="col-md-9">
+            <%= f.text_field :score, :id=>"inputScore", :class=>"form-control" %>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <%= f.label :remarks, :class=>"control-label col-md-3"%>
+          <div class="col-md-9">
+            <%= f.text_field :remarks, :id=>"inputRemarks", :class=>"form-control" %>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <%if @edit_error %>
+        <%= link_to "Back", @applicant, :class=>"btn btn-default"%>
+        <%else%>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%end%>
+        <%= f.submit :class=>"btn btn-primary" %><%end%>
+      </div>
+
+    </div>  <!-- end of modal content -->
+  </div> <!-- end of modal-dialog -->
+</div> <!-- end of modal -->
+
+
+
+<% if @edit_error %>
+  <script type="text/javascript">
+    $(window).load(function(){
+        $('#gradeModal').modal('show');
+    });
+  </script>
+<% end %>
+
+
+<script type="text/javascript">
+  var data_id = 0
+  var data_action = "";
+
+  $(document).on('click', 'a', function(event, ui) {
+      data_id = $(this).data('id');
+      data_action = $(this).data('action')
+      data_score = $(this).data('score')
+      data_remarks = $(this).data('remarks')
+  });
+
+
+  $('#gradeModal').on('shown.bs.modal', function () {
+    document.getElementById("edit_form").action = data_action
+    document.getElementById("inputScore").value = !data_score? '':data_score
+    document.getElementById("inputRemarks").value = !data_remarks? '':data_remarks
+  })
+
+
+  <% if @edit_error %>
+    $('#gradeModal').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+
+    $('#gradeModal').on('hide.bs.modal', function (e) {
+
+    })
+  <% end %>
+
+</script>
+<% end %>
