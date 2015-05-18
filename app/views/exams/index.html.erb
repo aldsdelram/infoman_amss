@@ -110,14 +110,14 @@
           <div class="field form-group">
             <%= f.label :total_score, "Total Score:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
             <div class="col-md-7 col-sm-7 col-xs-7">
-              <%= f.text_field :total_score, :class=>"form-control exam_tScore", :type=>"number", :id=>'myInput'%>
+              <%= f.text_field :total_score, :class=>"form-control exam_tScore", :type=>"number", :min=>1, :id=>'myInput'%>
             </div>
           </div>
 
           <div class="field form-group">
             <%= f.label :passing_score, "Passing Score:", :class=>"control-label col-md-5 col-sm-4 col-xs-5"%>
             <div class="col-md-7 col-sm-7 col-xs-7">
-              <%= f.text_field :passing_score, :class=>"form-control exam_pScore", :type=> "number", :id=>'myInput'%>
+              <%= f.text_field :passing_score, :class=>"form-control exam_pScore", :type=> "number", :min=>1, :id=>'myInput'%>
             </div>
           </div>
 

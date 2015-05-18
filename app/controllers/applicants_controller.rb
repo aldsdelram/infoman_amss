@@ -140,7 +140,8 @@ class ApplicantsController < ApplicationController
           @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
         end
         if @applicant.update_attributes(params[:applicant])
-          School.find(params[:school_id]).applicants << @applicant
+          @applicant.school = School.find(params[:school_id])
+          # School.find(params[:school_id]).applicants << @applicant
           format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
           format.xml  { head :ok }
         else
