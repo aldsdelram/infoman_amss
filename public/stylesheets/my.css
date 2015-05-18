@@ -168,3 +168,8 @@ body{
     -ms-hyphens: auto;
         hyphens: auto;
 }
+
+
+input[type=number] button{
+  background: black;
+}
