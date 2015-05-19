@@ -21,9 +21,12 @@
           <div class="clearfix"></div>
 
           <div class="panel-body">
+            <p>  <label>Position applying for:</label>  
+                                               <%= @applicant.position.title %>   </p>
             <p>  <label>Email Address:</label>  <%= @applicant.email_address %>   </p>
             <p>  <label>Contact Number:</label>       <%= @applicant.contact %>   </p>
             <p>  <label>Birthday: </label>               <%= @applicant.bday %>   </p>
+            <p>  <label>School: </label>   <%= @applicant.school.school_name %>   </p>
             <p>  <label>Gender: </label>               <%= @applicant.gender %>   </p>
             <p>  <label>Highest School Attainment: </label>
                                     <%= @applicant.highest_school_attainment %>   </p>
@@ -114,7 +117,7 @@
 
 <%= link_to 'Edit', edit_applicant_path(@applicant) %> |
 <%= link_to 'Remove', @applicant, :confirm => 'Are you sure?', :method => :delete, :action => :destroy %> |
-<%= link_to 'Okey', applicants_url %>
+<%= link_to 'Okay', applicants_url %>
 
 
 

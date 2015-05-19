@@ -157,8 +157,11 @@ class ApplicantsController < ApplicationController
           @school = School.new
           format.html {render :action => "new" }
       elsif params[:new_school] == 'Create new school'
-          @school = School.new(params[:school])
+          @school = School.new
+          @school.school_name = params[:school_name]
+          @school.acronym = params[:acronym]
           if @school.save
+            @applicant.school = @school
             @create_school = "success";
             format.html {render :action => "new" }
             format.xml  { render :xml => @school, :status => :created, :location => @school }
@@ -173,9 +176,10 @@ class ApplicantsController < ApplicationController
           end
           @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
         end
+
         if @applicant.update_attributes(params[:applicant])
           @applicant.school = School.find(params[:school_id])
-          # School.find(params[:school_id]).applicants << @applicant
+          
           format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
           format.xml  { head :ok }
         else
@@ -217,7 +221,7 @@ class ApplicantsController < ApplicationController
             when '1'
               @search = Applicant.find(:all, :conditions => ["lastname LIKE ?", "%#{params[:search_query]}%"])
             when '2'
-              @search = Applicant.joins(:school).find(:all, :conditions => ["school_name LIKE ? OR abbreviation LIKE ?",
+              @search = Applicant.joins(:school).find(:all, :conditions => ["school_name LIKE ? OR acronym LIKE ?",
                "%#{params[:search_query]}%","%#{params[:search_query]}%"])
           end
           @search_type = @category+" SEARCH RESULTS"
