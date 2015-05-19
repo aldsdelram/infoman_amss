@@ -7,7 +7,10 @@
   <meta content="ojt project" name="description" />
   <meta content="infomaninc" name="author" />
 
+  <% unless controller.controller_name == 'sessions' &&
+  controller.action_name == 'new'%>
   <%= stylesheet_link_tag :all %>
+  <% end %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 

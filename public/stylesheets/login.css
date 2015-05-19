@@ -1,5 +1,9 @@
 body{
-  background: url('/images/businessman.jpg') rgba(28,181,104,0.7) no-repeat center center;
+  background: rgba(28,181,104,1) url('/images/businessman_opaque_50.png')  no-repeat center;
+  -webkit-background-size:cover;
+       -moz-background-size:cover;
+         -o-background-size:cover;
+            background-size:cover;
 }
 
 #splash_logo{
