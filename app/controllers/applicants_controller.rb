@@ -57,8 +57,6 @@ class ApplicantsController < ApplicationController
   # GET /applicants/new.xml
   def new
     @applicant = Applicant.new
-    #school_id = {hashes: "school_id"}
-    #@applicant = {hashes: "school_id"}
     @school = School.new
 
     respond_to do |format|

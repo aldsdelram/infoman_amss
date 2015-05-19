@@ -20,9 +20,9 @@
               <%= image_tag applicant.image_name, :width=> '100%',
              :alt=>applicant.firstname + ' ' + applicant.lastname,
              :title=> applicant.firstname + ' ' + applicant.lastname,
-             :class=> "media-object"%>
+             :class=> "media-object thumbnail"%>
             <% else %>
-              <%= image_tag('404.jpg', :width=>'10%', :height=>"10%", :class=>"media-object") %>
+              <%= image_tag('404.jpg', :width=>'10%', :height=>"10%", :class=>"media-object thumbnail") %>
             <% end %>
 			    <% end %>
 			  </div>

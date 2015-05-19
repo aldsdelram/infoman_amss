@@ -1,10 +1,17 @@
 body{
-  background: rgba(28,181,104,1) url('/images/businessman_opaque_50.png')  no-repeat center;
+  background: rgba(28,181,104,1) url('/images/businessman_opaque_50.png')  no-repeat center center;
   -webkit-background-size:cover;
        -moz-background-size:cover;
          -o-background-size:cover;
             background-size:cover;
+  background-position: center 0;
 }
+
+
+html, body {
+    height: 100%;
+}
+
 
 #splash_logo{
   color: white;

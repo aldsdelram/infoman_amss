@@ -55,8 +55,12 @@
                 <%else%>
                   <% if @exam_list.count > 0%>
                     <%= form_tag assign_grade_path(@applicant) do%>
-                      <%= select_tag 'exam', options_from_collection_for_select(@exam_list, 'id', 'title')%>
-                      <%= submit_tag 'add exam'%>
+                    <div class="col-md-12">
+                      <div class="col-md-8">
+                      <%= select_tag 'exam', options_from_collection_for_select(@exam_list, 'id', 'title'), :class => 'form-control'%>
+                      </div>
+                      <%= submit_tag 'add exam', :class => 'btn btn-success col-md-3'%>
+                      </div>
                     <% end %>
                   <%else%>
                     ALL exams for <%= @applicant.position.title %> were taken

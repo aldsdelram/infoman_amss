@@ -1,8 +1,16 @@
-<p id="notice"><%= flash[:notice] %></p>
-
 
 <h1 class="page-header"><%= @position.title %></h1>
 
+<% if flash[:notice] %>
+
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3> <%= flash[:notice] %> </h3>
+</div>
+
+<% end %>
 <div class="row">
   <div class="col-md-6 text-justify">
     <h3> Examinations for this position </h3>
