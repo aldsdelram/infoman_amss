@@ -1,5 +1,5 @@
 body{
-  background: #1CB568;
+  background: url('/images/businessman.jpg') rgba(28,181,104,0.7) no-repeat center center;
 }
 
 #splash_logo{
@@ -18,8 +18,22 @@ body{
   display: block;
 }
 
+#splash_logo .logo{
+  background: url('/images/logo.png') center center;
+  height: 170px;
+  background-repeat:no-repeat;
+}
+
+
 @media screen and (max-width: 767px){
   #admin_pic{
     display: none !important;
+  }
+
+  #splash_logo .logo{
+    -webkit-background-size:cover;
+       -moz-background-size:cover;
+         -o-background-size:cover;
+            background-size:cover;
   }
 }

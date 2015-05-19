@@ -1,35 +1,42 @@
-<%= form_for(@schedule) do |f| %>
-  <% if @schedule.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
 
-      <ul>
-      <% @schedule.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+
+
+<div class="panel panel-success">
+  <div class="panel-heading"></div>
+  <div class="panel-body">
+    <%= form_for(@schedule) do |f| %>
+
+      <% if @schedule.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
+
+          <ul>
+          <% @schedule.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
+
+      <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
+      <%= f.text_field :interviewer_id, :value => @applicant.interviewers.first.id, :hidden => true %>
+      <h3>Pick Date</h3>
+      <p class="input-group">
+        <%= f.text_field :sched, :id => "datepicker", :class => "form-control"%>
+      </p>
+      <p class="input-group">
+        <%= text_field_tag :sched_time, nil, :id => "timepicker", :class => "form-control"%>
+      </p>
+  </div>
+    <div class="panel-footer">
+      <div class="actions text-right">
+        <%= link_to 'Cancel', schedules_path, :class => "btn btn-danger" %>
+        <%= f.submit 'schedule', :class => "btn btn-success", :id => "submit" %>
+      </div>
     </div>
   <% end %>
-  <div class="jumbotron col-md-10">
-  <div class="col-md-12">
-  <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
-  <%= f.text_field :interviewer_id, :value => @applicant.interviewers.first.id, :hidden => true %>
-  <h2>Pick Date</h2>
-    <p class="input-group">
-      <%= f.text_field :sched, :id => "datepicker", :class => "form-control"%>
-    </p>
-    <p class="input-group">
-      <%= text_field_tag :sched_time, nil, :id => "timepicker", :class => "form-control"%>
-    </p>
-  </div>
-  &nbsp;
-  <div class="actions col-md-12">
-    <%= f.submit 'schedule', :class => "btn btn-success", :id => "submit" %>
-    <%= link_to 'Cancel', schedules_path, :class => "btn btn-danger" %>
-  </div>
-  <p></p>
-  </div>
-<% end %>
+</div>
+
 
 
 <script>
