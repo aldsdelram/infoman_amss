@@ -9,7 +9,15 @@
 
   <% unless controller.controller_name == 'sessions' &&
   controller.action_name == 'new'%>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag 'dataTable.css'%>
+  <%= stylesheet_link_tag 'date-picker.css'%>
+  <%= stylesheet_link_tag 'idle.css'%>
+  <%= stylesheet_link_tag 'jquery-ui-timepicker-addon.css'%>
+  <%= stylesheet_link_tag 'jquery-ui.css'%>
+  <%= stylesheet_link_tag 'masonry.css'%>
+  <%= stylesheet_link_tag 'metro-bootstrap.css'%>
+  <%= stylesheet_link_tag 'my.css'%>
+  <%= stylesheet_link_tag 'scaffold.css'%>
   <% end %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
