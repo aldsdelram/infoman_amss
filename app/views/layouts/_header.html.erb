@@ -15,7 +15,7 @@
         <li id="search">
           <%= form_tag applicants_header_search_path, :method => :get do%>
             <%= text_field_tag :applicant_name ,params[:applicant_name] ,:placeholder=>"Search Applicant", :class=>"input"%>
-            <%= submit_tag '>', :class=> "submit"%>
+            <%= submit_tag '&#57347;'.html_safe, :class=> "submit"%>
           <% end %>
         </li>
         <li>
