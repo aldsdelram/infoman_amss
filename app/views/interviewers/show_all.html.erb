@@ -1,7 +1,22 @@
-<h1>Listing interviewers</h1>
+<h1 class="page-header">INTERVIEWERS</h1>
 
-<table class="table">
+<%= form_tag interviewers_show_all_path do %>
+<div class="col-md-12">
+  <div class="col-md-4">
+  <%= select_tag "filter_by", options_from_collection_for_select(Department.all, "id", "department_name", @selected_filter), :include_blank => "All", :class => "form-control" , :style => "font-weight:bold; font-size:15px"%>
+  </div>
+  <%= submit_tag "FILTER", :class => "btn btn-primary col-md-2" %>
+  <%= link_to 'Back', interviewers_path, :class => "btn btn-default col-md-1 col-md-offset-5" %>
+  </div>
+<% end %>
+<div class="clearfix"></div>
+<br />
+<% if !@interviewers.any? %>
+  <blockquote><h3>There is no registered interviewer for this department.</h3></blockquote>
+<% else %>
+<table class="table table-hover table-responsive table-striped">
   <tr>
+    <th>Picture</th>
     <th>Name</th>
     <th>Position</th>
     <th>Department</th>
@@ -12,6 +27,7 @@
 
 <% @interviewers.each do |interviewer| %>
   <tr>
+    <td><%= image_tag(interviewer.image_name, :size => "75x75", :class => "thumbnail") %></td>
     <td><%= interviewer.name %></td>
     <td><%= interviewer.position_title %></td>
     <td><%= interviewer.department.department_name %></td>
@@ -21,4 +37,4 @@
   </tr>
 <% end %>
 </table>
-<%= link_to 'Back', interviewers_path, :class => "btn btn-primary col-md-2 col-md-offset-10" %>
+<% end %>

@@ -25,6 +25,8 @@ AMSS::Application.routes.draw do
 
   get 'interviewers/show_all' => 'interviewers#show_all'
 
+  post 'interviewers/show_all' => 'interviewers#show_all'
+
   get 'schedules/new/:id' => 'schedules#new', :as => 'schedules/new'
 
   get 'positions/:id/exams/unassign/:exam_id' => 'positions#unassign', :as => :unassign

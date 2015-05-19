@@ -1,3 +1,9 @@
+<h1 class="page-header">ADMINISTRATORS</h1>
+<div class="col-md-12">
+<%= link_to 'New Admin', new_admin_path, :class => "btn btn-success col-md-2" %>
+</div>
+<div class="clearfix"></div>
+<br />
 <% if notice%>
 
   <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -7,32 +13,34 @@
     <h3> <%= notice %> </h3>
   </div>
 
-  <% end %>
-
-<h1>Listing admins</h1>
-
-<table class="table table-default">
-  <tr>
-    <th>Name</th>
-    <th>Hashed password</th>
-    <th>Salt</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @admins.each do |admin| %>
-  <tr>
-    <td><%= admin.name %></td>
-    <td><%= admin.hashed_password %></td>
-    <td><%= admin.salt %></td>
-    <td><%= link_to 'Show', admin %></td>
-    <td><%= link_to 'Edit', edit_admin_path(admin) %></td>
-    <td><%= link_to 'Destroy', admin, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Admin', new_admin_path %>
+<div class="container-fluid">
+  <div class="row masonry">
+  <% @admins.each do |admin| %>
+    <div class="item">
+      <div class="thumbnail">
+        <% if File.exists?("#{RAILS_ROOT}/public/images/#{admin.image_name}") && !admin.image_name.nil? %>
+          <%= image_tag admin.image_name, :width=>'100%', :height=>'100%',
+         :alt=>admin.name,
+         :title=> admin.name,
+         :class => "thumbnail" %>
+        <% else %>
+          <%= image_tag('404.jpg', :width=>'100%', :height=>"100%", :class=>"thumbnail") %>
+        <% end %>
+        <div class="caption">
+          <p style="font-size: 2em">
+            <%=admin.name%>
+          </p>
+          
+          <p class="text-center">
+            <%= link_to 'Show', admin , :class=>"btn btn-primary"%>
+            <%= link_to 'Edit', edit_admin_path(admin), :class=>"btn btn-warning" %>
+            <%= link_to 'Remove', admin, :confirm => 'Are you sure?', :method => :delete, :class=>"btn btn-danger" %>
+          </p>
+          <span class="clearfix"></span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>

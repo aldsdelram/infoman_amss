@@ -5,5 +5,5 @@ class Interviewer < ActiveRecord::Base
 	
 	has_many :schedules
 	
-	belongs_to :department
+	belongs_to :department 
 end

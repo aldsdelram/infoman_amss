@@ -1,20 +1,20 @@
+<h1 class="page-header">Administrator Info</h1>
 <p id="notice"><%= notice %></p>
+<div class="col-md-9 jumbotron">
+	<p>
+	  <b>Username:</b>
+	  <%= @admin.name %>
+	</p>
 
-<p>
-  <b>Name:</b>
-  <%= @admin.name %>
-</p>
+	<p>
+	  <b>Hashed password:</b>
+	  <%= @admin.hashed_password %>
+	</p>
 
-<p>
-  <b>Hashed password:</b>
-  <%= @admin.hashed_password %>
-</p>
-
-<p>
-  <b>Salt:</b>
-  <%= @admin.salt %>
-</p>
-
-
-<%= link_to 'Edit', edit_admin_path(@admin) %> |
-<%= link_to 'Back', admins_path %>
+	<p>
+	  <b>Salt:</b>
+	  <%= @admin.salt %>
+	</p>
+	<%= link_to 'Back', admins_path, :class => "btn btn-default" %>
+	<%= link_to 'Edit', edit_admin_path(@admin), :class => "btn btn-danger" %>
+</div>

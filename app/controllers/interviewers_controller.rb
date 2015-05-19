@@ -80,8 +80,17 @@ class InterviewersController < ApplicationController
   end
 
   def show_all
-    @interviewers = Interviewer.all
-
+    @selected_filter = 0
+    if params[:commit] == "FILTER"
+      if params[:filter_by] == ""
+        @interviewers = Interviewer.all
+      else
+        @selected_filter = params[:filter_by]
+        @interviewers = Interviewer.find(:all, :conditions => ["department_id = ?", params[:filter_by]])
+      end
+    else
+      @interviewers = Interviewer.all
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @interviewers }
