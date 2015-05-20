@@ -1,5 +1,5 @@
 class ApplicantsController < ApplicationController
-  include ApplicantsHelper 
+  include ApplicantsHelper
   # GET /applicants
   # GET /applicants.xml
 
@@ -129,7 +129,7 @@ class ApplicantsController < ApplicationController
         @school = School.new
         @school.school_name = params[:school_name]
         @school.acronym = params[:acronym]
-           
+
         if @school.save
           @create_school = "success";
           format.html {render :action => "new" }
@@ -149,11 +149,11 @@ class ApplicantsController < ApplicationController
 
           matched_db_applicants = validate_applicant_identity(params[:applicant])
         end
-        
+
         if matched_db_applicants.any?
           begin
             params[:applicant][:image].tempfile = nil
-          rescue 
+          rescue
 
           end
 
@@ -161,7 +161,7 @@ class ApplicantsController < ApplicationController
           session[:applicant] = @applicant
           session[:school_id] = params[:school_id]
           format.html{redirect_to(applicants_verify_path)}
-          
+
         else
           if @applicant.save
             session[:applicant] = nil;
@@ -188,7 +188,6 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.find(params[:id])
     @create_school = nil
     respond_to do |format|
-
       if params[:cancel] == "Cancel"
           @school = School.new
           format.html {render :action => "new" }
@@ -212,10 +211,10 @@ class ApplicantsController < ApplicationController
           end
           @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
         end
+          @applicant.school = School.find(params[:school_id])
 
         if @applicant.update_attributes(params[:applicant])
-          @applicant.school = School.find(params[:school_id])
-          
+
           format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
           format.xml  { head :ok }
         else
@@ -289,7 +288,7 @@ class ApplicantsController < ApplicationController
   end
 
   def header_search
-    @query = params[:applicant_name]  
+    @query = params[:applicant_name]
     # @sql = "SELECT *" +
     #        "FROM applicants" +
     #        "WHERE CONCAT_WS(\' \',firstname,middlename,lastname) LIKE '%#{@query}%'" +
