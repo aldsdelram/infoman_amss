@@ -66,7 +66,7 @@ class SchedulesController < ApplicationController
     else
       params[:schedule][:sched] = DateTime.parse(date+' '+time+':00')
     end
-   
+
     @schedule = Schedule.new(params[:schedule])
     @applicant = Applicant.find(params[:schedule][:applicant_id])
 
@@ -76,7 +76,7 @@ class SchedulesController < ApplicationController
     elsif hasError
       @schedule.realNil = false
       @schedule.hasError = true
-    else  
+    else
       @schedule.sched = params[:schedule][:sched]
       if !@applicant.schedule.nil?
         @applicant.schedule.destroy
@@ -90,7 +90,7 @@ class SchedulesController < ApplicationController
       else
         if !hasError
           @schedule.sched = @schedule.sched.strftime('%d-%m-%Y')
-        end 
+        end
       format.html { render :action => "new" }
       format.xml  { render :xml => @schedule.errors, :status => :unprocessable_entity }
       end
@@ -122,6 +122,30 @@ class SchedulesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(schedules_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def getEvent
+    @events = []
+    @schedules = Schedule.all
+
+
+
+    @schedules.each do |event|
+
+      @applicant = Applicant.find(event.applicant_id)
+
+      event_json = {
+        "id" => event.id,
+        "start" => event.sched.to_datetime,
+        "end" => event.sched.to_datetime,
+        "title" => @applicant.firstname + ' ' + @applicant.lastname
+      }
+      @events << event_json
+    end
+
+    respond_to do |format|
+      format.js {render :json => @events.to_json}
     end
   end
 end

@@ -6,6 +6,7 @@ body{
 #body{
   background: #fdfdfd;
   min-height: 92vh;
+  padding-bottom: 2em;
 }
 /*css rules for header*/
 
@@ -61,7 +62,7 @@ body{
   }
 
 #side{
-  background: #eee;
+  background: #333;
 }
 
 #myCanvas{
@@ -192,4 +193,58 @@ body{
 
 input[type=number] button{
   background: black;
+}
+
+#calendar{
+  position:relative;
+}
+
+#loading{
+  position:absolute;
+  background: rgba(0,50,0,0.2);
+  margin: auto;
+  padding: 5em;
+  z-index: 140;
+  text-align:center;
+  color:white;
+  width:100%;
+  height:auto;
+  top: 50%;
+  -webkit-transform: translate(0,-50%);
+     -moz-transform: translate(0,-50%);
+       -o-transform: translate(0,-50%);
+      -ms-transform: translate(0,-50%);
+          transform: translate(0,-50%);
+}
+
+@keyframes loading{
+  0% {
+    color: white;
+    -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+       -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg); /* IE 9 */
+         -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50% {
+    color: black;
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+       -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg); /* IE 9 */
+         -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    color: black;
+    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+       -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg); /* IE 9 */
+         -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+#refresh{
+  -webkit-animation: loading 3s ease infinite; /* Chrome, Safari, Opera */
+  animation: loading 3s ease infinite;
 }
