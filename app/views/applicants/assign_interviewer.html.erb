@@ -80,7 +80,7 @@
 	<% end %>
 	<!-- Interviewer info column -->
 	<div class="col-md-12">
-		<div id ="loading"></div>
+		<div id ="loading_interviewer"></div>
 		<div id="content" hidden>
 			<div class="col-md-6">
 				<%= image_tag "", :id => "interviewer_picture", :size => "200x200", :hidden => true %>
@@ -105,7 +105,7 @@
 		btnAssign.style.display = "none";
 		
 		if(val.value != ""){
-			$('#loading').html('<img id="loader-img" class="col-md-5" alt="" src="<%=image_path('petching_interviewer.gif')%>" width="30%" height="30%"/><x style="font-size:2em;" class="col-md-6"><br />LOADING . . .</x>');
+			$('#loading_interviewer').html('<img id="loader-img" class="col-md-5" alt="" src="<%=image_path('petching_interviewer.gif')%>" width="30%" height="30%"/><x style="font-size:2em;" class="col-md-6"><br />LOADING . . .</x>');
 			
 			$.ajax({
 							url: "<%= applicants_get_info_path %>",
@@ -120,7 +120,7 @@
 								 		img.style.display = "block";
 								 		btnAssign.style.display = "block";
 								 		$('#content').show();
-								 		$('#loading').html('');
+								 		$('#loading_interviewer').html('');
 				 					},
 				    error: function() {
 				   					alert("AJAX ERROR"+val.value);

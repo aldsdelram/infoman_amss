@@ -50,12 +50,15 @@ class ApplicantsController < ApplicationController
     end
     respond_to do |format|
 
-    if params[:consider_interview] == 'Consider for Interview'
+    if params[:bypass_all] == 'Proceed to Interview'
+      @applicant.skipped_exam = 1
+      @applicant.save
+      format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
+    elsif params[:consider_interview] == 'Consider for Interview'
       @applicant.consider = 1
       @applicant.save
       format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
     end
-
     
       format.html # show.html.erb
       format.xml  { render :xml => @applicant }

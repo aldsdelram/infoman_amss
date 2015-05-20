@@ -83,7 +83,7 @@
           <div class="panel-heading">Exam List</div>
             <div class="panel-body">
               <% if @applicant.skipped_exam == 1%>
-                <h3>This Applicant was skipped the exams.</h3>
+                <h3>This Applicant skipped the exams.</h3>
               <% elsif @applicant.consider == 1 %>
                 <h3>This Applicant failed the exam but considered for interview.</h3>
               <% elsif @applicant.status == 'Failed' %>
@@ -124,7 +124,10 @@
             <div class="panel-body">
 
               <%= form_tag @applicant do %>
-                <% if (@applicant.exams.any? && !@taken_all_exam) %>
+
+                <% if !@applicant.exams.any? && @applicant.skipped_exam == 0 %>
+                    <%= submit_tag 'Proceed to Interview', :name => 'bypass_all', :class => 'btn btn-primary' %>
+                <% elsif (@applicant.exams.any? && !@taken_all_exam) %>
                     <%= submit_tag 'Skip Exams', :name => 'bypass_exams', :class => 'btn btn-primary' %>
                 <% end %>
                 
