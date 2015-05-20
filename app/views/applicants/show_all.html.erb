@@ -9,6 +9,8 @@
     <%= label_tag "HIRED", nil,  :class => "form-label" %>
     <%= radio_button_tag 'toShow', "failed", (@toShow == 'failed') %>
     <%= label_tag "FAILED", nil,  :class => "form-label" %>
+    <%= radio_button_tag 'toShow', "on-interview", (@toShow == 'on-interview') %>
+    <%= label_tag "ON-INTERVIEW", nil,  :class => "form-label" %>
     <%= submit_tag "Proceed", :class => "btn btn-success"%>
 <% end %>
 
@@ -63,18 +65,6 @@
                 <%= link_to 'Edit', edit_applicant_path(applicant), :class=>"btn btn-warning" %>
                 <%= link_to 'Remove', applicant, :confirm => 'Are you sure?', :method => :delete , :class=>"btn btn-danger"%>
                 <p></p>
-                <% if applicant.interviewers.blank? %>
-                  <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>
-                <% else %>
-                  <%= link_to 'Reassign Interviewer', applicants_assign_interviewer_path(applicant), :class=>"btn btn-success col-md-12"%>
-                  <% if applicant.schedule.nil? %>
-                    <% lblSched = 'Assign Interview Schedule' %>
-                  <% else %>
-                    <% lblSched = 'Reassign Interview Schedule' %>
-                  <% end %>
-                  <%= link_to lblSched, schedules_new_path(applicant), :class => "btn btn-success col-md-12" %>
-                <% end %>
-                <span class="clearfix"></span>
               </p>
             </div>
           </div>

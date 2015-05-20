@@ -85,7 +85,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to(@schedule, :notice => 'Schedule was successfully created.') }
+        format.html { redirect_to(@applicant, :notice => 'Schedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
         if !hasError

@@ -80,12 +80,15 @@
 	<% end %>
 	<!-- Interviewer info column -->
 	<div class="col-md-12">
-		<div class="col-md-6">
-			<%= image_tag "", :id => "interviewer_picture", :size => "200x200", :hidden => true %>
-		</div>
-		<div class="col-md-6">
-			<blockquote><h3><div id = "name"></div></h3></blockquote>
-			<blockquote><h4><div id = "position_title"></div></h4></blockquote>
+		<div id ="loading"></div>
+		<div id="content" hidden>
+			<div class="col-md-6">
+				<%= image_tag "", :id => "interviewer_picture", :size => "200x200", :hidden => true %>
+			</div>
+			<div class="col-md-6">
+				<blockquote><h3><div id = "name"></div></h3></blockquote>
+				<blockquote><h4><div id = "position_title"></div></h4></blockquote>
+			</div>
 		</div>
 	</div>
 	<!-- end Interviewer info column -->
@@ -98,7 +101,12 @@
 
 	function showInfo(){
 		var val = document.getElementById('interviewer_option');
+		$('#content').hide();
+		btnAssign.style.display = "none";
+		
 		if(val.value != ""){
+			$('#loading').html('<img id="loader-img" class="col-md-5" alt="" src="<%=image_path('petching_interviewer.gif')%>" width="30%" height="30%"/><x style="font-size:2em;" class="col-md-6"><br />LOADING . . .</x>');
+			
 			$.ajax({
 							url: "<%= applicants_get_info_path %>",
 						 type: "GET",
@@ -111,6 +119,8 @@
 								 		$("#position_title").text("Position Title: "+data.info.interviewer.position_title);
 								 		img.style.display = "block";
 								 		btnAssign.style.display = "block";
+								 		$('#content').show();
+								 		$('#loading').html('');
 				 					},
 				    error: function() {
 				   					alert("AJAX ERROR"+val.value);
@@ -124,6 +134,9 @@
 		var $select = $("#interviewer_option");
 		var el = document.createElement("option");
 		$select.empty();
+		el.textContent = "Loading Interviewers . . .";
+		$select.append(el);
+		$('#content').hide();
 		img.src = "";
 		img.style.display = "none";
 		btnAssign.style.display = "none";

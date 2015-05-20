@@ -50,22 +50,26 @@
           <div class="panel panel-primary">
             <div class="panel-heading">Add Exam</div>
               <div class="panel-body">
-                <%if @applicant.position.exams.count == 0%>
-                  There's no existing exam for this position.
-                <%else%>
-                  <% if @exam_list.count > 0%>
-                    <%= form_tag assign_grade_path(@applicant) do%>
-                    <div class="col-md-12">
-                      <div class="col-md-8">
-                      <%= select_tag 'exam', options_from_collection_for_select(@exam_list, 'id', 'title'), :class => 'form-control'%>
-                      </div>
-                      <%= submit_tag 'add exam', :class => 'btn btn-success col-md-3'%>
-                      </div>
-                    <% end %>
+                <% if @applicant.skipped_exam == 1 %>
+                  <h3>Disabled</h3>
+                <% else %>
+                  <%if @applicant.position.exams.count == 0%>
+                    There's no existing exam for this position.
                   <%else%>
-                    ALL exams for <%= @applicant.position.title %> were taken
-                  <% end %>
-                <%end%>
+                    <% if @exam_list.count > 0%>
+                      <%= form_tag assign_grade_path(@applicant) do%>
+                      <div class="col-md-12">
+                        <div class="col-md-8">
+                        <%= select_tag 'exam', options_from_collection_for_select(@exam_list, 'id', 'title'), :class => 'form-control'%>
+                        </div>
+                        <%= submit_tag 'add exam', :class => 'btn btn-success col-md-3'%>
+                        </div>
+                      <% end %>
+                    <%else%>
+                      ALL exams for <%= @applicant.position.title %> were taken
+                    <% end %>
+                  <%end%>
+                <% end %>
               </div>
           </div>
       </div>
@@ -78,28 +82,36 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Exam List</div>
             <div class="panel-body">
-              <table class="table table-default table-responsive">
-                <thead>
-                  <th>Exam Title</th>
-                  <th>Score</th>
-                  <th>Remarks</th>
-                  <th></th>
-                </thead>
-                <%@exams = @applicant.exams%>
-                <%@exams.each do |exam|%>
-                <tr>
-                  <td><%= exam.title %></td>
-                  <% grade = exam.grades.find_by_applicant_id(@applicant) %>
-                  <td><%= grade.score %></td>
-                  <td><%= grade.remarks %></td>
-                  <td><%= link_to  'Grade', '#', 'data-toggle' => "modal",
-       'data-target' => '#gradeModal','data-id' => exam.id,
-       'data-action' => update_grade_path(@applicant,exam),
-       'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
-       'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks %></td>
-                </tr>
-                <% end %>
-              </table>
+              <% if @applicant.skipped_exam == 1%>
+                <h3>This Applicant was skipped the exams.</h3>
+              <% elsif @applicant.consider == 1 %>
+                <h3>This Applicant failed the exam but considered for interview.</h3>
+              <% elsif @applicant.status == 'Failed' %>
+                <h3>This Applicant failed the exam.</h3>
+              <% else %>
+                <table class="table table-default table-responsive">
+                  <thead>
+                    <th>Exam Title</th>
+                    <th>Score</th>
+                    <th>Remarks</th>
+                    <th></th>
+                  </thead>
+                  <%@exams = @applicant.exams%>
+                  <%@exams.each do |exam|%>
+                  <tr>
+                    <td><%= exam.title %></td>
+                    <% grade = exam.grades.find_by_applicant_id(@applicant) %>
+                    <td><%= grade.score %></td>
+                    <td><%= grade.remarks %></td>
+                    <td><%= link_to  'Grade', '#', 'data-toggle' => "modal",
+         'data-target' => '#gradeModal','data-id' => exam.id,
+         'data-action' => update_grade_path(@applicant,exam),
+         'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
+         'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks %></td>
+                  </tr>
+                  <% end %>
+                </table>
+              <% end %>
             </div>
         </div>
       </div>
@@ -110,8 +122,31 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Options</div>
             <div class="panel-body">
-              <a href="#" class="btn btn-info">Assign Interviewer</a>
-              <a href="#" class="btn btn-warning">Skip Exam</a>
+
+              <%= form_tag @applicant do %>
+                <% if (@applicant.exams.any? && !@taken_all_exam) %>
+                    <%= submit_tag 'Skip Exams', :name => 'bypass_exams', :class => 'btn btn-primary' %>
+                <% end %>
+                
+                <% if (@taken_all_exam && @applicant.exams.any?) || @applicant.skipped_exam == 1 %>
+                  <% if @applicant.status == 'Failed' && @applicant.consider == 0 %>
+                    <%= submit_tag 'Consider for Interview', :name => 'consider_interview', :class => 'btn btn-primary' %>
+                  <% elsif @applicant.interviewers.blank? %>
+                    <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-primary"%>
+                  <% else %>
+                    <%= link_to 'Reassign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
+                    <% if @applicant.schedule.nil? %>
+                      <% lblSched = 'Assign Interview Schedule' %>
+                      <% color = 'btn btn-primary'%>
+                    <% else %>
+                      <% lblSched = 'Reassign Interview Schedule' %>
+                      <% color = 'btn btn-warning'%>
+                    <% end %>
+                    <%= link_to lblSched, schedules_new_path(@applicant), :class => color %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <span class="clearfix"></span>
             </div>
         </div>
       </div>

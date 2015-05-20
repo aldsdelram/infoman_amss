@@ -25,7 +25,38 @@ class ApplicantsController < ApplicationController
         "FROM grades "+
         "WHERE applicant_id = ?)", @applicant)
 
+    @interviewer_option = false
+    if params[:bypass_exams]
+      @applicant.exams.each do |exam|
+        if exam.grades.find_by_applicant_id(@applicant).score.nil?
+          @applicant.exams.delete(exam)
+        end
+      end
+      @applicant.skipped_exam = 1
+      @applicant.save
+    end
+
+    @taken_all_exam = true
+    @applicant.exams.each do |exam|
+      if exam.grades.find_by_applicant_id(@applicant).score.nil?
+        @taken_all_exam = false
+      end
+      if !exam.grades.find_by_applicant_id(@applicant).score.nil?
+        if exam.grades.find_by_applicant_id(@applicant).score.to_i < exam.passing_score
+          @applicant.status = 'Failed'
+          @applicant.save
+        end
+      end
+    end
     respond_to do |format|
+
+    if params[:consider_interview] == 'Consider for Interview'
+      @applicant.consider = 1
+      @applicant.save
+      format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
+    end
+
+    
       format.html # show.html.erb
       format.xml  { render :xml => @applicant }
     end
@@ -45,6 +76,8 @@ class ApplicantsController < ApplicationController
     		@applicants = Applicant.find(:all, :conditions => ["status = 'Hired'"])
     	when "failed"
     		@applicants = Applicant.find(:all, :conditions => ["status = 'Failed'"])
+      when "on-interview"
+        @applicants = Applicant.find(:all, :conditions => ["status = 'On-Interview'"])
     end
 
     respond_to do |format|
@@ -106,6 +139,8 @@ class ApplicantsController < ApplicationController
         matched_db_applicants = []
         if params[:consider] != 'Consider as NEW'
           @applicant.status = 'Pending'
+          @applicant.skipped_exam = 0
+          @applicant.consider = 0
           @applicant.image_name = upload_image(params[:applicant][:image], params[:base64])
           @applicant.school = School.find(params[:school_id])
 
@@ -301,7 +336,9 @@ class ApplicantsController < ApplicationController
           end
         end
         interviewer.applicants << @applicant
-        format.html { redirect_to applicants_show_all_url }
+        @applicant.status = 'On-Interview'
+        @applicant.save
+        format.html { redirect_to @applicant }
       else
         format.html { render :action => 'assign_interviewer' }
       end

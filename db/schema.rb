@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150519011639) do
+ActiveRecord::Schema.define(:version => 20150520051733) do
 
   create_table "admins", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(:version => 20150519011639) do
     t.datetime "updated_at"
     t.integer  "position_id"
     t.string   "image_name"
+    t.integer  "skipped_exam"
+    t.integer  "consider"
   end
 
   create_table "applicants_interviewers", :id => false, :force => true do |t|
