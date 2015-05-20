@@ -2,7 +2,7 @@
 AMSS::Application.routes.draw do
 
 
-
+  get 'schedules/getEvent' => 'schedules#getEvent'
   # get 'update_grade/:id/exam/:exam_id' => 'applicants#update_grade', :as => :update_grade
 
   put 'update_grade/:id/exam/:exam_id' => 'applicants#update_grade', :as => :update_grade
