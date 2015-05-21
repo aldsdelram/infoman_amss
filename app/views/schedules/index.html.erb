@@ -6,38 +6,66 @@
 
 <h1>List of schedules</h1>
 
-<table class="table table-hover table-responsive table-striped">
-  <tr>
-    <th>Applicant</th>
-    <th>Picture</th>
-    <th>Interviewer</th>
-    <th>Picture</th>
-    <th>Sched</th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @schedules.each do |schedule| %>
-  <tr>
-    <td><%= Applicant.find(schedule.applicant_id).firstname %></td>
-    <td><%= image_tag(Applicant.find(schedule.applicant_id).image_name, :size => '75x75') %></td>
-    <td><%= Interviewer.find(schedule.interviewer_id).name %></td>
-    <td><%= image_tag(Interviewer.find(schedule.interviewer_id).image_name, :size => '75x75') %></td>
-    <td><%= schedule.sched %></td>
-    <td><%= link_to 'Show', schedule %></td>
-    <td><%= link_to 'Cancel', schedule, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
 
-<div class="col-md-8">
-  <div id='calendar'>
+<div role="tabpanel">
 
-    <div id="loading" class="idle">"
-          <div><h1><span class="glyphicon glyphicon-refresh" id="refresh"></span>LOADING</h1></div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#calendar_tab" aria-controls="calendar_tab" role="tab" data-toggle="tab">Calendar</a></li>
+    <li role="presentation"><a href="#tabular" aria-controls="tabular" role="tab" data-toggle="tab">Profile</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="calendar_tab">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div id='calendar'>
+              <div id="loading" class="idle">"
+                    <div><h1><span class="glyphicon glyphicon-refresh" id="refresh"></span>LOADING</h1></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" id="eventDesc">
+            <h3>Schedule: <span class="title">{Title}</span></h3>
+            <li>Applicant: {Applicant Name}</li>
+            <li>Interviewer: {Interviewer Name}</li>
+          </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tabular">
+      <table class="table table-hover table-responsive table-striped">
+        <tr>
+          <th>Applicant</th>
+          <th>Picture</th>
+          <th>Interviewer</th>
+          <th>Picture</th>
+          <th>Sched</th>
+          <th></th>
+          <th></th>
+        </tr>
+
+      <% @schedules.each do |schedule| %>
+        <tr>
+          <td><%= Applicant.find(schedule.applicant_id).firstname %></td>
+          <td><%= image_tag(Applicant.find(schedule.applicant_id).image_name, :size => '75x75') %></td>
+          <td><%= Interviewer.find(schedule.interviewer_id).name %></td>
+          <td><%= image_tag(Interviewer.find(schedule.interviewer_id).image_name, :size => '75x75') %></td>
+          <td><%= schedule.sched %></td>
+          <td><%= link_to 'Show', schedule %></td>
+          <td><%= link_to 'Cancel', schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+      <% end %>
+      </table>
+
     </div>
   </div>
+
 </div>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('#calendar').fullCalendar({
@@ -67,16 +95,31 @@
             // custom_param2: 'somethingelse'
         },
         beforeSend: function(){
-          $('#loading').switchClass( "idleBack", "idle", 1000, "easeInOutQuad" );
+            $('#loading').switchClass( "idleBack", "idle", 1000, "easeInOutQuad" );
         },
         success: function(){
-          $('#loading').switchClass( "idle", "idleBack", 3000, "easeInOutQuad" );
+            $('#loading').switchClass( "idle", "idleBack", 3000, "easeInOutQuad" );
         },
         error: function() {
             alert('there was an error while fetching events!');
         },
         // color: 'yellow',   // a non-ajax option
         // textColor: 'black' // a non-ajax option
+    },
+      dayClick: function(date, jsEvent, view) {
+          if(view.name == "month"){
+            $('#calendar').fullCalendar( 'changeView', 'agendaDay' )
+            $('#calendar').fullCalendar( 'gotoDate', date.format())
+          }
+          // alert('Clicked on: ' + date.format());
+
+          // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+        $('#eventDesc .title').html(calEvent.title+' '+calEvent.id);
+        // alert('Event: ' + calEvent.title);
+        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        // alert('View: ' + view.name);
     }
 
     });

@@ -195,8 +195,11 @@ input[type=number] button{
   background: black;
 }
 
+
+
 #calendar{
   position:relative;
+  overflow: hidden;
 }
 
 #loading{
@@ -219,23 +222,32 @@ input[type=number] button{
 
 @keyframes loading{
   0% {
-    color: white;
+    color: #7F7F7F;
     -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
        -moz-transform: rotate(0deg);
         -ms-transform: rotate(0deg); /* IE 9 */
          -o-transform: rotate(0deg);
             transform: rotate(0deg);
   }
-  50% {
-    color: black;
-    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-       -moz-transform: rotate(180deg);
-        -ms-transform: rotate(180deg); /* IE 9 */
-         -o-transform: rotate(180deg);
-            transform: rotate(180deg);
+  25% {
+    color: #000;
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+       -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg); /* IE 9 */
+         -o-transform: rotate(90deg);
+            transform: rotate(90deg);
   }
+  75% {
+    color: #fff;
+    -webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
+       -moz-transform: rotate(270deg);
+        -ms-transform: rotate(270deg); /* IE 9 */
+         -o-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+
   100% {
-    color: black;
+    color: #7F7F7F;
     -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
        -moz-transform: rotate(360deg);
         -ms-transform: rotate(360deg); /* IE 9 */
@@ -245,8 +257,8 @@ input[type=number] button{
 }
 
 #refresh{
-  -webkit-animation: loading 3s ease infinite; /* Chrome, Safari, Opera */
-  animation: loading 3s ease infinite;
+  -webkit-animation: loading 2s linear infinite; /* Chrome, Safari, Opera */
+  animation: loading 2s linear infinite;
 }
 
 .progress{
