@@ -53,44 +53,55 @@ class SchedulesController < ApplicationController
   # POST /schedules
   # POST /schedules.xml
   def create
-    @date_and_time = '%m-%d-%Y'
-    time = ""
-    if params[:sched_time] != ""
-      time = params[:sched_time].to_s+':00'
-    end
-    begin
-      date = DateTime.strptime(params[:schedule][:sched], @date_and_time).to_s.split('T')[0]
-      DateTime.parse(date+' '+time+':00')
-    rescue ArgumentError
-      hasError = true;
-    else
-      params[:schedule][:sched] = DateTime.parse(date+' '+time+':00')
-    end
-
-    @schedule = Schedule.new(params[:schedule])
+    # start commit
     @applicant = Applicant.find(params[:schedule][:applicant_id])
-
-    if params[:schedule][:sched].to_s == ""
-      @schedule.realNil = true
-      @schedule.hasError = false
-    elsif hasError
-      @schedule.realNil = false
-      @schedule.hasError = true
-    else
-      @schedule.sched = params[:schedule][:sched]
-      if !@applicant.schedule.nil?
-        @applicant.schedule.destroy
+    if params[:new_schedule] == 'Schedule'
+      
+      @date_and_time = '%m-%d-%Y'
+      time = ""
+      if params[:sched_time_start] != "" && params[:sched_time_end] != "" 
+        time_start = params[:sched_time_start].to_s+':00'
+        time_end = params[:sched_time_end].to_s+':00'
       end
+      begin
+        date = DateTime.strptime(params[:schedule][:sched_start], @date_and_time).to_s.split('T')[0]
+        DateTime.parse(date+' '+time_start+':00')
+        DateTime.parse(date+' '+time_end+':00')
+      rescue ArgumentError
+        hasError = true;
+      else
+        params[:schedule][:sched_start] = DateTime.parse(date+' '+time_start+':00')
+        params[:schedule][:sched_end] = DateTime.parse(date+' '+time_end+':00')
+      end
+
+      @schedule = Schedule.new(params[:schedule])
+      
+
+      if params[:schedule][:sched_start].to_s == "" ||
+        params[:schedule][:sched_end].to_s
+        @schedule.realNil = true
+        @schedule.hasError = false
+      elsif hasError
+        @schedule.realNil = false
+        @schedule.hasError = true
+      else
+        @schedule.sched_start = params[:schedule][:sched_start]
+        @schedule.sched_start = params[:schedule][:sched_end]
+        # if !@applicant.schedules.nil?
+        #   @applicant.schedule.destroy
+        # end
+      end
+    # end if commit
     end
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to(@applicant, :notice => 'Schedule was successfully created.') }
+        format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
-        if !hasError
-          @schedule.sched = @schedule.sched.strftime('%d-%m-%Y')
-        end
+        # if !hasError
+          @schedule.sched_start = @schedule.sched_start.strftime('%m-%d-%Y')
+        # end
       format.html { render :action => "new" }
       format.xml  { render :xml => @schedule.errors, :status => :unprocessable_entity }
       end

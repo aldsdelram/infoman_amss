@@ -325,22 +325,29 @@ class ApplicantsController < ApplicationController
   end
 
   def assign_interviewer
-    @applicant = Applicant.find(params[:id])
+    require 'cgi'
+
+    if params[:remove_interviewer] == 'Cancel'
+      id = CGI::parse(params[:id])
+      @applicant = Applicant.find(id['applicant'][0].to_i.to_s)
+    else  
+      #raise "HELLo"
+      @applicant = Applicant.find(params[:id])
+    end
     respond_to do |format|
       if params[:commit]
         interviewer = Interviewer.where(name: "#{params[:interviewer]}").first
-        if !@applicant.interviewers.first.blank?
-          interviewer_old = @applicant.interviewers.first
-          applicant = interviewer_old.applicants.find(@applicant.id)
-          interviewer_old.applicants.delete(applicant)
-          if !@applicant.schedule.nil?
-            @applicant.schedule.destroy
-          end
-        end
         interviewer.applicants << @applicant
         @applicant.status = 'On-Interview'
         @applicant.save
-        format.html { redirect_to @applicant }
+        format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
+      elsif params[:remove_interviewer] == 'Cancel'
+        interviewer_remove = Interviewer.find(id['interviewer'][0].to_i)
+        if @applicant.schedules.where('interviewer_id = ?', interviewer_remove.id).any?
+          @applicant.schedules.where(['interviewer_id = ?', interviewer_remove.id]).first.destroy
+        end
+        interviewer_remove.applicants.delete(@applicant)
+        format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
       else
         format.html { render :action => 'assign_interviewer' }
       end

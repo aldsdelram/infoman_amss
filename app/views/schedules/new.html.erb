@@ -1,8 +1,6 @@
 <h1 class="page-header">New schedule</h1>
 
-
-
-<div class="col-md-6">
+<div class="col-md-12">
 	<div class="panel panel-success">
 		<div class="panel-heading"></div>
 
@@ -10,7 +8,7 @@
 			<h3 class="col-md-12">APPLICANT</h3>
 			<div class="col-md-12">
 				<div class="col-md-4 col-sm-4">
-					<%= image_tag @applicant.image_name, :class=>"img-responsive" %>
+					<%= image_tag @applicant.image_name, :size=>'150x150', :class=>"img-responsive" %>
 				</div>
 				<div class="col-md-8 col-sm-8">
 					<h4>Name: <span> <%= @applicant.firstname %></span></h4>
@@ -18,24 +16,9 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="panel-footer">
-			<h3 class="col-md-12">INTERVIEWER</h3>
-			<div class="col-md-12">
-				<div class="col-md-4 col-sm-4">
-						<%= image_tag @applicant.interviewers.first.image_name, :class=>"img-responsive" %>
-				</div>
-				<div class="col-md-8 col-sm-8">
-					<h4>Name: <%= @applicant.interviewers.first.name %> </h4>
-					<h4>Department: <%= @applicant.interviewers.first.department.department_name %> </h4>
-					<h4>Position: <%= @applicant.interviewers.first.position_title %> </h4>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
 	</div>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-12">
 	<%= render 'form' %>
 </div>

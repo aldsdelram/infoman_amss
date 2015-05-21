@@ -138,7 +138,7 @@
                     <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-primary"%>
                   <% else %>
                     <%= link_to 'Reassign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
-                    <% if @applicant.schedule.nil? %>
+                    <% if @applicant.schedules.any? %>
                       <% lblSched = 'Assign Interview Schedule' %>
                       <% color = 'btn btn-primary'%>
                     <% else %>

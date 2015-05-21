@@ -23,7 +23,7 @@
     <td><%= image_tag(Applicant.find(schedule.applicant_id).image_name, :size => '75x75') %></td>
     <td><%= Interviewer.find(schedule.interviewer_id).name %></td>
     <td><%= image_tag(Interviewer.find(schedule.interviewer_id).image_name, :size => '75x75') %></td>
-    <td><%= schedule.sched %></td>
+    <td><%= schedule.sched_start %></td>
     <td><%= link_to 'Show', schedule %></td>
     <td><%= link_to 'Cancel', schedule, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

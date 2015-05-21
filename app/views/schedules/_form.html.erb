@@ -1,48 +1,90 @@
+<% if @schedule.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
 
-
+    <ul>
+    <% @schedule.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 
 <div class="panel panel-success">
-  <div class="panel-heading"></div>
+  <div class="panel-heading">INTERVIEWER</div>
   <div class="panel-body">
-    <%= form_for(@schedule) do |f| %>
+    
+      <table class="table">
+        <tr>
+          <th>Picture</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Department</th>
+          <th>Date</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th></th>
+        </tr>
 
-      <% if @schedule.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
-
-          <ul>
-          <% @schedule.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
+        <% @applicant.interviewers.each do |interviewer| %>
+          <%= form_for(@schedule) do |f| %>
+            <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
+            <%= f.text_field :interviewer_id, :value => interviewer.id, :hidden => true %>
+            <tr>
+              <td><%= image_tag interviewer.image_name, :size=>'75x75', :class=>"img-responsive" %></td>
+              <td>Name: <%= interviewer.name %></td>
+              <td>Department: <%= interviewer.department.department_name %></td>
+              <td>Position: <%= interviewer.position_title %></td>
+              <td>
+                <p class="input-group">
+                  <%= f.text_field :sched_start, :class => "datepick form-control", :id => "datepicker_"+interviewer.id.to_s %>
+                </p>
+              </td>
+              <td>
+                <p class="input-group">
+                  <%= text_field_tag :sched_time_start, nil, :class => "timepick form-control", :id => "timepickerStart_"+interviewer.id.to_s %>
+                </p> 
+              </td>
+              <td>
+                <p class="input-group">
+                  <%= text_field_tag :sched_time_end, nil, :class => "timepick form-control", :id => "timepickerEnd_"+interviewer.id.to_s %>
+                </p>
+              </td>
+              <td>
+                <% if interviewer.schedules.any? %>
+                  <%= f.submit 'Reschedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
+                <% else %>
+                  <%= f.submit 'Schedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
+                <% end %>
+                <%= f.submit 'Cancel', :name=>'cancel_schedule', :class => "btn btn-warning col-md-12", :id => "submit" %>
+              </td>
+            </tr>
           <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
-      <%= f.text_field :interviewer_id, :value => @applicant.interviewers.first.id, :hidden => true %>
-      <h3>Pick Date</h3>
-      <p class="input-group">
-        <%= f.text_field :sched, :id => "datepicker", :class => "form-control"%>
-      </p>
-      <p class="input-group">
-        <%= text_field_tag :sched_time, nil, :id => "timepicker", :class => "form-control"%>
-      </p>
+        <% end %>
+      </table>
+    <div class="clearfix"></div>
   </div>
-    <div class="panel-footer">
-      <div class="actions text-right">
-        <%= link_to 'Cancel', schedules_path, :class => "btn btn-danger" %>
-        <%= f.submit 'schedule', :class => "btn btn-success", :id => "submit" %>
-      </div>
-    </div>
-  <% end %>
 </div>
 
+<%= link_to 'Back', schedules_path, :class => "btn btn-primary" %>
 
 
 <script>
-  $(function() {
-
-    $( "#datepicker" ).datepicker({
+  <% sched_time_start = ['9', '00'] %>
+  <% sched_time_end = ['10', '00'] %>
+  <% @applicant.interviewers.each do |interviewer| %>
+    <% interviewer.schedules.each do |sched| %>
+      console.log('<%= sched.interviewer_id.to_s %>')
+      $('#datepicker_'+'<%= sched.interviewer_id %>').val('<%= sched.sched_start.to_date.strftime('%m-%d-%Y') %>');
+      <% sched_time_start = sched.sched_start.to_s.split(' ')[1].split(':') %>
+      <% sched_time_end = sched.sched_end.to_s.split(' ')[1].split(':') %>
+      $('#timepickerStart_'+'<%= sched.interviewer_id %>').val('<%= sched_time_start[0] %>:<%= sched_time_start[1] %>');
+      $('#timepickerEnd_'+'<%= sched.interviewer_id %>').val('<%= sched_time_end[0] %>:<%= sched_time_end[1] %>');
+    <% end %>
+  <% end %>
+    
+  $('.datepick').each(function(){
+    $(this).datepicker({
         showOn: "button",
         buttonImage: "<%= image_path('calendar_icon.png') %>",
         buttonImageOnly: true,
@@ -51,37 +93,25 @@
         dateFormat: "mm-dd-yy",
         minDate: "+0D"
       });
-
-    $( "#timepicker" ).timepicker({
+    console.log($(this)[0].id);
+  });
+  $('.timepick').each(function(){
+    $(this).timepicker({
         showOn: "button",
         buttonImage: "<%= image_path('gliphycon-time.png') %>",
         buttonImageOnly: true,
         buttonText: "Select time of interview",
         timeFormat: "HH:mm",
-        minTime: '9:00',
-        maxTime: '17:00',
         defaultValue: '9:00'
       });
   });
+
 </script>
 
 <script type="text/javascript">
   $('document').ready(function(){
     $('img.ui-datepicker-trigger').wrap('<span class="input-group-addon">');
-    var iHeight = $('#datepicker').height();
+    var iHeight = $('.datepick').height();
     $('img.ui-datepicker-trigger').height(iHeight);
   })
 </script>
-
-<% if !@applicant.schedule.nil? %>
-  <script type="text/javascript">
-    <% sched_date = @applicant.schedule.sched.to_date.strftime('%m-%d-%Y') %>
-    <% sched_time = @applicant.schedule.sched.to_s.split(' ')[1].split(':') %>
-    $('#datepicker').val('<%= sched_date %>');
-    $('#timepicker').val("<%= sched_time[0] %>:<%= sched_time[1] %>");
-  </script>
-<% else %>
-  <script type="text/javascript">
-    $('#timepicker').val('9:00');
-  </script>
-<% end %>

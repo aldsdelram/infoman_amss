@@ -2,7 +2,7 @@ class Applicant < ActiveRecord::Base
 
 belongs_to :position
 
-has_one :schedule
+has_many :schedules
 
 has_one :applicant_school_assignment
 
