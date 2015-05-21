@@ -56,10 +56,10 @@ class SchedulesController < ApplicationController
     # start commit
     @applicant = Applicant.find(params[:schedule][:applicant_id])
     if params[:new_schedule] == 'Schedule'
-      
+
       @date_and_time = '%m-%d-%Y'
       time = ""
-      if params[:sched_time_start] != "" && params[:sched_time_end] != "" 
+      if params[:sched_time_start] != "" && params[:sched_time_end] != ""
         time_start = params[:sched_time_start].to_s+':00'
         time_end = params[:sched_time_end].to_s+':00'
       end
@@ -75,7 +75,7 @@ class SchedulesController < ApplicationController
       end
 
       @schedule = Schedule.new(params[:schedule])
-      
+
 
       if params[:schedule][:sched_start].to_s == "" ||
         params[:schedule][:sched_end].to_s
@@ -145,8 +145,8 @@ class SchedulesController < ApplicationController
 
       event_json = {
         "id" => event.id,
-        "start" => event.sched.to_datetime,
-        "end" => event.sched.to_datetime,
+        "start" => event.sched_start.to_datetime,
+        "end" => event.sched_end.to_datetime,
         "title" => @applicant.firstname + ' ' + @applicant.lastname
       }
       @events << event_json
