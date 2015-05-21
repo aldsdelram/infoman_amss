@@ -248,3 +248,12 @@ input[type=number] button{
   -webkit-animation: loading 3s ease infinite; /* Chrome, Safari, Opera */
   animation: loading 3s ease infinite;
 }
+
+.progress{
+  height: 0.5em;
+  margin-bottom: 0;
+}
+
+#grade_table tfoot{
+  font-weight: bold;
+}

@@ -59,7 +59,7 @@ class ApplicantsController < ApplicationController
       @applicant.save
       format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
     end
-    
+
       format.html # show.html.erb
       format.xml  { render :xml => @applicant }
     end
@@ -288,14 +288,7 @@ class ApplicantsController < ApplicationController
   end
 
   def header_search
-    @query = params[:applicant_name]
-    # @sql = "SELECT *" +
-    #        "FROM applicants" +
-    #        "WHERE CONCAT_WS(\' \',firstname,middlename,lastname) LIKE '%#{@query}%'" +
-    #        " OR CONCAT_WS(\' \',firstname,lastname) LIKE '%#{@query}%'"
-
-    # @search = Applicant.where("CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
-      # " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%")
+    @query = params[:applicant_name].gsub(/\s+/, ' ')
 
     @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
       " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%"],
@@ -303,9 +296,8 @@ class ApplicantsController < ApplicationController
         :order=>"lastname asc",
         :per_page=> 5
       )
-
     # @search = Applicant.find_by_sql(@sql)
-
+    params[:applicant_name] = @query
     respond_to do |format|
       format.html { render :action => 'header_search' }
     end

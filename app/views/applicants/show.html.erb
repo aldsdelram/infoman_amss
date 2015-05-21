@@ -21,7 +21,7 @@
           <div class="clearfix"></div>
 
           <div class="panel-body">
-            <p>  <label>Position applying for:</label>  
+            <p>  <label>Position applying for:</label>
                                                <%= @applicant.position.title %>   </p>
             <p>  <label>Email Address:</label>  <%= @applicant.email_address %>   </p>
             <p>  <label>Contact Number:</label>       <%= @applicant.contact %>   </p>
@@ -86,29 +86,83 @@
                 <h3>This Applicant skipped the exams.</h3>
               <% elsif @applicant.consider == 1 %>
                 <h3>This Applicant failed the exam but considered for interview.</h3>
-              <% elsif @applicant.status == 'Failed' %>
-                <h3>This Applicant failed the exam.</h3>
               <% else %>
-                <table class="table table-default table-responsive">
+                <table id="grade_table" class="table table-default table-responsive table-bordered">
                   <thead>
                     <th>Exam Title</th>
                     <th>Score</th>
+                    <th>Passing Score</th>
+                    <th>Highest Score</th>
                     <th>Remarks</th>
                     <th></th>
                   </thead>
+                  <%@total=0%>
                   <%@exams = @applicant.exams%>
                   <%@exams.each do |exam|%>
                   <tr>
-                    <td><%= exam.title %></td>
+                    <td rowspan="2"><%= exam.title %></td>
                     <% grade = exam.grades.find_by_applicant_id(@applicant) %>
+                    <%@total=@total+grade.score.to_i%>
                     <td><%= grade.score %></td>
+                    <td><%= exam.passing_score %></td>
+                    <td><%= exam.total_score %></td>
                     <td><%= grade.remarks %></td>
-                    <td><%= link_to  'Grade', '#', 'data-toggle' => "modal",
+                    <% if @applicant.status == 'Failed' %>
+                      <td rowspan="2">
+                        <% if !grade.score.blank? && grade.score.to_i < exam.passing_score.to_i %>
+                          Failed
+                        <% end %>
+                      </td>
+                    <% else %>
+                    <td rowspan="2"><%= link_to  'Grade', '#', 'data-toggle' => "modal",
          'data-target' => '#gradeModal','data-id' => exam.id,
          'data-action' => update_grade_path(@applicant,exam),
          'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
-         'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks %></td>
+         'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks%></td>
+                    <% end %>
+                  <tr>
+                      <td colspan="4">
+                            <%score = grade.score.to_i%>
+                            <%total_score = exam.total_score.to_i%>
+                            <%passing_score = exam.passing_score.to_i%>
+                            <%percentage = score.to_f/total_score.to_f * 100; %>
+                            <%passing_width = (passing_score.to_f/total_score.to_f * 100)-percentage%>
+                          <div class="progress">
+                            <% if grade.score.blank?%>
+                              <div class="progress-bar progress-bar-info" style="width:100%">
+
+                              </div>
+                            <%elsif score < passing_score %>
+                              <div class="progress-bar progress-bar-danger" style= <%="\"width: #{percentage}% \"".html_safe%> >
+                                <span class="sr-only">35% Complete (success)</span>
+                              </div>
+                              <div class="progress-bar progress-bar-warning" style= <%="\"width: #{passing_width}% \"".html_safe%> >
+                                <span class="sr-only">35% Complete (success)</span>
+                              </div>
+                            <%elsif score <= passing_score+passing_score*0.3%>
+                              <div class="progress-bar progress-bar-warning" style= <%="\"width: #{percentage}% \"".html_safe%>>
+                            <%elsif score > passing_score+passing_score*0.3%>
+                              <div class="progress-bar progress-bar-success" style= <%="\"width: #{percentage}% \"".html_safe%>>
+                            <% end %>
+                          </div>
+                      </td>
+                    </tr>
+
                   </tr>
+
+                  <% end %>
+                  <tfoot>
+                    <tr>
+                      <td>Total:</td>
+                      <td><%=@total%></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                  <% if @applicant.status == 'Failed' %>
+                    <h3>This Applicant failed the exam.</h3>
                   <% end %>
                 </table>
               <% end %>
@@ -130,7 +184,7 @@
                 <% elsif (@applicant.exams.any? && !@taken_all_exam) %>
                     <%= submit_tag 'Skip Exams', :name => 'bypass_exams', :class => 'btn btn-primary' %>
                 <% end %>
-                
+
                 <% if (@taken_all_exam && @applicant.exams.any?) || @applicant.skipped_exam == 1 %>
                   <% if @applicant.status == 'Failed' && @applicant.consider == 0 %>
                     <%= submit_tag 'Consider for Interview', :name => 'consider_interview', :class => 'btn btn-primary' %>
