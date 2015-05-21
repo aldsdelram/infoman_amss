@@ -1,5 +1,4 @@
-<%= form_for @interviewer, :html => {:multipart => true, :class => "form-group col-md-5"} do |f| %>
-  <% if @interviewer.errors.any? %>
+<% if @interviewer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@interviewer.errors.count, "error") %> prohibited this interviewer from being saved:</h2>
 
@@ -11,36 +10,49 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= label_tag "Picture" %><br />
-    <canvas id="myCanvas"></canvas>
-    <input id="base64" type="hidden" value="" name="base64"/>
-    <input id="imgName" type="hidden" value="" name="imgName"/>
-    <input type='file', name = "interviewer[image]", accept="image/*", onchange="readURL(this);", id = "uploader"/>
+<div class="row">
+<%= form_for @interviewer, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+
+  <div class="field col-md-3 text-center">
+      <%= label_tag "Picture" %><br />
+      <canvas id="myCanvas"></canvas>
+      <input id="base64" type="hidden" value="" name="base64"/>
+      <input id="imgName" type="hidden" value="" name="imgName"/>
+      <input type='file', name = "interviewer[image]", accept="image/*",
+      onchange="readURL(this);", id = "uploader"/>
   </div>
 
-  <div class="field">
-    <%= f.label "Full Name" %><br />
-    <%= f.text_field :name , :class => "form-control"%>
-  </div>
+  <div class="col-md-6">
+    <br/><br/>
+    <div class="field form-group">
+      <%= f.label "Full Name:", :class=>"control-label col-md-3"%>
+      <div class="col-md-9">
+      <%= f.text_field :name , :class => "form-control", :required=> true%>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label "Position Title" %><br />
-    <%= f.text_field :position_title, :class => "form-control" %>
-  </div>
+    <div class="field form-group">
+      <%= f.label "Position Title:", :class=>"control-label col-md-3"%>
+      <div class="col-md-9">
+      <%= f.text_field :position_title, :class => "form-control", :required=> true %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label "Department Name" %><br />
-    <%= select_tag :department_id, options_for_select(Department.all.collect {|x| [x.department_name, x.id]}, 
-    	:selected => @interviewer.department_id ),:include_blank => "Select one", :class => "form-control" %>
-  </div>
+    <div class="field form-group">
+      <%= f.label "Department Name:", :class=>"control-label col-md-3"%>
+      <div class="col-md-9">
+      <%= select_tag :department_id, options_for_select(Department.all.collect {|x| [x.department_name, x.id]},
+      	:selected => @interviewer.department_id ),:include_blank => "Select one", :class => "form-control", :required=> true %>
+      </div>
+    </div>
 
-  <div class="field">
-  	<br />
-    <%= f.submit :class => "btn btn-danger" %>
+    <div class="field">
+    	<br />
+      <%= f.submit :class => "btn btn-danger" %>
+    </div>
   </div>
 <% end %>
-
+</div>
 <script type="text/javascript">
 
   $(window).load(function(){

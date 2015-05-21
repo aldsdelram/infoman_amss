@@ -139,9 +139,6 @@ class SchedulesController < ApplicationController
   def getEvent
     @events = []
     @schedules = Schedule.all
-
-
-
     @schedules.each do |event|
 
       @applicant = Applicant.find(event.applicant_id)

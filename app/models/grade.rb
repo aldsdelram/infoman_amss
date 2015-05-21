@@ -12,7 +12,7 @@ class Grade < ActiveRecord::Base
     exam = Exam.find(exam_id)
     if !score.nil?
       if score.to_i > exam.total_score
-        errors.add(:score, "Score can't be greater than the passing score")
+        errors.add(:score, "can't be greater than the total score")
       end
     end
   end
