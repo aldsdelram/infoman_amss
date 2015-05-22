@@ -1,7 +1,4 @@
-<%= stylesheet_link_tag 'fullcalendar.css' %>
-<%= stylesheet_link_tag 'fullcalendar.print.css', :media=>'print' %>
-<%= javascript_include_tag 'moment.js' %>
-<%= javascript_include_tag 'fullcalendar.js' %>
+<%=stylesheet_link_tag 'fonts/felix/stylesheet.css'%>
 
 
 <h1>List of schedules</h1>
@@ -11,27 +8,31 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#calendar_tab" aria-controls="calendar_tab" role="tab" data-toggle="tab">Calendar</a></li>
-    <li role="presentation"><a href="#tabular" aria-controls="tabular" role="tab" data-toggle="tab">Profile</a></li>
+    <li role="presentation"><a href="#tabular" aria-controls="tabular" role="tab" data-toggle="tab">Tabular</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="calendar_tab">
-        <div class="row">
+        <div class="col-md-12">
 
-          <div class="col-md-6">
+          <div class="col-md-6 col-sm-12">
+            <div class="row">
             <div id='calendar'>
               <div id="loading" class="idle">"
                     <div><h1><span class="glyphicon glyphicon-refresh" id="refresh"></span>LOADING</h1></div>
               </div>
             </div>
+            </div>
           </div>
 
-          <div class="col-md-6" id="eventDesc">
-            <h3>Schedule: <span class="title">{Title}</span></h3>
-            <li>Applicant: {Applicant Name}</li>
-            <li>Interviewer: {Interviewer Name}</li>
+          <div class="col-md-6 col-sm-12" id="eventDesc">
+              <h1 class="text-center"> S&ccedil;h&eacute;d&ugrave;l&eacute; </h1>
+              <h3 class="text-center"><span class="title">{Title}</span></h3>
+              <li>Applicant: <span class="applicant"> {Applicant Name} </span></li>
+              <li>Interviewer: <span class="interviewer"> {Interviewer Name} </span></li>
           </div>
+          <div class="clearfix"></div>
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="tabular">
@@ -102,7 +103,7 @@
         },
         // color: 'yellow',   // a non-ajax option
         // textColor: 'black' // a non-ajax option
-    },
+      },
       dayClick: function(date, jsEvent, view) {
           if(view.name == "month"){
             $('#calendar').fullCalendar( 'changeView', 'agendaDay' )
@@ -113,12 +114,18 @@
           // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
       },
       eventClick: function(calEvent, jsEvent, view) {
-        $('#eventDesc .title').html(calEvent.title+' '+calEvent.id);
-        // alert('Event: ' + calEvent.title);
-        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        // alert('View: ' + view.name);
-    }
+        $('#eventDesc .title').html(moment(calEvent.start).format('MMMM DD, YYYY: hh:MM A')+'-'+moment(calEvent.end).format("hh:MM A"));
+        $('#eventDesc .applicant').html(calEvent.applicant);
+        $('#eventDesc .interviewer').html(calEvent.interviewer);
+      }
+    })  //fullCalendar
+  }); //document.ready
+</script>
 
-    });
+<script type="text/javascript">
+  $('document').ready(function(){
+    $('#eventDesc').height($('#calendar').height());
   });
+
+
 </script>
