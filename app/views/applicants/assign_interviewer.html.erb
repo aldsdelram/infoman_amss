@@ -150,11 +150,12 @@
 		$("#name").text("");
 		$("#position_title").text("");
 		if(val.value != ""){
+			interviewers = JSON.parse('<%= get_selected_interviewers_id(@applicant.interviewers) %>');
 			$.ajax({
 							url: "<%= applicants_get_interviewer_path %>",
 						 type: "GET",
 				 dataType: "json",
-						 data: { department_name: val.value },
+						 data: { department_name: val.value, selected_interviewers: interviewers },
 				 complete: function() {},
 				  success: function(data, textStatus, xhr){
 								 		el.textContent = "Select one";

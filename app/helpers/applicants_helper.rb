@@ -43,4 +43,12 @@ module ApplicantsHelper
 
 		return matched_db_applicant
 	end
+
+	def get_selected_interviewers_id(interviewers)
+		id = []
+		interviewers.each do |store|
+			id << store.id
+		end
+		return id
+	end
 end

@@ -24,8 +24,11 @@
 	</div>
 </div>
 <div class="page-header"><h3>Schedule</h3></div>
-<div class="col-md-6"><h4>Date:  <b><%= @schedule.sched.to_date.strftime('%B %d, %Y') %></b></h4></div>
-<div class="col-md-6"><h4>Time:  <b><%= @sched_time_p %></b></h4></div>
+<div class="col-md-6"><h4>Date:  <b><%= @schedule.sched_start.to_date.strftime('%B %d, %Y') %></b></h4></div>
+<div class="col-md-6">
+	<h4>Start Time:  <b><%= @sched_time_start %></b></h4>
+	<h4>End Time:&nbsp;&nbsp;<b><%= @sched_time_end %></b></h4>
+</div>
 <div class="col-md-6"><%=  %></div>
 <div class="col-md-3 col-md-offset-9">
 <% if @create %>

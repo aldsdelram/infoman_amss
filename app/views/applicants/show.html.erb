@@ -191,12 +191,12 @@
                   <% elsif @applicant.interviewers.blank? %>
                     <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-primary"%>
                   <% else %>
-                    <%= link_to 'Reassign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
+                    <%= link_to 'View Interviewers', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
                     <% if @applicant.schedules.any? %>
                       <% lblSched = 'Assign Interview Schedule' %>
                       <% color = 'btn btn-primary'%>
                     <% else %>
-                      <% lblSched = 'Reassign Interview Schedule' %>
+                      <% lblSched = 'View Interview Schedule' %>
                       <% color = 'btn btn-warning'%>
                     <% end %>
                     <%= link_to lblSched, schedules_new_path(@applicant), :class => color %>

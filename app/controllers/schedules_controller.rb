@@ -1,4 +1,5 @@
 class SchedulesController < ApplicationController
+  include SchedulesHelper
   # GET /schedules
   # GET /schedules.xml
   def index
@@ -15,16 +16,11 @@ class SchedulesController < ApplicationController
   def show
     @schedule = Schedule.find(params[:id])
     @applicant = Applicant.find(@schedule.applicant_id)
-    sched_time = @applicant.schedule.sched.to_s.split(' ')[1].split(':')
-    if sched_time[0].to_i >= 12
-      @sched_time_p = sched_time[0]+':'+sched_time[1]+':'+sched_time[2]+' PM'
-      if sched_time[0].to_i > 12
-        sched_time[0] = (sched_time[0].to_i-12).to_s
-        @sched_time_p = sched_time[0]+':'+sched_time[1]+':'+sched_time[2]+' PM'
-      end
-    else
-      @sched_time_p = sched_time[0]+':'+sched_time[1]+':'+sched_time[2]+' AM'
-    end
+    sched_time_s = @schedule.sched_start.to_s.split(' ')[1].split(':')
+    sched_time_e = @schedule.sched_end.to_s.split(' ')[1].split(':')
+
+    @sched_time_start = determine_am_pm(sched_time_s)
+    @sched_time_end = determine_am_pm(sched_time_e)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -55,7 +51,7 @@ class SchedulesController < ApplicationController
   def create
     # start commit
     @applicant = Applicant.find(params[:schedule][:applicant_id])
-    if params[:new_schedule] == 'Schedule'
+    if params[:new_schedule] == 'Schedule' || params[:new_schedule] == 'Reschedule'
 
       @date_and_time = '%m-%d-%Y'
       time = ""
@@ -87,6 +83,7 @@ class SchedulesController < ApplicationController
       else
         @schedule.sched_start = params[:schedule][:sched_start]
         @schedule.sched_start = params[:schedule][:sched_end]
+        
         # if !@applicant.schedules.nil?
         #   @applicant.schedule.destroy
         # end

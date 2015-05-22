@@ -344,13 +344,15 @@ class ApplicantsController < ApplicationController
         format.html { render :action => 'assign_interviewer' }
       end
     end
-  end
+  end 
 
   def get_interviewer
   	if request.xhr?
   		@department_id = Department.find(:first, :conditions => ["department_name = ?", params[:department_name]]).id
+      params[:selected_interviewers] = params[:selected_interviewers].map {|i| i.to_i}
     	render :json => {
-						:interviewers => Interviewer.find(:all, :conditions => ["department_id = ?", @department_id])
+            :interviewers => Interviewer.where("department_id = (?) AND id NOT IN (?)", 
+              @department_id, params[:selected_interviewers])
 						}
     end
   end
