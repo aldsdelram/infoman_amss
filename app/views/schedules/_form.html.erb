@@ -4,7 +4,7 @@
 
     <ul>
     <% @schedule.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+      <li><%= simple_format(msg) %></li>
     <% end %>
     </ul>
   </div>
@@ -42,21 +42,21 @@
               </td>
               <td>
                 <p class="input-group">
-                  <%= text_field_tag :sched_time_start, nil, :class => "timepick form-control", :id => "timepickerStart_"+interviewer.id.to_s %>
+                  <%= text_field_tag :sched_time_start, nil, :class => "timepick_Start form-control", :id => "timepickerStart_"+interviewer.id.to_s %>
                 </p> 
               </td>
               <td>
                 <p class="input-group">
-                  <%= text_field_tag :sched_time_end, nil, :class => "timepick form-control", :id => "timepickerEnd_"+interviewer.id.to_s %>
+                  <%= text_field_tag :sched_time_end, nil, :class => "timepick_End form-control", :id => "timepickerEnd_"+interviewer.id.to_s %>
                 </p>
               </td>
-              <td>
-                <% if interviewer.schedules.any? %>
+              <td class="col-md-1">
+                <% if !get_schedule(interviewer, @applicant.id).blank? %>
                   <%= f.submit 'Reschedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
+                  <%= f.submit 'Cancel', :name=>'cancel_schedule', :class => "btn btn-warning col-md-12", :id => "submit" %>
                 <% else %>
                   <%= f.submit 'Schedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
                 <% end %>
-                <%= f.submit 'Cancel', :name=>'cancel_schedule', :class => "btn btn-warning col-md-12", :id => "submit" %>
               </td>
             </tr>
           <% end %>
@@ -70,16 +70,21 @@
 
 
 <script>
-  <% sched_time_start = ['9', '00'] %>
+  <% sched_time_start = ['09', '00'] %>
   <% sched_time_end = ['10', '00'] %>
+  $('.timepick_Start').val('<%= sched_time_start[0] %>:<%= sched_time_start[1] %>');
+  $('.timepick_End').val('<%= sched_time_end[0] %>:<%= sched_time_end[1] %>');
+
   <% @applicant.interviewers.each do |interviewer| %>
-    <% interviewer.schedules.each do |sched| %>
-      console.log('<%= sched.interviewer_id.to_s %>')
+    <% sched = get_schedule(interviewer, @applicant.id) %>
+    <% if !sched.blank? %>
       $('#datepicker_'+'<%= sched.interviewer_id %>').val('<%= sched.sched_start.to_date.strftime('%m-%d-%Y') %>');
       <% sched_time_start = sched.sched_start.to_s.split(' ')[1].split(':') %>
-      <% sched_time_end = sched.sched_end.to_s.split(' ')[1].split(':') %>
+      <% if !sched.sched_end.nil? %>
+        <% sched_time_end = sched.sched_end.to_s.split(' ')[1].split(':') %>
+        $('#timepickerEnd_'+'<%= sched.interviewer_id %>').val('<%= sched_time_end[0] %>:<%= sched_time_end[1] %>');
+      <% end %>
       $('#timepickerStart_'+'<%= sched.interviewer_id %>').val('<%= sched_time_start[0] %>:<%= sched_time_start[1] %>');
-      $('#timepickerEnd_'+'<%= sched.interviewer_id %>').val('<%= sched_time_end[0] %>:<%= sched_time_end[1] %>');
     <% end %>
   <% end %>
     
@@ -93,17 +98,44 @@
         dateFormat: "mm-dd-yy",
         minDate: "+0D"
       });
-    console.log($(this)[0].id);
   });
-  $('.timepick').each(function(){
+
+  $('.timepick_Start, .timepick_End').each(function(){
     $(this).timepicker({
         showOn: "button",
         buttonImage: "<%= image_path('gliphycon-time.png') %>",
         buttonImageOnly: true,
         buttonText: "Select time of interview",
         timeFormat: "HH:mm",
+        minTime: "01:00",
         defaultValue: '9:00'
       });
+  });
+
+  $('.timepick_Start').on('change', function(){
+    id = $(this.id).selector.toString();
+    end_time_id = 'timepickerEnd_'+id.split('_')[1];
+    end_time = document.getElementById(end_time_id).value;
+    start_time = document.getElementById(id).value;
+    plusOne = '0'+(parseInt(start_time.split(":")[0])+1).toString();
+
+    if(end_time <= start_time){
+      document.getElementById(end_time_id).value = 
+      plusOne.slice(-2)+':'+start_time.split(":")[1];
+    };
+  });
+
+   $('.timepick_End').on('change', function(){
+    id = $(this.id).selector.toString();
+    start_time_id = 'timepickerStart_'+id.split('_')[1];
+    start_time = document.getElementById(start_time_id).value;
+    end_time = document.getElementById(id).value;
+    minusOne = '0'+(parseInt(end_time.split(":")[0])-1).toString();
+
+    if(end_time <= start_time){
+      document.getElementById(start_time_id).value = 
+      minusOne.slice(-2)+':'+start_time.split(":")[1];
+    };
   });
 
 </script>

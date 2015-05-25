@@ -13,4 +13,9 @@ module SchedulesHelper
 	    end
 	    return sched_time_str
 	end
+
+	def get_schedule(interviewer, applicant_id)
+		schedule = interviewer.schedules.find(:first, :conditions => ["applicant_id = ?", applicant_id])
+		return schedule
+	end
 end

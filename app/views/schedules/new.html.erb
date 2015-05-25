@@ -8,7 +8,13 @@
 			<h3 class="col-md-12">APPLICANT</h3>
 			<div class="col-md-12">
 				<div class="col-md-4 col-sm-4">
-					<%= image_tag @applicant.image_name, :size=>'150x150', :class=>"img-responsive" %>
+					 <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+			             <%= image_tag @applicant.image_name, :size=>"200x200",
+			             :alt=>@applicant.firstname + ' ' + @applicant.lastname,
+			             :title=> @applicant.firstname + ' ' + @applicant.lastname%>
+		            <% else %>
+		           		<%= image_tag('404.jpg', :size=>"200x200") %>
+		            <% end %>
 				</div>
 				<div class="col-md-8 col-sm-8">
 					<h4>Name: <span> <%= @applicant.firstname %></span></h4>
