@@ -148,7 +148,8 @@ class SchedulesController < ApplicationController
         "end" => event.sched_end.to_datetime,
         "title" => @applicant.firstname + ' ' + @applicant.lastname,
         "applicant" => name,
-        "interviewer" => event.interviewer.name
+        "interviewer" => event.interviewer.name,
+        "imgsrc" => @applicant.image_name
       }
       @events << event_json
     end

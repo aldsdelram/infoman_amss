@@ -278,7 +278,10 @@ input[type=number] button{
   font-family: 'felixregular'!important;
 }
 
-#eventDesc h1, h3{
+#eventDesc h1,
+#eventDesc h2,
+#eventDesc h4
+{
   font-family: 'felixregular'!important;
 }
 
