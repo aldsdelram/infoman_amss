@@ -1,6 +1,10 @@
 
 AMSS::Application.routes.draw do
 
+  get 'schedules/per/interviewer' => 'schedules#per_interviewer', :as => 'interviewer_schedules'
+
+  get 'schedules/per/applicant' => 'schedules#per_applicant', :as => 'applicant_schedules'
+
   get 'schedules/getEvent' => 'schedules#getEvent'
   # get 'update_grade/:id/exam/:exam_id' => 'applicants#update_grade', :as => :update_grade
 

@@ -169,4 +169,15 @@ class SchedulesController < ApplicationController
       format.js {render :json => @events.to_json} if request.xhr?
     end
   end
+
+  def per_applicant
+    @query = params[:query].gsub(/\s+/, ' ')
+
+    @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
+      " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%"],
+        :page=>params[:page],
+        :order=>"lastname asc",
+        :per_page=> 5
+      )
+  end
 end
