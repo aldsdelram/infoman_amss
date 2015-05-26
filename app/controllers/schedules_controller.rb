@@ -160,13 +160,16 @@ class SchedulesController < ApplicationController
   end
 
   def per_applicant
-    @query = params[:query].gsub(/\s+/, ' ')
+    if params[:query]
 
-    @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
-      " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%"],
-        :page=>params[:page],
-        :order=>"lastname asc",
-        :per_page=> 5
-      )
+      @query = params[:query].gsub(/\s+/, ' ')
+
+      @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
+        " OR CONCAT_WS(\' \',firstname,lastname) LIKE ?" , "%#{@query}%", "%#{@query}%"],
+          :page=>params[:page],
+          :order=>"lastname asc",
+          :per_page=> 10
+        )
+    end
   end
 end
