@@ -28,10 +28,11 @@
 
           <div class="col-md-6 col-xs-12" id="eventDesc">
               <h1 class="text-center"> S&ccedil;h&eacute;d&ugrave;l&eacute; </h1>
-              <h3 class="text-center"><span class="title">{Title}</span></h3>
+              <h3 class="text-center"><span class="title">{Date &amp; Time}</span></h3>
               <div class="col-xs-12 text-center"><img src="/images/new_applicant.png" class="img-responive img-circle" id="applicant_img" style="width: 150px; height: 150px;"></div>
               <h4 class="text-left">Applicant: <span class="applicant"> {Applicant Name} </span></h4>
               <h4 class="text-right">Interviewer: <span class="interviewer"> {Interviewer Name} </span></h4>
+              <div class="text-center"><%=link_to "Schedule Infromation", '#', :class=>"btn btn-success", :id=>"link"%></div>
           </div>
           <div class="clearfix"></div>
       </div>
@@ -127,6 +128,7 @@
         $('#eventDesc .applicant').html(calEvent.applicant);
         $('#eventDesc .interviewer').html(calEvent.interviewer);
         $('#applicant_img').attr('src','/images/' + calEvent.imgsrc);
+        $('#eventDesc #link').attr('href', '/schedules/'+calEvent.id)
       }
     })  //fullCalendar
   }); //document.ready
