@@ -51,16 +51,23 @@ class SchedulesController < ApplicationController
   def create
     # start commit
     @applicant = Applicant.find(params[:schedule][:applicant_id])
-    if params[:new_schedule] == 'Schedule' || params[:new_schedule] == 'Reschedule'
+    interviewer = Interviewer.find(params[:schedule][:interviewer_id])
+    has_schedule = get_schedule(interviewer, @applicant.id)
 
+    if params[:new_schedule] == 'Schedule' || params[:new_schedule] == 'Reschedule'
+      if !params[:schedule][:sched_start].match('^\d{2}-\d{2}-\d{4}$')
+          hasError = true;
+      end
+      
       @date_and_time = '%m-%d-%Y'
       time = ""
       if params[:sched_time_start] != "" && params[:sched_time_end] != ""
         time_start = params[:sched_time_start].to_s+':00'
         time_end = params[:sched_time_end].to_s+':00'
       end
+      
       begin
-        date = DateTime.strptime(params[:schedule][:sched_start], @date_and_time).to_s.split('T')[0]
+        date = DateTime.strptime(params[:schedule][:sched_start], @date_and_time).to_s.split('T')[0]       
         DateTime.parse(date+' '+time_start+':00')
         DateTime.parse(date+' '+time_end+':00')
       rescue ArgumentError
@@ -72,33 +79,38 @@ class SchedulesController < ApplicationController
 
       @schedule = Schedule.new(params[:schedule])
 
-
       if params[:schedule][:sched_start].to_s == "" ||
-        params[:schedule][:sched_end].to_s
+        params[:schedule][:sched_end].to_s == ""
         @schedule.realNil = true
         @schedule.hasError = false
-      elsif hasError
+      end
+      if hasError && params[:schedule][:sched_start].to_s != ""
         @schedule.realNil = false
         @schedule.hasError = true
       else
         @schedule.sched_start = params[:schedule][:sched_start]
-        @schedule.sched_start = params[:schedule][:sched_end]
+        @schedule.sched_end = params[:schedule][:sched_end]
 
-        # if !@applicant.schedules.nil?
-        #   @applicant.schedule.destroy
-        # end
       end
     # end if commit
+      
+    elsif params[:cancel_schedule] == 'Cancel'
+      has_schedule.destroy
     end
-
     respond_to do |format|
-      if @schedule.save
+      if params[:cancel_schedule] == 'Cancel'
+        format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully cancelled.') }
+      elsif @schedule.save
+        if !has_schedule.blank?
+          has_schedule.destroy
+        end
         format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
-        # if !hasError
+        if !hasError
           @schedule.sched_start = @schedule.sched_start.strftime('%m-%d-%Y')
-        # end
+          @schedule.sched_end = @schedule.sched_end.strftime('%m-%d-%Y')
+        end
       format.html { render :action => "new" }
       format.xml  { render :xml => @schedule.errors, :status => :unprocessable_entity }
       end
@@ -126,7 +138,6 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule = Schedule.find(params[:id])
     @schedule.destroy
-
     respond_to do |format|
       format.html { redirect_to(schedules_url) }
       format.xml  { head :ok }
