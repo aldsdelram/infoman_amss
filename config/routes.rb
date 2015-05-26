@@ -15,7 +15,8 @@ AMSS::Application.routes.draw do
   end
 
   get 'applicants/matched_db_applicants' => 'applicants#matched_db_applicants', :as => 'applicants/verify'
-
+  get 'applicants/matched_db_applicants/:id' => 'applicants#matched_db_applicants', :as => 'applicants/renew'
+  
   resources :admins
 
   resources :schools

@@ -114,6 +114,9 @@ class ApplicantsController < ApplicationController
       @applicant = Applicant.new(session[:applicant].attributes)
       @applicant.school = School.find(session[:school_id])
     else
+      params[:applicant][:firstname] = params[:applicant][:firstname].gsub(/\s+/, ' ')
+      params[:applicant][:lastname] = params[:applicant][:lastname].gsub(/\s+/, ' ')
+      params[:applicant][:middlename] = params[:applicant][:middlename].gsub(/\s+/, ' ')
       @applicant = Applicant.new(params[:applicant])
     end
 
@@ -349,10 +352,17 @@ class ApplicantsController < ApplicationController
   def get_interviewer
   	if request.xhr?
   		@department_id = Department.find(:first, :conditions => ["department_name = ?", params[:department_name]]).id
-      params[:selected_interviewers] = params[:selected_interviewers].map {|i| i.to_i}
-    	render :json => {
-            :interviewers => Interviewer.where("department_id = (?) AND id NOT IN (?)", 
+      
+    	if !params[:selected_interviewers].blank?
+        params[:selected_interviewers] = params[:selected_interviewers].map {|i| i.to_i}
+        options = Interviewer.where("department_id = (?) AND id NOT IN (?)", 
               @department_id, params[:selected_interviewers])
+      else
+        options = Interviewer.where("department_id = (?)", @department_id)
+      end
+
+      render :json => {
+            :interviewers => options
 						}
     end
   end
@@ -368,9 +378,57 @@ class ApplicantsController < ApplicationController
   end
 
   def matched_db_applicants
-    @applicant = Applicant.new
-    @applicant_new = session[:applicant]
-    @matched = session[:matched]
+    
+    if params[:renew] == "true"
+      
+      matched_applicant = Applicant.find(params[:id])
+      applicant = session[:applicant]      
+      applicant.school = School.find(session[:school_id])
+
+      session[:applicant] = nil;
+      session[:school_id] = nil;
+      session[:matched] = nil;
+
+      if File.exists?("#{RAILS_ROOT}/public/images/#{matched_applicant.image_name}")
+          File.delete("#{RAILS_ROOT}/public/images/#{matched_applicant.image_name}")
+      end
+
+      history = ApplicantReApplication.new(
+        :applicant_id=>matched_applicant.id,
+        :applied_for=>matched_applicant.position_id
+        )
+
+      if matched_applicant.update_attributes(applicant.attributes)
+        
+        if history.save
+          matched_applicant.grades.each do |store|
+            GradeHistory.create(
+              :applicant_re_applications_id => history.id,
+              :exam_id => store.exam_id
+              )
+            store.destroy
+          end
+        end
+
+        matched_applicant.interviewers.each do |rem|
+          rem.applicants.delete(matched_applicant)
+        end
+
+        matched_applicant.schedules.each do |rem|
+          rem.destroy
+        end
+
+        respond_to do |format|
+          format.html { redirect_to(matched_applicant, :notice => 'Applicant was successfully updated.') }
+          format.xml  { head :ok }
+        end
+      end
+    else
+      @applicant = Applicant.new
+      @applicant_new = session[:applicant]
+      @matched = session[:matched]
+    end
+
   end
 
   def assign_grade

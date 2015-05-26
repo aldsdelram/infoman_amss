@@ -90,6 +90,7 @@ class SchedulesController < ApplicationController
       else
         @schedule.sched_start = params[:schedule][:sched_start]
         @schedule.sched_end = params[:schedule][:sched_end]
+
       end
     # end if commit
       
@@ -148,19 +149,24 @@ class SchedulesController < ApplicationController
     @schedules = Schedule.all
     @schedules.each do |event|
 
-      @applicant = Applicant.find(event.applicant_id)
-
+      @applicant = event.applicant
+      name = @applicant.firstname + ' ';
+      name += (@applicant.middlename.first.upcase + '. ') unless @applicant.middlename.blank?
+      name += @applicant.lastname
       event_json = {
         "id" => event.id,
         "start" => event.sched_start.to_datetime,
         "end" => event.sched_end.to_datetime,
-        "title" => @applicant.firstname + ' ' + @applicant.lastname
+        "title" => @applicant.firstname + ' ' + @applicant.lastname,
+        "applicant" => name,
+        "interviewer" => event.interviewer.name,
+        "imgsrc" => @applicant.image_name
       }
       @events << event_json
     end
 
     respond_to do |format|
-      format.js {render :json => @events.to_json}
+      format.js {render :json => @events.to_json} if request.xhr?
     end
   end
 end

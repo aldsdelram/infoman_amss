@@ -269,3 +269,28 @@ input[type=number] button{
 #grade_table tfoot{
   font-weight: bold;
 }
+
+#eventDesc{
+  background: #243; /*#2BA70B;*/
+  color: white;
+  margin:0;
+  min-height: 90%;
+  font-family: 'felixregular'!important;
+}
+
+#eventDesc h1,
+#eventDesc h2,
+#eventDesc h4
+{
+  font-family: 'felixregular'!important;
+}
+
+#eventDesc h3{
+  border: 1px solid #fff;
+  border-width: 1px 0;
+  padding: 0.5em 0;
+}
+
+#calendar_tab{
+  padding-top: 1em;
+}

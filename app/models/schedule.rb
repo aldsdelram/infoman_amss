@@ -11,15 +11,13 @@ class Schedule < ActiveRecord::Base
 	validate :should_not_less_than_present_day, :if => :resume?
 	validate :should_not_conflict_with_other_applicants, :if => :resume?
 	validate :should_not_conflict_with_other_interviewers, :if=> :resume?
-
-	validates :sched_start, :applicant_id, :presence => true, :if => @realNil
-	
+	validate :hasValue
 	#validates :applicant_id, :uniqueness => true
 	#validates_uniqueness_of :sched_start, :scope => :interviewer_id
 	
 	def check_date
 		if self.hasError
-			self.errors.add("", "Invalid date")
+			errors.add("", "You entered Invalid date: \n - "+self.interviewer.name)
 		end
 	end
 
@@ -49,17 +47,25 @@ class Schedule < ActiveRecord::Base
 
 		conflict_interviewers = ""
 		day_event_interviewers.each do |schedule|
-			if Time.at(self.sched_start.to_i) <= Time.at(schedule.sched_end.to_i)
+			puts schedule.interviewer.name+"-"+Time.at(self.sched_start.to_i).to_s+"\n"+Time.at(schedule.sched_end.to_i).to_s
+			if Time.at(self.sched_start.to_i) <= Time.at(schedule.sched_end.to_i) &&
+			 Time.at(self.sched_end.to_i) >= Time.at(schedule.sched_start.to_i)
 				conflict_interviewers += (" - "+schedule.interviewer.name+"\n")
 			end
 		end
 		
 		if conflict_interviewers != ""
-			errors.add("", "Cannot complete request: Conflict in interview schedule with:\n"+conflict_interviewers)
+			errors.add("", "Conflict in schedule of "+self.interviewer.name+ " with the following schedules:\n"+conflict_interviewers)
 		end
 	end
 
 	def resume?
 		!@hasError && !@realNil
+	end
+
+	def hasValue
+		if @realNil
+			errors.add("", "Schedule Cant be blank: \n - "+self.interviewer.name)
+		end
 	end
 end 

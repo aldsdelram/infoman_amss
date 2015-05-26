@@ -37,9 +37,10 @@
 	      <th>Birth Day</th>
 	      <th>Contact</th>
 	      <th>Email Address</th>
+	      <th>Renew</th>
 	    </tr>
 		<% @matched.each do |m| %>
-		    <% db_applicant = Applicant.find(m[0].to_i) %>
+	    	<% db_applicant = Applicant.find(m[0].to_i) %>
 		    <tr>
 		    	<td><%= image_tag(db_applicant.image_name, :size => "75x75") %></td>
 		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.lastname %></td>
@@ -48,6 +49,7 @@
 		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.bday %></td>
 		    	<td <% if m[3] == "true" %>style="color:red"<%end%> ><%= db_applicant.contact %></td>
 		    	<td <% if m[2] == "true" %>style="color:red"<%end%> ><%= db_applicant.email_address %></td>
+		    	<td><%= link_to "RENEW", applicants_renew_path(db_applicant.id, :renew => "true"), :class=>"btn btn-primary" %></td>
 		    </tr>
 		<% end %>
 	</table>
