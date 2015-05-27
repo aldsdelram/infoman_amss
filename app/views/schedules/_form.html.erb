@@ -12,17 +12,14 @@
 
 <div class="panel panel-success">
   <div class="panel-heading">INTERVIEWER</div>
-  <div class="panel-body">
-    
-      <table class="table">
+  <div class="panel-body table-responsive">
+
+      <table class="table table-hover">
         <tr>
-          <th>Picture</th>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Department</th>
+          <th>Interviewer</th>
           <th>Date</th>
           <th>Start Time</th>
-          <th>End Time</th> 
+          <th>End Time</th>
           <th></th>
         </tr>
 
@@ -31,10 +28,10 @@
             <%= f.text_field :applicant_id, :value => @applicant.id, :hidden => true %>
             <%= f.text_field :interviewer_id, :value => interviewer.id, :hidden => true %>
             <tr>
-              <td><%= image_tag interviewer.image_name, :size=>'75x75', :class=>"img-responsive" %></td>
-              <td>Name: <%= interviewer.name %></td>
-              <td>Department: <%= interviewer.department.department_name %></td>
-              <td>Position: <%= interviewer.position_title %></td>
+              <td><%= image_tag interviewer.image_name, :size=>'75x75', :class=>"img-responsive" %>
+              Name: <%= interviewer.name %><br/>
+              Department: <%= interviewer.department.department_name %><br/>
+              Position: <%= interviewer.position_title %></td>
               <td>
                 <p class="input-group">
                   <%= f.text_field :sched_start, :class => "datepick form-control", :id => "datepicker_"+interviewer.id.to_s %>
@@ -43,7 +40,7 @@
               <td>
                 <p class="input-group">
                   <%= text_field_tag :sched_time_start, nil, :class => "timepick_Start form-control", :id => "timepickerStart_"+interviewer.id.to_s %>
-                </p> 
+                </p>
               </td>
               <td>
                 <p class="input-group">
@@ -87,7 +84,7 @@
       $('#timepickerStart_'+'<%= sched.interviewer_id %>').val('<%= sched_time_start[0] %>:<%= sched_time_start[1] %>');
     <% end %>
   <% end %>
-    
+
   $('.datepick').each(function(){
     $(this).datepicker({
         showOn: "button",
@@ -120,7 +117,7 @@
     plusOne = '0'+(parseInt(start_time.split(":")[0])+1).toString();
 
     if(end_time <= start_time){
-      document.getElementById(end_time_id).value = 
+      document.getElementById(end_time_id).value =
       plusOne.slice(-2)+':'+start_time.split(":")[1];
     };
   });
@@ -133,7 +130,7 @@
     minusOne = '0'+(parseInt(end_time.split(":")[0])-1).toString();
 
     if(end_time <= start_time){
-      document.getElementById(start_time_id).value = 
+      document.getElementById(start_time_id).value =
       minusOne.slice(-2)+':'+start_time.split(":")[1];
     };
   });

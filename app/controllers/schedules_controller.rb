@@ -58,16 +58,16 @@ class SchedulesController < ApplicationController
       if !params[:schedule][:sched_start].match('^\d{2}-\d{2}-\d{4}$')
           hasError = true;
       end
-      
+
       @date_and_time = '%m-%d-%Y'
       time = ""
       if params[:sched_time_start] != "" && params[:sched_time_end] != ""
         time_start = params[:sched_time_start].to_s+':00'
         time_end = params[:sched_time_end].to_s+':00'
       end
-      
+
       begin
-        date = DateTime.strptime(params[:schedule][:sched_start], @date_and_time).to_s.split('T')[0]       
+        date = DateTime.strptime(params[:schedule][:sched_start], @date_and_time).to_s.split('T')[0]
         DateTime.parse(date+' '+time_start+':00')
         DateTime.parse(date+' '+time_end+':00')
       rescue ArgumentError
@@ -93,7 +93,7 @@ class SchedulesController < ApplicationController
 
       end
     # end if commit
-      
+
     elsif params[:cancel_schedule] == 'Cancel'
       has_schedule.destroy
     end
@@ -172,7 +172,6 @@ class SchedulesController < ApplicationController
 
   def per_applicant
     if params[:query]
-
       @query = params[:query].gsub(/\s+/, ' ')
 
       @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
@@ -181,6 +180,69 @@ class SchedulesController < ApplicationController
           :order=>"lastname asc",
           :per_page=> 10
         )
+    end
+  end
+
+  def per_interviewer
+    if params[:query]
+      @query = params[:query].gsub(/\s+/, ' ')
+
+      @search = Interviewer.paginate(:conditions=> ["name LIKE ?", "%#{@query}%"],
+          :page=>params[:page],
+          :order=>"name asc",
+          :per_page=> 10
+        )
+    end
+  end
+
+
+
+  def getSched
+    if request.xhr?
+      if params[:filter] == 'applicant'
+
+        @applicant = Applicant.find(params[:applicant_id])
+
+        @schedules = []
+        @applicant.schedules.each do |sched|
+          @sched = {
+            "date" => sched.sched_start.strftime('%B %d, %Y'),
+            "time" => sched.sched_start.strftime('%H:%m %p') + '-' + sched.sched_end.strftime('%H:%m %p'),
+            "interviewer" => sched.interviewer.name
+          }
+          @schedules << @sched
+        end
+
+      else
+
+        @interviewer = Interviewer.find(params[:interviewer_id])
+
+
+        @schedules = []
+        @interviewer.schedules.each do |sched|
+
+        applicant = sched.applicant
+        name = applicant.firstname + ' ';
+          unless applicant.middlename.blank?
+                name += (applicant.middlename.first.upcase + '. ')
+          end
+        name += applicant.lastname
+
+          @sched = {
+            "date" => sched.sched_start.strftime('%B %d, %Y'),
+            "time" => sched.sched_start.strftime('%H:%m %p') + '-' + sched.sched_end.strftime('%H:%m %p'),
+            "applicant" => name
+          }
+          @schedules << @sched
+        end
+
+
+      end
+
+      respond_to do |format|
+        format.js { render :json => @schedules.to_json}
+      end
+
     end
   end
 end
