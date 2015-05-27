@@ -20,31 +20,34 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.xml
   def show
     @applicant = Applicant.find(params[:id])
-    @exam_list = @applicant.position.exams.where("exam_id NOT IN (" +
-        "SELECT exam_id "+
-        "FROM grades "+
-        "WHERE applicant_id = ?)", @applicant)
+    
+    if @applicant.status != "Hired"
+      @exam_list = @applicant.position.exams.where("exam_id NOT IN (" +
+          "SELECT exam_id "+
+          "FROM grades "+
+          "WHERE applicant_id = ?)", @applicant)
 
-    @interviewer_option = false
-    if params[:bypass_exams]
+      @interviewer_option = false
+      if params[:bypass_exams]
+        @applicant.exams.each do |exam|
+          if exam.grades.find_by_applicant_id(@applicant).score.nil?
+            @applicant.exams.delete(exam)
+          end
+        end
+        @applicant.skipped_exam = 1
+        @applicant.save
+      end
+
+      @taken_all_exam = true
       @applicant.exams.each do |exam|
         if exam.grades.find_by_applicant_id(@applicant).score.nil?
-          @applicant.exams.delete(exam)
+          @taken_all_exam = false
         end
-      end
-      @applicant.skipped_exam = 1
-      @applicant.save
-    end
-
-    @taken_all_exam = true
-    @applicant.exams.each do |exam|
-      if exam.grades.find_by_applicant_id(@applicant).score.nil?
-        @taken_all_exam = false
-      end
-      if !exam.grades.find_by_applicant_id(@applicant).score.nil?
-        if exam.grades.find_by_applicant_id(@applicant).score.to_i < exam.passing_score
-          @applicant.status = 'Failed'
-          @applicant.save
+        if !exam.grades.find_by_applicant_id(@applicant).score.nil?
+          if exam.grades.find_by_applicant_id(@applicant).score.to_i < exam.passing_score
+            @applicant.status = 'Failed'
+            @applicant.save
+          end
         end
       end
     end
@@ -58,8 +61,11 @@ class ApplicantsController < ApplicationController
       @applicant.consider = 1
       @applicant.save
       format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
+    elsif params[:HIRE]
+      @applicant.status = "Hired"
+      @applicant.save
+      format.html {redirect_to @applicant}
     end
-
       format.html # show.html.erb
       format.xml  { render :xml => @applicant }
     end
@@ -81,6 +87,8 @@ class ApplicantsController < ApplicationController
     		@applicants = Applicant.find(:all, :conditions => ["status = 'Failed'"])
       when "on-interview"
         @applicants = Applicant.find(:all, :conditions => ["status = 'On-Interview'"])
+      when "for-hiring"
+        @applicants = Applicant.find(:all, :conditions => ["status = 'For Hiring'"])
     end
 
     respond_to do |format|
@@ -403,7 +411,8 @@ class ApplicantsController < ApplicationController
           matched_applicant.grades.each do |store|
             GradeHistory.create(
               :applicant_re_applications_id => history.id,
-              :exam_id => store.exam_id
+              :exam_id => store.exam_id,
+              :score => store.score
               )
             store.destroy
           end

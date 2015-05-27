@@ -3,23 +3,23 @@
 	<div class="col-md-6">
 		<h3 class="col-md-12">APPLICANT</h3>
 		<div class="col-md-4">
-			<%= image_tag @applicant.image_name, :size => "150x150" %>
+			<%= image_tag @schedule.applicant.image_name, :size => "150x150" %>
 		</div>
 		<div class="col-md-8">
-			<h4 class="col-md-12">Name:  <%= @applicant.firstname %> </h4>
-			<h4 class="col-md-12">Position applying:<blockquote><%= @applicant.position.title %></blockquote> </h4>
-			<h4 class="col-md-12">School:<blockquote><%= @applicant.school.school_name %></blockquote> </h4>
+			<h4 class="col-md-12">Name:  <%= @schedule.applicant.firstname %> </h4>
+			<h4 class="col-md-12">Position applying:<blockquote><%= @schedule.applicant.position.title %></blockquote> </h4>
+			<h4 class="col-md-12">School:<blockquote><%= @schedule.applicant.school.school_name %></blockquote> </h4>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<h3 class="col-md-12">INTERVIEWER</h3>
 		<div class="col-md-4">
-			<%= image_tag @applicant.interviewers.first.image_name, :size => "150x150" %>
+			<%= image_tag @schedule.interviewer.image_name, :size => "150x150" %>
 		</div>
 		<div class="col-md-8">
-			<h4 class="col-md-12">Name: <%= @applicant.interviewers.first.name %> </h4>
-			<h4 class="col-md-12">Department:<blockquote><%= @applicant.interviewers.first.department.department_name %></blockquote></h4>
-			<h4 class="col-md-12">Position:<blockquote><%= @applicant.interviewers.first.position_title %></blockquote></h4>
+			<h4 class="col-md-12">Name: <%= @schedule.interviewer.name %> </h4>
+			<h4 class="col-md-12">Department:<blockquote><%= @schedule.interviewer.department.department_name %></blockquote></h4>
+			<h4 class="col-md-12">Position:<blockquote><%= @schedule.interviewer.position_title %></blockquote></h4>
 		</div>
 	</div>
 </div>
@@ -30,11 +30,18 @@
 	<h4>End Time:&nbsp;&nbsp;<b><%= @sched_time_end %></b></h4>
 </div>
 <div class="col-md-6"><%=  %></div>
-<div class="col-md-3 col-md-offset-9">
-<% if @create %>
-	<%= link_to 'Back to applicants', applicants_show_all_path, :class => "btn btn-success" %>
-<% else %>
-	<%= link_to 'Back to schedules', schedules_path, :class => "btn btn-success" %>
-<% end %>
-</div>
 <div class="page-header">&nbsp;</div>
+	<div class="col-md-12">
+		<%= form_tag interviewer_grade_decision_path(@schedule) do %>
+			<%= text_area_tag :remarks,nil, :size=>'80x5' %>
+			<%= submit_tag "Passed", :name=>"trigger", :class => "btn btn-success" %>
+			<% if @schedule.applicant.schedules.where("NOT interviewer_id = ?", @schedule.interviewer_id).any? %>
+				<%= submit_tag "For Hiring", :name=>"trigger", :class => "btn btn-success" %>
+				<%= submit_tag "Failed-Continue", :name=>"trigger", :class => "btn btn-success" %>
+				<%= submit_tag "Failed-Stop", :name=>"trigger", :class => "btn btn-success" %>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="col-md-12">
+		<%= link_to 'Back to schedules', schedules_path, :class => "btn btn-success" %>
+	</div>

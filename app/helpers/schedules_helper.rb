@@ -18,4 +18,19 @@ module SchedulesHelper
 		schedule = interviewer.schedules.find(:first, :conditions => ["applicant_id = ?", applicant_id])
 		return schedule
 	end
+
+	def get_interviewer_grade(schedule)
+		case schedule.grade
+			when "PS"
+				label = "Passed and canceled all other interviews"
+			when "FS"
+				label = "Failed and canceled all other interviews"
+			when "PC"
+				label = "Passed and continue"
+			when "FC"
+				label = "Failed but continue to other interviews"
+		end
+
+		return label
+	end
 end

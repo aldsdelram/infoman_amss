@@ -15,7 +15,6 @@ class SchedulesController < ApplicationController
   # GET /schedules/1.xml
   def show
     @schedule = Schedule.find(params[:id])
-    @applicant = Applicant.find(@schedule.applicant_id)
     sched_time_s = @schedule.sched_start.to_s.split(' ')[1].split(':')
     sched_time_e = @schedule.sched_end.to_s.split(' ')[1].split(':')
 
@@ -55,6 +54,7 @@ class SchedulesController < ApplicationController
     has_schedule = get_schedule(interviewer, @applicant.id)
 
     if params[:new_schedule] == 'Schedule' || params[:new_schedule] == 'Reschedule'
+      
       if !params[:schedule][:sched_start].match('^\d{2}-\d{2}-\d{4}$')
           hasError = true;
       end
@@ -77,7 +77,11 @@ class SchedulesController < ApplicationController
         params[:schedule][:sched_end] = DateTime.parse(date+' '+time_end+':00')
       end
 
-      @schedule = Schedule.new(params[:schedule])
+      if params[:new_schedule] == "Reschedule"
+        @schedule = has_schedule
+      else
+        @schedule = Schedule.new(params[:schedule])
+      end
 
       if params[:schedule][:sched_start].to_s == "" ||
         params[:schedule][:sched_end].to_s == ""
@@ -93,17 +97,15 @@ class SchedulesController < ApplicationController
 
       end
     # end if commit
-      
+
     elsif params[:cancel_schedule] == 'Cancel'
       has_schedule.destroy
     end
+
     respond_to do |format|
       if params[:cancel_schedule] == 'Cancel'
         format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully cancelled.') }
       elsif @schedule.save
-        if !has_schedule.blank?
-          has_schedule.destroy
-        end
         format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
@@ -168,6 +170,49 @@ class SchedulesController < ApplicationController
     respond_to do |format|
       format.js {render :json => @events.to_json} if request.xhr?
     end
+  end
+
+  def interviewer_grade_decision
+    schedule = Schedule.find(params[:id])
+    applicant = Applicant.find(schedule.applicant.id)
+    
+    case params[:trigger]
+      when "For Hiring"
+        schedule.grade = "PS"
+        applicant.status = "For Hiring"
+        applicant.save
+      when "Failed-Stop"
+        schedule.grade = "FS"
+        applicant.status = "For Hiring"
+        applicant.save
+      when "Passed"
+        schedule.grade = "PC"
+      when "Failed-Continue"
+        schedule.grade = "FC"
+    end
+
+    schedule.remarks = params[:remarks]
+    schedule.save
+
+    if params[:trigger] == "For Hiring" || params[:trigger] == "Failed-Stop"
+      
+      applicant.schedules.where("grade IS NULL").each do |sched|
+        sched.destroy
+        puts "Schedule removed"
+      end
+
+      applicant.interviewers.each do |interviewer|
+        if !interviewer.schedules.where("applicant_id = (?)", applicant.id).any?
+          interviewer.applicants.delete(applicant)
+          puts "Interviewer removed"
+        end
+      end
+    end
+
+  respond_to do |format|
+    format.html {redirect_to schedules_path }
+  end
+
   end
 
   def per_applicant

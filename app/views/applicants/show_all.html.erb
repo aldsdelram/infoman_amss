@@ -11,6 +11,8 @@
     <%= label_tag "FAILED", nil,  :class => "form-label" %>
     <%= radio_button_tag 'toShow', "on-interview", (@toShow == 'on-interview') %>
     <%= label_tag "ON-INTERVIEW", nil,  :class => "form-label" %>
+    <%= radio_button_tag 'toShow', "for-hiring", (@toShow == 'for-hiring') %>
+    <%= label_tag "FOR HIRING", nil,  :class => "form-label" %>
     <%= submit_tag "Proceed", :class => "btn btn-success"%>
 <% end %>
 

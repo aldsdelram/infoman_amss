@@ -1,6 +1,8 @@
 
 AMSS::Application.routes.draw do
 
+  post 'schedules/interviewer_grade_decision/:id' => 'schedules#interviewer_grade_decision', :as => 'interviewer/grade_decision'
+
   get 'schedules/per/interviewer' => 'schedules#per_interviewer', :as => 'interviewer_schedules'
 
   get 'schedules/per/applicant' => 'schedules#per_applicant', :as => 'applicant_schedules'

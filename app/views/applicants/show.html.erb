@@ -44,7 +44,10 @@
   </div>
 
   <div class="col-md-6 col-xs-12">
-
+  <% if @applicant.status == "Hired" %>
+        <h3>HIRED</h3>
+  <% else %>
+                    
     <div class="col-md-12">
       <div class="row">
           <div class="panel panel-primary">
@@ -191,15 +194,19 @@
                   <% elsif @applicant.interviewers.blank? %>
                     <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-primary"%>
                   <% else %>
-                    <%= link_to 'View Interviewers', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
-                    <% if @applicant.schedules.any? %>
-                      <% lblSched = 'Assign Interview Schedule' %>
-                      <% color = 'btn btn-primary'%>
+                    <% if @applicant.schedules.count != @applicant.interviewers.count %>
+                      <%= link_to 'View Interviewers', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
+                      <% if @applicant.schedules.any? %>
+                        <% lblSched = 'Assign Interview Schedule' %>
+                        <% color = 'btn btn-primary'%>
+                      <% else %>
+                        <% lblSched = 'View Interview Schedule' %>
+                        <% color = 'btn btn-warning'%>
+                      <% end %>
+                      <%= link_to lblSched, schedules_new_path(@applicant), :class => color %>
                     <% else %>
-                      <% lblSched = 'View Interview Schedule' %>
-                      <% color = 'btn btn-warning'%>
+                      <%= submit_tag 'HIRE', :name => 'HIRE', :class=> 'btn btn-primary'%>
                     <% end %>
-                    <%= link_to lblSched, schedules_new_path(@applicant), :class => color %>
                   <% end %>
                 <% end %>
               <% end %>
@@ -208,6 +215,7 @@
         </div>
       </div>
       </div>
+    <% end %>
   </div>
 </div>
 

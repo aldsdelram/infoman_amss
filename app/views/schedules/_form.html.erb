@@ -51,9 +51,15 @@
                 </p>
               </td>
               <td class="col-md-1">
-                <% if !get_schedule(interviewer, @applicant.id).blank? %>
-                  <%= f.submit 'Reschedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
-                  <%= f.submit 'Cancel', :name=>'cancel_schedule', :class => "btn btn-warning col-md-12", :id => "submit" %>
+              <% sched = get_schedule(interviewer, @applicant.id) %>
+              
+                <% if !sched.blank? %>
+                  <% if sched.grade.nil? %>
+                    <%= f.submit 'Reschedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
+                    <%= f.submit 'Cancel', :name=>'cancel_schedule', :class => "btn btn-warning col-md-12", :id => "submit" %>
+                  <% else %>
+                    <div class="btn btn-success">Finished</div>
+                  <% end %>
                 <% else %>
                   <%= f.submit 'Schedule', :name=>'new_schedule', :class => "btn btn-success col-md-12", :id => "submit" %>
                 <% end %>

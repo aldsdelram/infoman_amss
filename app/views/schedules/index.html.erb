@@ -64,8 +64,12 @@
                 <%= schedule.sched_start.strftime("%I:%M %p") %> :
                 <%= schedule.sched_end.strftime("%I:%M %p") %>
           </td>
-          <td><%= link_to 'Show', schedule %></td>
-          <td><%= link_to 'Cancel', schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% if schedule.grade.nil? %>
+            <td><%= link_to 'Show', schedule %></td>
+            <td><%= link_to 'Cancel', schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% else %>
+            <td><%= link_to get_interviewer_grade(schedule), '#' %><br />Remarks: <%= schedule.remarks %></td>
+          <% end %>
         </tr>
       <% end %>
       </table>

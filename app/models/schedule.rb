@@ -6,6 +6,7 @@ class Schedule < ActiveRecord::Base
 	
 	belongs_to :interviewer
 	belongs_to :applicant
+	belongs_to :applicants_interviewers
 
 	validate :check_date
 	validate :should_not_less_than_present_day, :if => :resume?
@@ -30,20 +31,21 @@ class Schedule < ActiveRecord::Base
 
 	def should_not_conflict_with_other_applicants
 		day_event = Schedule.find(:all, :conditions=>["interviewer_id = ? 
-			AND YEAR(sched_start) = ? AND DAY(sched_start) = ? AND MONTH(sched_start) = ?",
-			self.interviewer_id, self.sched_start.year, self.sched_start.day, self.sched_start.month])
+			AND YEAR(sched_start) = ? AND DAY(sched_start) = ? AND MONTH(sched_start) = ? AND NOT(applicant_id = ?) ",
+			self.interviewer_id, self.sched_start.year, self.sched_start.day, self.sched_start.month, self.applicant.id])
 
 		day_event.each do |check_time|
 			errors.add("", "Interviewer schedule conflict.") if 
-				Time.at(self.sched_start.to_i) <= Time.at(check_time.sched_end.to_i)
+				Time.at(self.sched_start.to_i) <= Time.at(check_time.sched_end.to_i) &&
+			 	Time.at(self.sched_end.to_i) >= Time.at(check_time.sched_start.to_i)
 		end
 	end
 
 	def should_not_conflict_with_other_interviewers
 
 		day_event_interviewers = Schedule.where("applicant_id = (?) 
-			AND YEAR(sched_start) = (?) AND DAY(sched_start) = (?) AND MONTH(sched_start) = (?)",
-			 self.applicant_id, self.sched_start.year, self.sched_start.day, self.sched_start.month).all
+			AND YEAR(sched_start) = (?) AND DAY(sched_start) = (?) AND MONTH(sched_start) = (?) AND NOT(interviewer_id = ?)",
+			 self.applicant_id, self.sched_start.year, self.sched_start.day, self.sched_start.month, self.interviewer.id)
 
 		conflict_interviewers = ""
 		day_event_interviewers.each do |schedule|
