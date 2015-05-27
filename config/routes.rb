@@ -3,6 +3,8 @@ AMSS::Application.routes.draw do
 
   post 'schedules/interviewer_grade_decision/:id' => 'schedules#interviewer_grade_decision', :as => 'interviewer/grade_decision'
 
+  get 'schedules/getSched/:filter' => 'schedules#getSched'
+
   get 'schedules/per/interviewer' => 'schedules#per_interviewer', :as => 'interviewer_schedules'
 
   get 'schedules/per/applicant' => 'schedules#per_applicant', :as => 'applicant_schedules'
@@ -22,7 +24,7 @@ AMSS::Application.routes.draw do
 
   get 'applicants/matched_db_applicants' => 'applicants#matched_db_applicants', :as => 'applicants/verify'
   get 'applicants/matched_db_applicants/:id' => 'applicants#matched_db_applicants', :as => 'applicants/renew'
-  
+
   resources :admins
 
   resources :schools

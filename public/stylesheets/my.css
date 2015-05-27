@@ -292,3 +292,81 @@ input[type=number] button{
 #calendar_tab{
   padding-top: 1em;
 }
+
+#applicant_cover{
+  background: #cfc;
+  overflow: hidden;
+  position: relative;
+  height: 125px;
+}
+
+#applicant_image{
+  z-index: 2;
+  width: 125px;
+  height: auto;
+  position: relative;
+  margin-left: 15px;
+}
+
+#applicant_image_opaque{
+  opacity: 0.6;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  -webkit-transform: translate(10%,-40%);
+     -moz-transform: translate(10%,-40%);
+       -o-transform: translate(10%,-40%);
+      -ms-transform: translate(10%,-40%);
+          transform: translate(10%,-40%);
+}
+
+#applicant_right{
+  box-shadow: 0 0.2em 0.05em rgba(0,0,0,0.4);
+  margin-bottom: 15px;
+  z-index: 500;
+  position: relative
+}
+
+#applicant_right #divider div{
+  height: 7px;
+  overflow: hidden;
+  margin-top: 1px;
+}
+
+#result_div ul{
+  margin: 0;
+  padding: 0;
+}
+
+#result_div ul > li{
+  list-style: none;
+  margin-left: 0;
+}
+
+#result_div > ul > li{
+  padding-left: 5px;
+  padding-bottom: 10px;
+  width: auto;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 0.1em 0.1em #ddd;
+}
+
+#applicant_head{
+  width: 50px;
+  height:50px;
+  background: #ddd;
+  margin-right: 5px;
+  margin-top: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  color: white;
+  font-size: 2em;
+}
+
+#search_bar{
+  top: -19px;
+  padding: 5px 2px ;
+  background: #5a5;
+  border-bottom: 2px solid #050;
+}
