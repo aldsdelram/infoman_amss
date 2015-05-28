@@ -189,7 +189,7 @@
             <div class="panel-body">
               <% if @applicant.status == "Hired" %>
                 <h3>HIRED</h3>
-              <% else %>  
+              <% else %>
                 <%= form_tag @applicant do %>
                   <% if !@applicant.exams.any? && (@applicant.skipped_exam == 0 || @applicant.skipped_exam.nil?) %>
                       <%= submit_tag 'Proceed to Interview', :name => 'bypass_all', :class => 'btn btn-primary', :confirm=>"Are you Sure?"%>
@@ -203,7 +203,7 @@
                     <% elsif @applicant.interviewers.blank? %>
                       <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-primary"%>
                     <% else %>
-                      <% if @applicant.status != "For Hiring" %>
+                      <% if @applicant.status != "For Hiring" && (@applicant.schedules.count != @applicant.interviewers.count)%>
                         <%= link_to 'View Interviewers', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
                         <% if !@applicant.schedules.any? %>
                           <% lblSched = 'Assign Interview Schedule' %>
