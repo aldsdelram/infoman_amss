@@ -1,5 +1,6 @@
 class ApplicantsController < ApplicationController
   include ApplicantsHelper
+  
   # GET /applicants
   # GET /applicants.xml
 

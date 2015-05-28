@@ -77,6 +77,7 @@
   <% sched_time_end = ['10', '00'] %>
   $('.timepick_Start').val('<%= sched_time_start[0] %>:<%= sched_time_start[1] %>');
   $('.timepick_End').val('<%= sched_time_end[0] %>:<%= sched_time_end[1] %>');
+  $('.datepick').val('');
 
   <% @applicant.interviewers.each do |interviewer| %>
     <% sched = get_schedule(interviewer, @applicant.id) %>
@@ -122,23 +123,27 @@
     start_time = document.getElementById(id).value;
     plusOne = '0'+(parseInt(start_time.split(":")[0])+1).toString();
 
-    if(end_time <= start_time){
+     if(document.getElementById(end_time_id)!==null){
       document.getElementById(end_time_id).value =
       plusOne.slice(-2)+':'+start_time.split(":")[1];
-    };
+     };
   });
 
    $('.timepick_End').on('change', function(){
     id = $(this.id).selector.toString();
+    if(id.split('_').indexOf('visited') == -1){
+      document.getElementById(id).setAttribute('id', id+'_visited');
+      id = $(this.id).selector.toString();
+    }
     start_time_id = 'timepickerStart_'+id.split('_')[1];
     start_time = document.getElementById(start_time_id).value;
     end_time = document.getElementById(id).value;
     minusOne = '0'+(parseInt(end_time.split(":")[0])-1).toString();
 
-    if(end_time <= start_time){
-      document.getElementById(start_time_id).value =
-      minusOne.slice(-2)+':'+start_time.split(":")[1];
-    };
+    // if(end_time <= start_time){
+    //   document.getElementById(start_time_id).value =
+    //   minusOne.slice(-2)+':'+start_time.split(":")[1];
+    // };
   });
 
 </script>
