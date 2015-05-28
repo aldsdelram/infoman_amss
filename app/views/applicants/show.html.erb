@@ -215,7 +215,18 @@
                       <% end %>
                       <%= link_to lblSched, schedules_new_path(@applicant), :class => color %>
                     <% else %>
-                      <%= submit_tag 'HIRE', :name => 'HIRE', :class=> 'btn btn-primary'%>
+                      <% @applicant.schedules.each do |sched| %>
+                        <% if sched.grade.nil? %>
+                          <% @still_on_interview = true %>
+                        <% end %>
+                      <% end %>
+
+                      <% if @still_on_interview %>
+                        * This applicant still has an interview. You can view the schedules
+                          <%=link_to "here", applicant_schedules_path(:applicant_id => @applicant) %>
+                      <% else %>
+                       <%= submit_tag 'HIRE', :name => 'HIRE', :class=> 'btn btn-primary'%>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>

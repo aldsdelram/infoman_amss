@@ -76,30 +76,38 @@
           <table class="table table-default table-hover table-condensed table-bordered" id="tblSchedule">
           <% if interviewer.schedules.any? %>
             <thead>
-            <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Applicant</th>
-            </tr>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Applicant</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
             <% interviewer.schedules.each do |sched| %>
             <tr>
-            <td>
-              <%= sched.sched_start.strftime('%B %d, %Y') %></td>
-            <td>
-              <%= sched.sched_start.strftime('%H:%m %p') %> -
-              <%= sched.sched_end.strftime('%H:%m %p') %>
-            </td>
+              <td>
+                <%= sched.sched_start.strftime('%B %d, %Y') %></td>
+              <td>
+                <%= sched.sched_start.strftime('%H:%m %p') %> -
+                <%= sched.sched_end.strftime('%H:%m %p') %>
+              </td>
 
-              <%applicant = sched.applicant%>
-              <% name = applicant.firstname + ' ';
-                unless applicant.middlename.blank?
-                      name += (applicant.middlename.first.upcase + '. ')
-                end
-              name += applicant.lastname %>
+                <%applicant = sched.applicant%>
+                <% name = applicant.firstname + ' ';
+                  unless applicant.middlename.blank?
+                        name += (applicant.middlename.first.upcase + '. ')
+                  end
+                name += applicant.lastname %>
 
-            <td><%= name%></td>
+              <td><%= name%></td>
+              <td>
+                <% if sched.grade.nil? %>
+                  <%= link_to "Grade", sched%>
+                <% else %>
+                  ---
+                <% end %>
+              </td>
             </tr>
             <% end %>
             </tbody>
@@ -263,7 +271,8 @@ $('#applicant_image').load(function(){
             var tr = $('<tr>')
               .append($('<td>').text(sched.date))
               .append($('<td>').text(sched.time))
-              .append($('<td>').text(sched.applicant));
+              .append($('<td>').text(sched.applicant))
+              .append($('<td>').html(sched.link));;
 
 
             $('#tblSchedule tbody').append(tr)

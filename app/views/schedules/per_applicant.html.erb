@@ -103,6 +103,13 @@
                           <%= sched.sched_end.strftime('%H:%m %p') %>
                         </td>
                         <td><%= sched.interviewer.name%></td>
+                        <td>
+                          <% if sched.grade.nil? %>
+                            <%= link_to "Grade", sched%>
+                          <% else %>
+                            ---
+                          <% end %>
+                        </td>
                       </tr>
                     <% end %>
                     </tbody>
@@ -271,8 +278,8 @@ $('#applicant_image').load(function(){
             var tr = $('<tr>')
               .append($('<td>').text(sched.date))
               .append($('<td>').text(sched.time))
-              .append($('<td>').text(sched.interviewer));
-
+              .append($('<td>').text(sched.interviewer))
+              .append($('<td>').html(sched.link));
 
             $('#tblSchedule tbody').append(tr)
           });
