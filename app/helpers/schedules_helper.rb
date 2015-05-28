@@ -29,6 +29,10 @@ module SchedulesHelper
 				label = "Passed and continue"
 			when "FC"
 				label = "Failed but continue to other interviews"
+			when "PA"
+				label = "Passed all interviews"
+			when "FI"
+				label = "Failed the interview"
 		end
 
 		return label

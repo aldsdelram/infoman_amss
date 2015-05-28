@@ -1,5 +1,3 @@
-
-
 <% if @schedule.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
@@ -47,30 +45,35 @@
 <div class="col-md-6"><%=  %></div>
 <div class="page-header">&nbsp;</div>
 	<div class="col-md-12">
-		<% schedule_count = @schedule.applicant.schedules.where("NOT interviewer_id = ? AND grade IS NULL", @schedule.interviewer_id) %>
-		<%= form_tag interviewer_grade_decision_path(@schedule) do %>
-			<%= text_area_tag :remarks,nil, :size=>'80x5' %>
-			<% if schedule_count.count == 0 %>
-				<%= submit_tag "Passed", :name=>"trigger",
-					:title=>"Interview passed and proceed for hiring",
-					:class => "btn btn-success" %>
-				<%= submit_tag "Failed", :name=>"trigger",
-					:title=>"Interview failed and proceed for hiring",
-					:class => "btn btn-success" %>
-			<% elsif schedule_count.count > 0 %>
-				<%= submit_tag "Passed-Continue", :name=>"trigger",
-					:title=>"Interview passed and continue to other interview",
-					:class => "btn btn-success" %>
-				<%= submit_tag "Failed-Continue", :name=>"trigger",
-					:title=>"Interview Failed but continue to other Intreview",
-					:class => "btn btn-success" %>
-				<%= submit_tag "For Hiring", :name=>"trigger",
-					:title=>"Interview passed and Bypass all pending interview mark as For hiring",
-					:class => "btn btn-success" %>
-				<%= submit_tag "Failed-Stop", :name=>"trigger",
-					:title=>"Interview failed but bypass all pending interview and mark as For hiring",
-					:class => "btn btn-success" %>	
+		<% if @schedule.grade.blank? %>
+			<% schedule_count = @schedule.applicant.schedules.where("NOT interviewer_id = ? AND grade IS NULL", @schedule.interviewer_id) %>
+			<%= form_tag interviewer_grade_decision_path(@schedule) do %>
+				<%= text_area_tag :remarks,nil, :size=>'80x5' %>
+				<% if schedule_count.count == 0 && 
+					(@schedule.applicant.interviewers.count == @schedule.applicant.schedules.count) %>
+					<%= submit_tag "Passed", :name=>"trigger",
+						:title=>"Passed all interview",
+						:class => "btn btn-success" %>
+					<%= submit_tag "Failed", :name=>"trigger",
+						:title=>"Failed the interview",
+						:class => "btn btn-success" %>
+				<% else %>
+					<%= submit_tag "Passed-Continue", :name=>"trigger",
+						:title=>"Interview passed and continue to other interview",
+						:class => "btn btn-success" %>
+					<%= submit_tag "Failed-Continue", :name=>"trigger",
+						:title=>"Interview Failed but continue to other Intreview",
+						:class => "btn btn-success" %>
+					<%= submit_tag "For Hiring", :name=>"trigger",
+						:title=>"Interview passed and Bypass all pending interview mark as For hiring",
+						:class => "btn btn-success" %>
+					<%= submit_tag "Failed-Stop", :name=>"trigger",
+						:title=>"Interview failed but bypass all pending interview and mark as For hiring",
+						:class => "btn btn-success" %>	
+				<% end %>
 			<% end %>
+		<% else %>
+			<%= notice %>
 		<% end %>
 	</div>
 	<div class="col-md-12">

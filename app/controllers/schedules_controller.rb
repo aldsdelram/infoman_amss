@@ -177,11 +177,19 @@ class SchedulesController < ApplicationController
     applicant = Applicant.find(schedule.applicant.id)
 
     case params[:trigger]
-      when "For Hiring" || "Passed"
+      when "For Hiring"
         schedule.grade = "PS"
         applicant.status = "For Hiring"
         applicant.save
-      when "Failed-Stop" || "Failed"
+      when "Passed"
+        schedule.grade = "PA"
+        applicant.status = "For Hiring"
+        applicant.save
+      when "Failed"
+        schedule.grade = "FI"
+        applicant.status = "For Hiring"
+        applicant.save
+      when "Failed-Stop", "Failed"
         schedule.grade = "FS"
         applicant.status = "For Hiring"
         applicant.save
@@ -191,15 +199,9 @@ class SchedulesController < ApplicationController
         schedule.grade = "FC"
     end
 
-
     schedule.remarks = params[:remarks]
     schedule.det = true
-    schedule.save
-
-    puts '====================================================================='
-    puts schedule.errors
-    puts '====================================================================='
-
+    
     if params[:trigger] == "For Hiring" || params[:trigger] == "Failed-Stop"
 
       applicant.schedules.where("grade IS NULL").each do |sched|
@@ -214,12 +216,14 @@ class SchedulesController < ApplicationController
         end
       end
     end
-
-  respond_to do |format|
-    @schedule = schedule
-    format.html {render :action => 'show'}
-  end
-
+    respond_to do |format|
+      @schedule = schedule
+      if schedule.save
+        format.html {redirect_to @schedule, :notice=>'NOTICE' }
+      else
+        format.html {render :action => 'show', :notice=>'NOTICE' }
+      end
+    end
   end
 
   def per_applicant
