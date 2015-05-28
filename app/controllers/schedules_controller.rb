@@ -227,7 +227,9 @@ class SchedulesController < ApplicationController
   end
 
   def per_applicant
-    if params[:query]
+    if params[:applicant_id]
+      @search = Applicant.paginate(:conditions=>["id = ?", params[:applicant_id]], :page=>params[:page], :per_page=>1)
+    elsif params[:query]
       @query = params[:query].gsub(/\s+/, ' ')
 
       @search = Applicant.paginate(:conditions=> ["CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?" +
@@ -251,20 +253,23 @@ class SchedulesController < ApplicationController
     end
   end
 
-
-
   def getSched
     if request.xhr?
       if params[:filter] == 'applicant'
 
         @applicant = Applicant.find(params[:applicant_id])
 
+
         @schedules = []
         @applicant.schedules.each do |sched|
+          link = '---'
+          link = "<a href='#{schedule_url(sched)}'>Grade</a>".html_safe if sched.grade.nil?
+
           @sched = {
             "date" => sched.sched_start.strftime('%B %d, %Y'),
             "time" => sched.sched_start.strftime('%H:%m %p') + '-' + sched.sched_end.strftime('%H:%m %p'),
-            "interviewer" => sched.interviewer.name
+            "interviewer" => sched.interviewer.name,
+            "link" => link
           }
           @schedules << @sched
         end
@@ -283,11 +288,14 @@ class SchedulesController < ApplicationController
                 name += (applicant.middlename.first.upcase + '. ')
           end
         name += applicant.lastname
+          link = '---'
+          link = "<a href='#{schedule_url(sched)}'>Grade</a>".html_safe if sched.grade.nil?
 
           @sched = {
             "date" => sched.sched_start.strftime('%B %d, %Y'),
             "time" => sched.sched_start.strftime('%H:%m %p') + '-' + sched.sched_end.strftime('%H:%m %p'),
-            "applicant" => name
+            "applicant" => name,
+            "link" => link
           }
           @schedules << @sched
         end

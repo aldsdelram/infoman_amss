@@ -21,6 +21,7 @@
           <div class="clearfix"></div>
 
           <div class="panel-body">
+            <p>  <label>Status</label>                  <%= @applicant.status %>  </p>
             <p>  <label>Position applying for:</label>
                                                <%= @applicant.position.title %>   </p>
             <p>  <label>Email Address:</label>  <%= @applicant.email_address %>   </p>
@@ -53,8 +54,12 @@
           <div class="panel panel-success">
             <div class="panel-heading">Add Exam</div>
               <div class="panel-body">
-                <% if @applicant.skipped_exam == 1 %>
-                  <h3>Disabled</h3>
+                <% if @applicant.skipped_exam == 1%>
+                  <h4> This applicant already skipped the exam.
+                    <% if @applicant.gender == "Male" %> He
+                    <% else %> She <% end %>
+                      can now proceed to interview.
+                  </h4>
                 <% else %>
                   <%if @applicant.position.exams.count == 0%>
                     There's no existing exam for this position.
@@ -85,9 +90,7 @@
         <div class="panel panel-success">
           <div class="panel-heading">Exam List</div>
             <div class="panel-body">
-              <% if @applicant.skipped_exam == 1%>
-                <h3>This Applicant skipped the exams.</h3>
-              <% elsif @applicant.consider == 1 %>
+              <% if @applicant.consider == 1 %>
                 <h3>This Applicant failed the exam but considered for interview.</h3>
               <% else %>
                 <table id="grade_table" class="table table-default table-responsive table-bordered">
@@ -117,11 +120,15 @@
                         <% end %>
                       </td>
                     <% else %>
-                    <td rowspan="2"><%= link_to  'Grade', '#', 'data-toggle' => "modal",
-         'data-target' => '#gradeModal','data-id' => exam.id,
-         'data-action' => update_grade_path(@applicant,exam),
-         'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
-         'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks%></td>
+                      <% if @applicant.skipped_exam == 1 %>
+                        --
+                      <% else %>
+                      <td rowspan="2"><%= link_to  'Grade', '#', 'data-toggle' => "modal",
+           'data-target' => '#gradeModal','data-id' => exam.id,
+           'data-action' => update_grade_path(@applicant,exam),
+           'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
+           'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks%></td>
+                      <% end %>
                     <% end %>
                   <tr>
                       <td colspan="4">
@@ -168,6 +175,10 @@
                     <h3>This Applicant failed the exam.</h3>
                   <% end %>
                 </table>
+                <% if @applicant.skipped_exam == 1 && @applicant.exams.count == 0%>
+                  * This applicant did not take any exam. But can proceed to interview.
+                <% end %>
+
               <% end %>
             </div>
         </div>
@@ -181,11 +192,10 @@
             <div class="panel-body">
 
               <%= form_tag @applicant do %>
-
-                <% if !@applicant.exams.any? && @applicant.skipped_exam == 0 %>
-                    <%= submit_tag 'Proceed to Interview', :name => 'bypass_all', :class => 'btn btn-primary' %>
+                <% if !@applicant.exams.any? && (@applicant.skipped_exam == 0 || @applicant.skipped_exam.nil?) %>
+                    <%= submit_tag 'Proceed to Interview', :name => 'bypass_all', :class => 'btn btn-primary', :confirm=>"Are you Sure?"%>
                 <% elsif (@applicant.exams.any? && !@taken_all_exam) %>
-                    <%= submit_tag 'Skip Exams', :name => 'bypass_exams', :class => 'btn btn-primary' %>
+                    <%= submit_tag 'Skip Exams', :name => 'bypass_exams', :class => 'btn btn-primary', :confirm=> "Are you sure?"%>
                 <% end %>
 
                 <% if (@taken_all_exam && @applicant.exams.any?) || @applicant.skipped_exam == 1 %>
@@ -205,7 +215,18 @@
                       <% end %>
                       <%= link_to lblSched, schedules_new_path(@applicant), :class => color %>
                     <% else %>
-                      <%= submit_tag 'HIRE', :name => 'HIRE', :class=> 'btn btn-primary'%>
+                      <% @applicant.schedules.each do |sched| %>
+                        <% if sched.grade.nil? %>
+                          <% @still_on_interview = true %>
+                        <% end %>
+                      <% end %>
+
+                      <% if @still_on_interview %>
+                        * This applicant still has an interview. You can view the schedules
+                          <%=link_to "here", applicant_schedules_path(:applicant_id => @applicant) %>
+                      <% else %>
+                       <%= submit_tag 'HIRE', :name => 'HIRE', :class=> 'btn btn-primary'%>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
