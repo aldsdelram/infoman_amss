@@ -177,15 +177,15 @@ class SchedulesController < ApplicationController
     applicant = Applicant.find(schedule.applicant.id)
     
     case params[:trigger]
-      when "For Hiring"
+      when "For Hiring" || "Passed"
         schedule.grade = "PS"
         applicant.status = "For Hiring"
         applicant.save
-      when "Failed-Stop"
+      when "Failed-Stop" || "Failed"
         schedule.grade = "FS"
         applicant.status = "For Hiring"
         applicant.save
-      when "Passed"
+      when "Passed-Continue"
         schedule.grade = "PC"
       when "Failed-Continue"
         schedule.grade = "FC"

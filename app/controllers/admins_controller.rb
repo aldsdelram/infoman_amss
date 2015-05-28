@@ -103,5 +103,4 @@ class AdminsController < ApplicationController
     end
     return "upload_images/#{who}/"+file_name
   end
-
 end

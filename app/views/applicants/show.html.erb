@@ -194,7 +194,7 @@
                   <% elsif @applicant.interviewers.blank? %>
                     <%= link_to 'Assign Interviewer', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-primary"%>
                   <% else %>
-                    <% if @applicant.schedules.count != @applicant.interviewers.count %>
+                    <% if @applicant.status != "For Hiring" %>
                       <%= link_to 'View Interviewers', applicants_assign_interviewer_path(@applicant), :class=>"btn btn-warning"%>
                       <% if @applicant.schedules.any? %>
                         <% lblSched = 'Assign Interview Schedule' %>
