@@ -54,7 +54,7 @@ class SchedulesController < ApplicationController
     has_schedule = get_schedule(interviewer, @applicant.id)
 
     if params[:new_schedule] == 'Schedule' || params[:new_schedule] == 'Reschedule'
-      
+
       if !params[:schedule][:sched_start].match('^\d{2}-\d{2}-\d{4}$')
           hasError = true;
       end
@@ -175,7 +175,7 @@ class SchedulesController < ApplicationController
   def interviewer_grade_decision
     schedule = Schedule.find(params[:id])
     applicant = Applicant.find(schedule.applicant.id)
-    
+
     case params[:trigger]
       when "For Hiring" || "Passed"
         schedule.grade = "PS"
@@ -191,11 +191,17 @@ class SchedulesController < ApplicationController
         schedule.grade = "FC"
     end
 
+
     schedule.remarks = params[:remarks]
+    schedule.det = true
     schedule.save
 
+    puts '====================================================================='
+    puts schedule.errors
+    puts '====================================================================='
+
     if params[:trigger] == "For Hiring" || params[:trigger] == "Failed-Stop"
-      
+
       applicant.schedules.where("grade IS NULL").each do |sched|
         sched.destroy
         puts "Schedule removed"
@@ -210,7 +216,8 @@ class SchedulesController < ApplicationController
     end
 
   respond_to do |format|
-    format.html {redirect_to schedules_path }
+    @schedule = schedule
+    format.html {render :action => 'show'}
   end
 
   end

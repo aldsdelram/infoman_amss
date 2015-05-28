@@ -1,4 +1,6 @@
 <h1 class="page-header">Schedules Per Applicant</h1>
+
+
 <div class="col-md-12" id="search_bar">
   <%=form_tag '', :method=>:get , :class=>"form-horizontal" do %>
     <label for='query' class="col-xs-3 col-sm-4 control-label"> Search Applicant: </label>
@@ -15,161 +17,167 @@
   <% end %>
   <div class="clearfix"></div>
 </div>
-  <div class'col-md-12'>
+
+<div class'col-md-12'>
   <%if @search %>
-  <% if @search.count > 0 %>
-      <a name="bookmark"></a>
+    <% if @search.count > 0 %>
+        <a name="bookmark"></a>
 
-    <h4>Result:</h4>
-
-
-    <!-- Floating Applicant Information -->
-
-    <div class="col-md-6 col-xs-12 pull-right text-justify">
-      <div class="col-xs-12" id="applicant_right">
-        <%applicant = @search.first%>
-        <% name = applicant.firstname + ' ';
-          unless applicant.middlename.blank?
-                name += (applicant.middlename.first.upcase + '. ')
-          end
-        name += applicant.lastname %>
-        <div class="row">
-          <div class="col-md-12  text-left" id="applicant_cover">
-
-          <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
-            <%= image_tag applicant.image_name,
-           :alt=>applicant.firstname + ' ' + applicant.lastname,
-           :title=> applicant.firstname + ' ' + applicant.lastname,
-           :class=> "img-circle",
-           :id => "applicant_image"%>
-          <% else %>
-            <%= image_tag('404.jpg', :class=>"img-scircle",
-              :id=> "applicant_image") %>
-          <% end %>
-
-          <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
-            <%= image_tag applicant.image_name,
-           :alt=>applicant.firstname + ' ' + applicant.lastname,
-           :title=> applicant.firstname + ' ' + applicant.lastname,
-           :class=> "img-responsive img-circle",
-           :id => "applicant_image_opaque"%>
-          <% else %>
-            <%= image_tag('404.jpg', :class=>"img-responsive img-scircle",
-              :id=> "applicant_image_opaque") %>
-          <% end %>
-
-          </div>
-        </div>
-        <div class="clearfix"></div>
-
-        <div id="divider" class="row">
-          <div class="col-xs-2"></div>
-          <div class="col-xs-2"></div>
-          <div class="col-xs-2"></div>
-          <div class="col-xs-2"></div>
-          <div class="col-xs-2"></div>
-          <div class="col-xs-2"></div>
-        </div>
-        <h2 id="applicant_name"><%=name%></h2>
-
-        <div class="col-md-12">
-          <div class="row table-responsive">
-          <h3> Schedules: </h3>
-          <table class="table table-default table-hover table-condensed table-bordered" id="tblSchedule">
-          <% if applicant.schedules.any? %>
-            <thead>
-            <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Interviewer</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% applicant.schedules.each do |sched| %>
-            <tr>
-            <td>
-              <%= sched.sched_start.strftime('%B %d, %Y') %></td>
-            <td>
-              <%= sched.sched_start.strftime('%H:%m %p') %> -
-              <%= sched.sched_end.strftime('%H:%m %p') %>
-            </td>
-            <td><%= sched.interviewer.name%></td>
-            </tr>
-            <% end %>
-            </tbody>
-          <% else %>
-          <h4> No Schedule for this Applicant </h4>
-          <% end %>
-          </table>
-          </div>
-        </div>
-      </div>
-    </div>
+        <h4>Result:</h4>
 
 
-    <!--END: Floating Applicant Information -->
+          <!-- Floating Applicant Information -->
+          <div class="col-md-6 col-xs-12 pull-right text-justify">
+            <div class="col-xs-12" id="applicant_right">
+              <%applicant = @search.first%>
+              <% name = applicant.firstname + ' ';
+                unless applicant.middlename.blank?
+                      name += (applicant.middlename.first.upcase + '. ')
+                end
+              name += applicant.lastname %>
 
-    <!-- Results -->
+              <!-- Picture -->
+              <div class="row">
+                <div class="col-md-12  text-left" id="applicant_cover">
 
-    <div class="text-justify col-md-6" id="result_div" >
-      <ul>
-      <% @search.each do |applicant| %>
-        <% name = applicant.firstname + ' ';
-          unless applicant.middlename.blank?
-                name += (applicant.middlename.first.upcase + '. ')
-          end
-        name += applicant.lastname %>
-        <li>
-          <div class="img-circle pull-left text-center" id="applicant_head">
-              <span><%=name.slice(0,1).capitalize%></span>
-          </div>
-
-          <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
-            <%= image_tag applicant.image_name,
-           :class=> "visible-xs hidden-xs",
-           :id => "applicant_pic"%>
-          <% else %>
-            <%= image_tag('404.jpg', :class=>"visible-xs hidden-xse",
-              :id=> "applicant_pic") %>
-          <% end %>
-
-          <%#image_tag applicant.image_name, :class=>"visible-xs hidden-xs", :id=>"applicant_pic"%>
-        <%= link_to name, '#bookmark', :id=>'applicant_link', 'data-id' => applicant.id ,
-          'data-name' => name, 'data-image' => applicant.image_name%>
-          <ul>
-            <li>
-              <description>
-                <%= applicant.position.title %> /
-                <% if applicant.school %>
-                <%= applicant.school.school_name %> /
+                <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
+                  <%= image_tag applicant.image_name,
+                 :alt=>applicant.firstname + ' ' + applicant.lastname,
+                 :title=> applicant.firstname + ' ' + applicant.lastname,
+                 :class=> "img-circle",
+                 :id => "applicant_image"%>
+                <% else %>
+                  <%= image_tag('404.jpg', :class=>"img-scircle",
+                    :id=> "applicant_image") %>
                 <% end %>
-                <%= applicant.email_address %> /
-                <%= applicant.contact %>
-              </description>
+
+                <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
+                  <%= image_tag applicant.image_name,
+                 :alt=>applicant.firstname + ' ' + applicant.lastname,
+                 :title=> applicant.firstname + ' ' + applicant.lastname,
+                 :class=> "img-responsive img-circle",
+                 :id => "applicant_image_opaque"%>
+                <% else %>
+                  <%= image_tag('404.jpg', :class=>"img-responsive img-scircle",
+                    :id=> "applicant_image_opaque") %>
+                <% end %>
+
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <!-- END : Picture -->
+
+              <div id="divider" class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2"></div>
+              </div>
+
+              <!-- INFORMATION -->
+              <h2 id="applicant_name"><%=name%></h2>
+
+              <div class="col-md-12">
+                <div class="row table-responsive">
+                  <h3> Schedules: </h3>
+                  <table class="table table-default table-hover table-condensed table-bordered" id="tblSchedule">
+                  <% if applicant.schedules.any? %>
+
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Interviewer</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                    <% applicant.schedules.each do |sched| %>
+                      <tr>
+                        <td>
+                          <%= sched.sched_start.strftime('%B %d, %Y') %></td>
+                        <td>
+                          <%= sched.sched_start.strftime('%H:%m %p') %> -
+                          <%= sched.sched_end.strftime('%H:%m %p') %>
+                        </td>
+                        <td><%= sched.interviewer.name%></td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  <% else %>
+                  <tr><td><h4> No Schedules found </h4></td></tr>
+                  <% end %>
+                </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!--END: Floating Applicant Information -->
+
+
+
+        <!-- Results -->
+
+        <div class="text-justify col-md-6" id="result_div" >
+          <ul>
+          <% @search.each do |applicant| %>
+            <% name = applicant.firstname + ' ';
+              unless applicant.middlename.blank?
+                    name += (applicant.middlename.first.upcase + '. ')
+              end
+            name += applicant.lastname %>
+            <li>
+              <div class="img-circle pull-left text-center" id="applicant_head">
+                  <span><%=name.slice(0,1).capitalize%></span>
+              </div>
+
+              <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
+                <%= image_tag applicant.image_name,
+               :class=> "visible-xs hidden-xs",
+               :id => "applicant_pic"%>
+              <% else %>
+                <%= image_tag('404.jpg', :class=>"visible-xs hidden-xse",
+                  :id=> "applicant_pic") %>
+              <% end %>
+
+              <%#image_tag applicant.image_name, :class=>"visible-xs hidden-xs", :id=>"applicant_pic"%>
+            <%= link_to name, '#bookmark', :id=>'applicant_link', 'data-id' => applicant.id ,
+              'data-name' => name, 'data-image' => applicant.image_name%>
+              <ul>
+                <li>
+                  <description>
+                    <%= applicant.position.title %> /
+                    <% if applicant.school %>
+                    <%= applicant.school.school_name %> /
+                    <% end %>
+                    <%= applicant.email_address %> /
+                    <%= applicant.contact %>
+                  </description>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
             </li>
+          <% end %>
           </ul>
-          <div class="clearfix"></div>
-        </li>
-      <% end %>
-      </ul>
 
-    </div>
-    <!--END: Results -->
+        </div>
+        <!--END: Results -->
 
 
-    <!-- Pagination -->
-    <div class="col-md-12">
-      <%= will_paginate @search %>
-    </div>
-    <!-- END:  Pagination -->
+        <!-- Pagination -->
+        <div class="col-md-12"><%= will_paginate @search %></div>
+        <!-- END:  Pagination -->
 
 
 
-  <% else %>
-    no results found
+    <% else %>
+      no results found
+    <% end %>
   <% end %>
-  <% end %>
-  </div>
+</div>
 
 
 <script type="text/javascript">
@@ -239,9 +247,7 @@ $('#applicant_image').load(function(){
 
     $.ajax({
         url: '/schedules/getSched/applicant',
-        data: {
-          applicant_id : id
-        },
+        data: { applicant_id : id },
         dataType: 'json',
         beforeSend: function(){
           $('#applicant_right #applicant_name').append($('<small>').text('Loading...'));
@@ -282,7 +288,5 @@ $('#applicant_image').load(function(){
         }
       })
   });
-
-
 </script>
 

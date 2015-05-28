@@ -1,6 +1,5 @@
 <%=stylesheet_link_tag 'fonts/felix/stylesheet.css'%>
 
-
 <h1>List of schedules</h1>
 
 <div role="tabpanel">
@@ -128,7 +127,7 @@
           // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
       },
       eventClick: function(calEvent, jsEvent, view) {
-        $('#eventDesc .title').html(moment(calEvent.start).format('MMMM DD, YYYY: hh:MM A')+'-'+moment(calEvent.end).format("hh:MM A"));
+        $('#eventDesc .title').html(moment(calEvent.start).format('MMMM DD, YYYY: hh:mm A')+'-'+moment(calEvent.end).format("hh:mm A"));
         $('#eventDesc .applicant').html(calEvent.applicant);
         $('#eventDesc .interviewer').html(calEvent.interviewer);
         $('#applicant_img').attr('src','/images/' + calEvent.imgsrc);

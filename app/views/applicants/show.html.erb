@@ -4,7 +4,7 @@
   <div class="col-md-6 col-xs-12">
     <div class="row">
       <div class="col-md-12">
-        <div class="panel panel-primary ap_info">
+        <div class="panel panel-success ap_info">
           <div class="panel-heading">
             <% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
               <%= image_tag "#{@applicant.image_name}" , :size => "200x200" , :class=>"img-circle" %>
@@ -47,10 +47,10 @@
   <% if @applicant.status == "Hired" %>
         <h3>HIRED</h3>
   <% else %>
-                    
+
     <div class="col-md-12">
       <div class="row">
-          <div class="panel panel-primary">
+          <div class="panel panel-success">
             <div class="panel-heading">Add Exam</div>
               <div class="panel-body">
                 <% if @applicant.skipped_exam == 1 %>
@@ -82,7 +82,7 @@
 
     <div class="col-md-12">
       <div class="row">
-        <div class="panel panel-primary">
+        <div class="panel panel-success">
           <div class="panel-heading">Exam List</div>
             <div class="panel-body">
               <% if @applicant.skipped_exam == 1%>
@@ -176,7 +176,7 @@
 
     <div class="col-md-12">
       <div class="row">
-        <div class="panel panel-primary">
+        <div class="panel panel-success">
           <div class="panel-heading">Options</div>
             <div class="panel-body">
 

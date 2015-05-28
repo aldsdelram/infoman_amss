@@ -15,6 +15,12 @@ class InterviewersController < ApplicationController
   def show
     @interviewer = Interviewer.find(params[:id])
 
+    now = DateTime.now
+
+    @next_sched = @interviewer.schedules.where(["sched_start > ?", now]) #.find(:conditions=>["sched_start < ?", now])
+    @prev_sched = @interviewer.schedules.where(["sched_start < ?", now]) #.find(:conditions=>["sched_start < ?", now])
+
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @interviewer }
@@ -111,7 +117,7 @@ class InterviewersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def upload_image(image, base64)
     require 'fileutils'
     data =  base64
