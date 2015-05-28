@@ -123,7 +123,17 @@
           <div class="img-circle pull-left text-center" id="applicant_head">
               <span><%=name.slice(0,1).capitalize%></span>
           </div>
-          <%=image_tag applicant.image_name, :class=>"visible-xs hidden-xs", :id=>"applicant_pic"%>
+
+          <% if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") %>
+            <%= image_tag applicant.image_name,
+           :class=> "visible-xs hidden-xs",
+           :id => "applicant_pic"%>
+          <% else %>
+            <%= image_tag('404.jpg', :class=>"visible-xs hidden-xse",
+              :id=> "applicant_pic") %>
+          <% end %>
+
+          <%#image_tag applicant.image_name, :class=>"visible-xs hidden-xs", :id=>"applicant_pic"%>
         <%= link_to name, '#bookmark', :id=>'applicant_link', 'data-id' => applicant.id ,
           'data-name' => name, 'data-image' => applicant.image_name%>
           <ul>

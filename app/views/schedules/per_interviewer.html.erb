@@ -124,7 +124,18 @@
           <div class="img-circle pull-left text-center" id="applicant_head">
               <span><%=interviewer.name.slice(0,1).capitalize%></span>
           </div>
-          <%=image_tag interviewer.image_name, :class=>"visible-xs hidden-xs", :id=>"applicant_pic"%>
+
+
+          <% if File.exists?("#{RAILS_ROOT}/public/images/#{interviewer.image_name}") %>
+            <%= image_tag interviewer.image_name,
+           :class=> "visible-xs hidden-xs",
+           :id => "applicant_pic"%>
+          <% else %>
+            <%= image_tag('404.jpg', :class=>"visible-xs hidden-xse",
+              :id=> "applicant_pic") %>
+          <% end %>
+
+          <%#image_tag interviewer.image_name, :class=>"visible-xs hidden-xs", :id=>"applicant_pic"%>
         <%= link_to interviewer.name, '#bookmark', :id=>'applicant_link', 'data-id' => interviewer.id ,
           'data-name' => interviewer.name, 'data-image' => interviewer.image_name%>
           <ul>
