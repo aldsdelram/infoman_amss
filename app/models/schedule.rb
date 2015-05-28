@@ -1,9 +1,11 @@
 class Schedule < ActiveRecord::Base
-	
+
 	attr_accessor :realNil
 	attr_accessor :hasError
 	attr_accessor :re_sched
-	
+	attr_accessor :det
+
+
 	belongs_to :interviewer
 	belongs_to :applicant
 	belongs_to :applicants_interviewers
@@ -15,7 +17,8 @@ class Schedule < ActiveRecord::Base
 	validate :hasValue
 	#validates :applicant_id, :uniqueness => true
 	#validates_uniqueness_of :sched_start, :scope => :interviewer_id
-	
+
+
 	def check_date
 		if self.hasError
 			errors.add("", "You entered Invalid date: \n - "+self.interviewer.name)
@@ -30,20 +33,30 @@ class Schedule < ActiveRecord::Base
 	end
 
 	def should_not_conflict_with_other_applicants
-		day_event = Schedule.find(:all, :conditions=>["interviewer_id = ? 
+		day_event = Schedule.find(:all, :conditions=>["interviewer_id = ?
 			AND YEAR(sched_start) = ? AND DAY(sched_start) = ? AND MONTH(sched_start) = ? AND NOT(applicant_id = ?) ",
 			self.interviewer_id, self.sched_start.year, self.sched_start.day, self.sched_start.month, self.applicant.id])
 
+
 		day_event.each do |check_time|
-			errors.add("", "Interviewer schedule conflict.") if 
-				Time.at(self.sched_start.to_i) <= Time.at(check_time.sched_end.to_i) &&
-			 	Time.at(self.sched_end.to_i) >= Time.at(check_time.sched_start.to_i)
+				if  Time.at(self.sched_start.to_i) <= Time.at(check_time.sched_end.to_i) &&
+			 		Time.at(self.sched_end.to_i) >= Time.at(check_time.sched_start.to_i)
+
+			 						errors.add("", "Interviewer schedule conflict.")
+			 						puts "ERROR--------------------------------------"
+			 						puts self.sched_start
+			 						puts self.sched_end
+			 						puts check_time.sched_end
+			 						puts check_time.sched_end
+			 						puts self.applicant.lastname
+			 						puts check_time.applicant.lastname
+			 	end
 		end
 	end
 
 	def should_not_conflict_with_other_interviewers
 
-		day_event_interviewers = Schedule.where("applicant_id = (?) 
+		day_event_interviewers = Schedule.where("applicant_id = (?)
 			AND YEAR(sched_start) = (?) AND DAY(sched_start) = (?) AND MONTH(sched_start) = (?) AND NOT(interviewer_id = ?)",
 			 self.applicant_id, self.sched_start.year, self.sched_start.day, self.sched_start.month, self.interviewer.id)
 
@@ -55,14 +68,18 @@ class Schedule < ActiveRecord::Base
 				conflict_interviewers += (" - "+schedule.interviewer.name+"\n")
 			end
 		end
-		
+
 		if conflict_interviewers != ""
 			errors.add("", "Conflict in schedule of "+self.interviewer.name+ " with the following schedules:\n"+conflict_interviewers)
 		end
 	end
 
 	def resume?
-		!@hasError && !@realNil
+		if @det == true
+			false
+		else
+			!@hasError && !@realNil
+		end
 	end
 
 	def hasValue
@@ -70,4 +87,4 @@ class Schedule < ActiveRecord::Base
 			errors.add("", "Schedule Cant be blank: \n - "+self.interviewer.name)
 		end
 	end
-end 
+end
