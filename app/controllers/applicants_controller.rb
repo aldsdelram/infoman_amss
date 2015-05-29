@@ -1,6 +1,6 @@
 class ApplicantsController < ApplicationController
   include ApplicantsHelper
-  
+
   # GET /applicants
   # GET /applicants.xml
 
@@ -21,12 +21,13 @@ class ApplicantsController < ApplicationController
   # GET /applicants/1.xml
   def show
     @applicant = Applicant.find(params[:id])
-    
+
+    @exam_list = @applicant.position.exams.where("exam_id NOT IN (" +
+        "SELECT exam_id "+
+        "FROM grades "+
+        "WHERE applicant_id = ?)", @applicant)
+
     if @applicant.status != "Hired"
-      @exam_list = @applicant.position.exams.where("exam_id NOT IN (" +
-          "SELECT exam_id "+
-          "FROM grades "+
-          "WHERE applicant_id = ?)", @applicant)
 
       @interviewer_option = false
       if params[:bypass_exams]
@@ -360,7 +361,7 @@ class ApplicantsController < ApplicationController
 
   def get_interviewer
   	if request.xhr?
-  		@department_id = Department.find(:first, :conditions => ["department_name = ?", params[:department_name]]).id      
+  		@department_id = Department.find(:first, :conditions => ["department_name = ?", params[:department_name]]).id
     	if !params[:selected_interviewers].blank?
         params[:selected_interviewers] = params[:selected_interviewers].map {|i| i.to_i}
         options = Interviewer.where("department_id = (?) AND id NOT IN (?)",
@@ -386,11 +387,11 @@ class ApplicantsController < ApplicationController
   end
 
   def matched_db_applicants
-    
+
     if params[:renew] == "true"
-      
+
       matched_applicant = Applicant.find(params[:id])
-      applicant = session[:applicant]      
+      applicant = session[:applicant]
       applicant.school = School.find(session[:school_id])
 
       session[:applicant] = nil;
@@ -407,7 +408,7 @@ class ApplicantsController < ApplicationController
         )
 
       if matched_applicant.update_attributes(applicant.attributes)
-        
+
         if history.save
           matched_applicant.grades.each do |store|
             GradeHistory.create(

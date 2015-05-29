@@ -117,14 +117,16 @@
                         <% end %>
                       </td>
                     <% else %>
-                      <% if @applicant.skipped_exam == 1 %>
-                        --
+                      <% if @applicant.skipped_exam == 1 || @applicant.status = "Hired"%>
+                        <td rowspan="2">--</td>
                       <% else %>
-                      <td rowspan="2"><%= link_to  'Grade', '#', 'data-toggle' => "modal",
-           'data-target' => '#gradeModal','data-id' => exam.id,
-           'data-action' => update_grade_path(@applicant,exam),
-           'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
-           'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks%></td>
+                      <td rowspan="2">
+                        <%= link_to  'Grade', '#', 'data-toggle' => "modal",
+                         'data-target' => '#gradeModal','data-id' => exam.id,
+                         'data-action' => update_grade_path(@applicant,exam),
+                         'data-score' => exam.grades.find_by_applicant_id(@applicant).score,
+                         'data-remarks' => exam.grades.find_by_applicant_id(@applicant).remarks%>
+                        </td>
                       <% end %>
                     <% end %>
                   <tr>
