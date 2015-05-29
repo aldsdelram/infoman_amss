@@ -12,6 +12,25 @@
           cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       </div>
+
+
+
     </div>
   </div>
 </div>
+
+
+
+
+<% if session[:logged] %>
+  <script type="text/javascript">
+    var admin_name = <%= "'" + @admin.name + "'"%>
+    $.smkAlert(
+      {
+        text:"Welcome " + admin_name,
+        type:'info'
+      }
+    );
+  </script>
+<% end %>
+<%  session[:logged] = false%>

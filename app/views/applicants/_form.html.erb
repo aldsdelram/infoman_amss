@@ -11,14 +11,14 @@
   <% end %>
 
 <div class="row">
-<%= form_for @applicant, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+<%= form_for @applicant, :html => {:multipart => true, :class=>"form-horizontal", :id=>"applicant_form"} do |f| %>
 
   <div class="field col-md-3 text-center">
     <%= label_tag "Picture" %><br />
     <canvas id="myCanvas"></canvas>
     <input id="base64" type="hidden" value="" name="base64"/>
     <input id="imgName" type="hidden" value="" name="imgName"/>
-    <input type='file' name = "applicant[image]" accept="image/*" 
+    <input type='file' name = "applicant[image]" accept="image/*"
     onchange="readURL(this);" id = "uploader" class="btn" />
   </div>
 
@@ -27,13 +27,15 @@
     <div class="field form-group">
       <%= f.label :lastname ,'Last Name' ,:class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.text_field :lastname, :class=>"form-control" , :required=>true, :autofocus=>true%>
+        <%= f.text_field :lastname, :class=>"form-control" , :required=>true, :autofocus=>true,
+          :pattern=> "^(?!\\s*$).+"%>
       </div>
     </div>
     <div class="field form-group">
       <%= f.label :firstname,'First Name ', :class=>"control-label col-md-3" %>
       <div class="col-md-9">
-        <%= f.text_field :firstname, :class=>"form-control", :required=>true, :autofocus=>true%>
+        <%= f.text_field :firstname, :class=>"form-control", :required=>true, :autofocus=>true,
+          :pattern=> "^(?!\\s*$).+"%>
       </div>
     </div>
     <div class="field form-group">
@@ -79,7 +81,8 @@
     <div class="field form-group">
       <%= f.label :address , :class=>"control-label col-md-3"%>
       <div class="col-md-9">
-        <%= f.text_area :address, :rows=>4, :cols=>40, :class=>"form-control", :required=>true %>
+        <%= f.text_area :address, :rows=>4, :cols=>40, :class=>"form-control", :required=>true,
+           :pattern=> "^(?!\\s*$).+"%>
       </div>
     </div>
     <div class="field form-group">
@@ -105,7 +108,7 @@
   <div class="clearfix"></div>
   <div class="row">
     <div class="actions col-md-2 col-md-offset-4">
-      <%= f.submit :class=>"btn btn-default"%>
+      <%= f.submit :class=>"btn btn-default", :id=>"applicant_submit"%>
     </div>
   </div>
 
@@ -215,3 +218,29 @@
     document.getElementById('school').value = <%= @applicant.school.id %>;
   </script>
 <% end %>
+
+
+
+<script type="text/javascript">
+    $('#applicant_submit').click(function(){
+      validate();
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+
+  function validate(){
+    if ($('#applicant_form').smkValidate()) {
+
+    }
+    else{
+      $.smkAlert({
+        text: 'Oooops! There\'s an error',
+        type: 'danger'
+      })
+    }
+  }
+</script>
