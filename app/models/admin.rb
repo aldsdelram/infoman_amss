@@ -2,6 +2,8 @@ require 'digest/sha2'
 
 class Admin < ActiveRecord::Base
   attr_accessor :image
+
+  has_many :admin_logs
   
   validates :name, :presence => true, :uniqueness => true
 

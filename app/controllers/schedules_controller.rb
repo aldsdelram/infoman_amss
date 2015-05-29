@@ -106,6 +106,11 @@ class SchedulesController < ApplicationController
       if params[:cancel_schedule] == 'Cancel'
         format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully cancelled.') }
       elsif @schedule.save
+        if params[:new_schedule] == "Reschedule"
+          AdminLog.create(:admin_id=>session[:admin_id], :log=>"Reschedule -> "+@schedule.id.to_s+" to Applicant -> "+@applicant.id.to_s)
+        else
+          AdminLog.create(:admin_id=>session[:admin_id], :log=>"Assigned schedule -> "+@schedule.id.to_s+" to Applicant -> "+@applicant.id.to_s)
+        end
         format.html { redirect_to(schedules_new_path(@applicant), :notice => 'Schedule was successfully created.') }
         format.xml  { render :xml => @schedule, :status => :created, :location => @schedule }
       else
@@ -139,6 +144,7 @@ class SchedulesController < ApplicationController
   # DELETE /schedules/1.xml
   def destroy
     @schedule = Schedule.find(params[:id])
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed schedule -> "+@schedule.id.to_s)
     @schedule.destroy
     respond_to do |format|
       format.html { redirect_to(schedules_url) }
@@ -219,6 +225,7 @@ class SchedulesController < ApplicationController
     respond_to do |format|
       @schedule = schedule
       if schedule.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Graded applicant -> "+applicant.id.to_s+" with a schedule of -> "+@schedule.id.to_s)
         format.html {redirect_to @schedule, :notice=>'NOTICE' }
       else
         format.html {render :action => 'show', :notice=>'NOTICE' }

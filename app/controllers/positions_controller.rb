@@ -42,6 +42,7 @@ class PositionsController < ApplicationController
 
     respond_to do |format|
       if @position.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new position -> "+@position.id.to_s)
         format.html { redirect_to(positions_path, :notice => 'Position was successfully created.') }
         format.xml  { render :xml => positions_path, :status => :created, :location => @position }
       else
@@ -65,6 +66,7 @@ class PositionsController < ApplicationController
         puts "respond" + @edit_position.title
 
       if @edit_position.update_attributes(params[:position])
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a position -> "+@edit_position.id.to_s)
         @edit_error = nil
         session['updated'] = @edit_position
         format.html { redirect_to(positions_path, :notice => 'Position was successfully updated.')}
@@ -84,6 +86,7 @@ class PositionsController < ApplicationController
   # DELETE /positions/1.xml
   def destroy
     @position = Position.find(params[:id])
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a position -> "+@position.id.to_s)
     @position.destroy
 
     respond_to do |format|
@@ -108,6 +111,7 @@ class PositionsController < ApplicationController
         "WHERE position_id = ?)", @position)
 
       if@epa.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Assigned exam -> "+@exam.id.to_s+" to position -> "+@position.id.to_s)
         format.html { redirect_to @position, :notice=>"#{@exam.title} successfully added."}
       else
         format.html { render :action => "show"}
@@ -120,7 +124,8 @@ class PositionsController < ApplicationController
     @position = Position.find(params[:id])
 
     @epa = ExamPositionAssignment.where(:position_id => @position, :exam_id => @exam)
-
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed exam -> "+@exam.id.to_s+" to position -> "+@position.id.to_s)
+        
     respond_to do |format|
        if @epa.last.destroy
          format.html { redirect_to @position}

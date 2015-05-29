@@ -56,14 +56,17 @@ class ApplicantsController < ApplicationController
     respond_to do |format|
 
     if params[:bypass_all] == 'Proceed to Interview'
+      AdminLog.create(:admin_id=>session[:admin_id], :log=>"Applicant -> "+@applicant.id.to_s+" proceed to Interview(bypass_all)")
       @applicant.skipped_exam = 1
       @applicant.save
       format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
     elsif params[:consider_interview] == 'Consider for Interview'
+      AdminLog.create(:admin_id=>session[:admin_id], :log=>"Applicant -> "+@applicant.id.to_s+" consider for Interview(exam_failed)")
       @applicant.consider = 1
       @applicant.save
       format.html {redirect_to applicants_assign_interviewer_path(@applicant)}
     elsif params[:HIRE]
+      AdminLog.create(:admin_id=>session[:admin_id], :log=>"Hired the Applicant -> "+@applicant.id.to_s)
       @applicant.status = "Hired"
       @applicant.save
       format.html {redirect_to @applicant}
@@ -124,6 +127,7 @@ class ApplicantsController < ApplicationController
   def create
     if params[:consider] == 'Consider as NEW'
       @applicant = Applicant.new(session[:applicant].attributes)
+      AdminLog.create(:admin_id=>session[:admin_id], :log=>"Considered as new Applicant -> "+@applicant.id.to_s)
       @applicant.school = School.find(session[:school_id])
     else
       params[:applicant][:firstname] = params[:applicant][:firstname].gsub(/\s+/, ' ')
@@ -135,6 +139,7 @@ class ApplicantsController < ApplicationController
     @create_school = nil
     @school = School.new
     @image_data = params[:base64]
+
     respond_to do |format|
 
       if params[:cancel] == "Cancel"
@@ -146,6 +151,7 @@ class ApplicantsController < ApplicationController
         @school.acronym = params[:acronym]
 
         if @school.save
+          AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new school -> "+@school.school_name)
           @create_school = "success";
           format.html {render :action => "new" }
           format.xml  { render :xml => @school, :status => :created, :location => @school }
@@ -179,6 +185,9 @@ class ApplicantsController < ApplicationController
 
         else
           if @applicant.save
+            if params[:consider] != 'Consider as NEW'
+              AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new Applicant -> "+@applicant.id.to_s)
+            end
             session[:applicant] = nil;
             session[:school_id] = nil;
             session[:matched] = nil;
@@ -229,7 +238,7 @@ class ApplicantsController < ApplicationController
           @applicant.school = School.find(params[:school_id])
 
         if @applicant.update_attributes(params[:applicant])
-
+          AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a Applicant -> "+@applicant.id.to_s)
           format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
           format.xml  { head :ok }
         else
@@ -248,8 +257,9 @@ class ApplicantsController < ApplicationController
     if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
       File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
     end
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a Applicant -> "+@applicant.id_to_s)
     @applicant.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to(applicants_show_all_url) }
       format.xml  { head :ok }
@@ -347,6 +357,7 @@ class ApplicantsController < ApplicationController
         interviewer.applicants << @applicant
         @applicant.status = 'On-Interview'
         @applicant.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Assigned interviewer -> "+interviewer.id.to_s+" to Applicant -> "+@applicant.id.to_s)
         format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
       elsif params[:remove_interviewer] == 'Cancel'
         interviewer_remove = Interviewer.find(id['interviewer'][0].to_i)
@@ -354,6 +365,7 @@ class ApplicantsController < ApplicationController
           @applicant.schedules.where(['interviewer_id = ?', interviewer_remove.id]).first.destroy
         end
         interviewer_remove.applicants.delete(@applicant)
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed interviewer -> "+interviewer_remove.id.to_s+" to Applicant -> "+@applicant.id.to_s)
         format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
       else
         format.html { render :action => 'assign_interviewer' }
@@ -447,7 +459,7 @@ class ApplicantsController < ApplicationController
     @applicant = Applicant.find(params[:id])
     @exam = Exam.find(params[:exam])
     @applicant.exams << @exam
-
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Assigned Exam ->"+@exam.id.to_s+" to Applicant -> "+@applicant.id.to_s)
     redirect_to @applicant
   end
 
@@ -460,6 +472,7 @@ class ApplicantsController < ApplicationController
     @grades.update_attributes(params[:grade])
     respond_to do |format|
       if @grades.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Graded the exam ->"+@exam.id.to_s+" of Applicant -> "+@applicant.id.to_s+" with a score of "+@grade.score.to_s)
         format.html { redirect_to @applicant}
       else
         @applicant = Applicant.find(params[:id])

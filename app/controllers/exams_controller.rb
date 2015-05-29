@@ -53,7 +53,7 @@ class ExamsController < ApplicationController
 
     respond_to do |format|
       if @exam.save
-
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new exam -> "+@exam.id.to_s)
         # page = Exam.all(:order => "title").index(@exam) / $per_page
         # page += 1
         page = find_page(@exam)
@@ -82,7 +82,8 @@ class ExamsController < ApplicationController
       if @edit_exam.update_attributes(params[:exam])
         @edit_error = nil
         session['updated'] = @edit_exam
-
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a exam -> "+@edit_exam.id.to_s)
+        
         page = find_page(@edit_exam)
 
 
@@ -107,8 +108,9 @@ class ExamsController < ApplicationController
   # DELETE /exams/1.xml
   def destroy
     @exam = Exam.find(params[:id])
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a exam -> "+@exam.id.to_s)
     @exam.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to(exams_url) }
       format.xml  { head :ok }

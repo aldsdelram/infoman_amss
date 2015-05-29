@@ -52,6 +52,7 @@ class InterviewersController < ApplicationController
 
     respond_to do |format|
       if @interviewer.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new interviewer -> "+@interviewer.id.to_s)
         format.html { redirect_to(@interviewer, :notice => 'Interviewer was successfully created.') }
         format.xml  { render :xml => @interviewer, :status => :created, :location => @interviewer }
       else
@@ -76,6 +77,7 @@ class InterviewersController < ApplicationController
 
     respond_to do |format|
       if @interviewer.update_attributes(params[:interviewer])
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a interviewer -> "+@interviewer.id.to_s)
         format.html { redirect_to(@interviewer, :notice => 'Interviewer was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -110,6 +112,7 @@ class InterviewersController < ApplicationController
     if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
       File.delete("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
     end
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a interviewer -> "+@interviewer.id.to_s)
     @interviewer.destroy
 
     respond_to do |format|

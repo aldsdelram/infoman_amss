@@ -1,0 +1,24 @@
+<h1 class="page-header">LOGS</h1>
+<div class="col-md-2">
+	<%=link_to "Back", index_path, :class=>"btn btn-success col-md-12" %>
+</div>
+<div class="col-md-12">
+<br />
+<div class="panel panel-success">
+  <div class="panel-heading"><h4>Admin <%= @admin.name %></h4></div>
+    <div class="panel-body">
+			<table class="table table-default table-responsive table-bordered table-striped">
+				<tr>
+					<th>Date</th>
+					<th>Log</th>
+				</tr>
+				<% @logs.each do |log| %>
+					<tr>
+						<td><%= log.created_at %></td>
+						<td><%= log.log %></td>
+					</tr>
+				<% end %>
+		  </table>
+   </div>
+</div>
+</div>

@@ -52,6 +52,7 @@ class SchoolsController < ApplicationController
 
     respond_to do |format|
       if @school.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new School -> "+@school.id.to_s)
 
         page = find_page(@school)
 
@@ -78,6 +79,7 @@ class SchoolsController < ApplicationController
 
     respond_to do |format|
       if @edit_school.update_attributes(params[:school])
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated School -> "+@school.id.to_s)
         @edit_error = nil
         session['updated'] = @edit_school
 
@@ -103,6 +105,8 @@ class SchoolsController < ApplicationController
   # DELETE /schools/1.xml
   def destroy
     @school = School.find(params[:id])
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed School -> "+@school.id.to_s)
+
     @school.destroy
 
     respond_to do |format|

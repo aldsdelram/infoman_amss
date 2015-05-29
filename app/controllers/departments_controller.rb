@@ -53,7 +53,7 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new department -> "+@department.id.to_s)
         page = find_page(@department)
 
         format.html { redirect_to(departments_path(:page=> page), :notice => 'Department was successfully created.') }
@@ -79,6 +79,7 @@ class DepartmentsController < ApplicationController
     respond_to do |format|
       if @edit_department.update_attributes(params[:department])
         @edit_error = nil
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a department -> "+@edit_department.id.to_s)
         session['updated'] = @edit_department
 
         page = find_page(@edit_department)
@@ -103,8 +104,9 @@ class DepartmentsController < ApplicationController
   # DELETE /departments/1.xml
   def destroy
     @department = Department.find(params[:id])
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a department -> "+@department.id.to_s)
     @department.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to(departments_url) }
       format.xml  { head :ok }

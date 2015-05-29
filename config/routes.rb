@@ -1,6 +1,8 @@
 
 AMSS::Application.routes.draw do
 
+  get 'admins/log/:id' => 'admins#show_logs', :as=>'admin/logs'
+  
   post 'schedules/interviewer_grade_decision/:id' => 'schedules#interviewer_grade_decision', :as => 'interviewer/grade_decision'
 
   get 'schedules/getSched/:filter' => 'schedules#getSched'
