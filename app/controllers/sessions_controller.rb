@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   skip_before_filter :authorize
 
   def new
+    session[:logged] = true
     if Admin.find_by_id(session[:admin_id])
         redirect_to index_url
     end
