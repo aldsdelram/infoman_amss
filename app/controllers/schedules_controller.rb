@@ -187,11 +187,11 @@ class SchedulesController < ApplicationController
         applicant.save
       when "Failed"
         schedule.grade = "FI"
-        applicant.status = "For Hiring"
+        applicant.status = "Failed-Interview"
         applicant.save
-      when "Failed-Stop", "Failed"
+      when "Failed-Stop"
         schedule.grade = "FS"
-        applicant.status = "For Hiring"
+        applicant.status = "Failed-Interview"
         applicant.save
       when "Passed-Continue"
         schedule.grade = "PC"

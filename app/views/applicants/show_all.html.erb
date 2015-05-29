@@ -1,18 +1,20 @@
 <h1 class="page-header">Showing all Applicants</h1>
 <h3> FILTER: </h3>
-<%= form_tag applicants_show_all_path , :class => "form-group form-inline col-md-6" do %>
-    <%= radio_button_tag 'toShow', "all", (@toShow.nil? || @toShow == 'all') %>
-    <%= label_tag "ALL", nil,  :class => "form-label" %>
+<%= form_tag applicants_show_all_path , :class => "form-group form-inline col-md-12" do %>
+    | <%= radio_button_tag 'toShow', "all", (@toShow.nil? || @toShow == 'all') %>
+    <%= label_tag "ALL", nil,  :class => "form-label" %> | 
     <%= radio_button_tag 'toShow', "pending", (@toShow == 'pending') %>
-    <%= label_tag "PENDING", nil,  :class => "form-label" %>
-    <%= radio_button_tag 'toShow', "hired", (@toShow == 'hired') %>
-    <%= label_tag "HIRED", nil,  :class => "form-label" %>
-    <%= radio_button_tag 'toShow', "failed", (@toShow == 'failed') %>
-    <%= label_tag "FAILED", nil,  :class => "form-label" %>
+    <%= label_tag "PENDING", nil,  :class => "form-label" %> | 
     <%= radio_button_tag 'toShow', "on-interview", (@toShow == 'on-interview') %>
-    <%= label_tag "ON-INTERVIEW", nil,  :class => "form-label" %>
+    <%= label_tag "ON-INTERVIEW", nil,  :class => "form-label" %> | 
     <%= radio_button_tag 'toShow', "for-hiring", (@toShow == 'for-hiring') %>
-    <%= label_tag "FOR HIRING", nil,  :class => "form-label" %>
+    <%= label_tag "FOR HIRING", nil,  :class => "form-label" %> | 
+    <%= radio_button_tag 'toShow', "hired", (@toShow == 'hired') %>
+    <%= label_tag "HIRED", nil,  :class => "form-label" %> | 
+    <%= radio_button_tag 'toShow', "failed-exam", (@toShow == 'failed-exam') %>
+    <%= label_tag "FAILED ON EXAM", nil,  :class => "form-label" %> | 
+    <%= radio_button_tag 'toShow', "failed-interview", (@toShow == 'failed-interview') %>
+    <%= label_tag "FAILED ON INTERVIEW", nil,  :class => "form-label" %> | 
     <%= submit_tag "Proceed", :class => "btn btn-success"%>
 <% end %>
 

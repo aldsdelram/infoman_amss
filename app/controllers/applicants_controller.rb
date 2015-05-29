@@ -47,7 +47,7 @@ class ApplicantsController < ApplicationController
         end
         if !exam.grades.find_by_applicant_id(@applicant).score.nil?
           if exam.grades.find_by_applicant_id(@applicant).score.to_i < exam.passing_score
-            @applicant.status = 'Failed'
+            @applicant.status = 'Failed-Exam'
             @applicant.save
           end
         end
@@ -85,8 +85,10 @@ class ApplicantsController < ApplicationController
     		@applicants = Applicant.find(:all, :conditions => ["status = 'Pending'"])
     	when "hired"
     		@applicants = Applicant.find(:all, :conditions => ["status = 'Hired'"])
-    	when "failed"
-    		@applicants = Applicant.find(:all, :conditions => ["status = 'Failed'"])
+    	when "failed-exam"
+    		@applicants = Applicant.find(:all, :conditions => ["status = 'Failed-Exam'"])
+      when "failed-interview"
+        @applicants = Applicant.find(:all, :conditions => ["status = 'Failed-Interview'"])
       when "on-interview"
         @applicants = Applicant.find(:all, :conditions => ["status = 'On-Interview'"])
       when "for-hiring"

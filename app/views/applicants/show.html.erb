@@ -197,9 +197,7 @@
                       <%= submit_tag 'Proceed to Interview', :name => 'bypass_all', :class => 'btn btn-primary', :confirm=>"Are you Sure?"%>
                   <% elsif (@applicant.exams.any? && !@taken_all_exam) && @applicant.status != "Failed"%>
                       <%= submit_tag 'Skip Exams', :name => 'bypass_exams', :class => 'btn btn-primary', :confirm=> "Are you sure?"%>
-                  <% end %>
-
-                  <% if (@taken_all_exam && @applicant.exams.any?) || @applicant.skipped_exam == 1 || @applicant.consider.nil? || @applicant.consider == 0%>
+                  <% elsif (@taken_all_exam && @applicant.exams.any?) || @applicant.skipped_exam == 1 || @applicant.consider.nil? || @applicant.consider == 0%>
                     <% if @applicant.status == 'Failed' && (@applicant.consider == 0 || @applicant.consider.nil?)%>
                       <%= submit_tag 'Consider for Interview', :name => 'consider_interview', :class => 'btn btn-primary' %>
                     <% elsif @applicant.interviewers.blank? %>
@@ -225,6 +223,8 @@
                         <% if @still_on_interview %>
                           * This applicant still has an interview. You can view the schedules
                             <%=link_to "here", applicant_schedules_path(:applicant_id => @applicant) %>
+                        <% elsif @applicant.status == "Failed-Interview" %>
+                          <h4>This Applicant failed the interview.</h4>
                         <% else %>
                          <%= submit_tag 'HIRE', :name => 'HIRE', :class=> 'btn btn-primary'%>
                         <% end %>
