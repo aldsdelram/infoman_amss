@@ -63,6 +63,8 @@ body{
 
 #side{
   background: #333;
+  overflow-y: auto;
+  max-height: 92vh;
 }
 
 #myCanvas{
@@ -369,4 +371,77 @@ input[type=number] button{
   padding: 5px 2px ;
   background: #5a5;
   border-bottom: 2px solid #050;
+}
+
+#admin_pic{
+  margin-bottom: 10px;
+  position:relative;
+  min-height: 30vh;
+  background-image: url('/images/businessman_opaque_50.png');
+  -webkit-background-size:cover;
+       -moz-background-size:cover;
+         -o-background-size:cover;
+            background-size:cover;
+  background-position: center center;
+  z-index: 5;
+  padding: 0;
+  padding-top: 15px;
+}
+
+
+#admin_pic .row{
+  height: 100%;
+  width: 100%;
+  display: table;
+  padding: 0;
+  margin: 0;
+}
+
+#admin_pic span {
+  display: table-cell;
+  vertical-align: bottom;
+  position:relative;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 15px;
+  color: #fff;
+}
+
+#admin_pic h3{
+  margin-bottom: 5px;
+}
+
+#admin_pic a{
+  color: white;
+}
+
+#logout_button{
+  z-index: 10;
+  position: relative;
+  display: inline-block;
+  width: 175px;
+  padding: 8px;
+  color: #fff;
+  border: 3px solid #fff;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+  transition: all 0.2s ease-out,
+              color 0.2s ease-out;
+}
+
+#logout_button:hover,
+#logout_button:active{
+  background-color: #fff; /* fallback */
+  background-color: rgba(28,181,104,1);
+  border-color: #fff; /* fallback */
+  border-color: rgba(28,181,104,1);
+  transition: all 0.3s ease-in,
+              color 0.3s ease-in;
+}
+
+#applicant_stat{
+  background: #cec;
+  border-bottom: 5px solid #dfd;
+  margin-bottom: 5px;
 }
