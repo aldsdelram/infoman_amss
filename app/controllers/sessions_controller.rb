@@ -11,6 +11,12 @@ class SessionsController < ApplicationController
   def create
     if user = Admin.authenticate(params[:name], params[:password])
         session[:admin_id] = user.id
+        Dir.chdir(Rails.root.to_s+'/public/images/')
+        Dir.mkdir('upload_images') unless Dir.exists?('upload_images')
+        Dir.chdir(Rails.root.to_s+'/public/images/upload_images')
+        Dir.mkdir('admins') unless Dir.exists?('admins')
+        Dir.mkdir('applicants') unless Dir.exists?('applicants')
+        Dir.mkdir('interviewers') unless Dir.exists?('interviewers')
         redirect_to index_url
     else
         redirect_to login_url, :alert => "Invalid user/password combination"
