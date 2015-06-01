@@ -5,6 +5,12 @@ class HomeController < ApplicationController
       redirect_to login_url
     else
       @admin = Admin.find(session[:admin_id])
+
+      @applicants = Applicant.all;
+      @pending = Applicant.where(:status=> "Pending");
+      @hired = Applicant.where(:status=> "Hired");
+      @failed = Applicant.where(:status=> "Failed-Exam");
+
     end
   end
 

@@ -43,7 +43,7 @@ class AdminsController < ApplicationController
     @admin = Admin.new(params[:admin])
     @image_data = params[:base64]
     @admin.image_name = upload_image(params[:admin][:image], params[:base64])
-    
+
     respond_to do |format|
       if @admin.save
         format.html { redirect_to(admins_url, :notice => "Admin #{@admin.name} was successfully created.") }
@@ -60,7 +60,7 @@ class AdminsController < ApplicationController
   def update
     @admin = Admin.find(params[:id])
     if @admin.image_name != params[:imgName]
-      if File.exists?("#{RAILS_ROOT}/public/images/#{@admin.image_name}")
+      if File.exists?("#{RAILS_ROOT}/public/images/#{@admin.image_name}") && !@admin.image.nil?
         File.delete("#{RAILS_ROOT}/public/images/#{@admin.image_name}")
       end
       @admin.image_name =  upload_image(params[:admin][:image], params[:base64])
@@ -105,7 +105,7 @@ class AdminsController < ApplicationController
   end
 
   def get_logs
-    
+
     #raise "HELLO"
   end
 

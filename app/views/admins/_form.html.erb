@@ -18,7 +18,7 @@
       <canvas id="myCanvas" class="thumbnail"></canvas>
       <input id="base64" type="hidden" value="" name="base64"/>
       <input id="imgName" type="hidden" value="" name="imgName"/>
-      <input type='file' name = "admin[image]" accept="image/*" 
+      <input type='file' name = "admin[image]" accept="image/*"
       onchange="readURL(this);" id = "uploader" class="btn" />
     </div>
     <div class="col-md-5">
@@ -36,7 +36,7 @@
       </div>
       <br />
       <div class="actions">
-        <%= f.submit "ADD", :class => "btn btn-success col-md-5 col-md-offset-1" %>
+        <%= f.submit :class => "btn btn-success col-md-5 col-md-offset-1" %>
       </div>
     </div>
     <div class="col-md-12">
@@ -44,9 +44,9 @@
         <%= link_to 'Back', admins_path, :class => "btn btn-default col-md-2" %>
     </div>
   </div>
-  
+
 <% end %>
- 
+
 <script type="text/javascript">
 
   $(window).load(function(){

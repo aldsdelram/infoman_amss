@@ -1,4 +1,18 @@
 <div class="row">
+  <div class="col-md-12" id="admin_pic" data-color='red' data-image=<%= "\"/images/#{Admin.find(session[:admin_id]).image_name}\"".html_safe %> >
+    <div class="row text-center">
+      <span class="text-center">
+      <%= image_tag Admin.find(session[:admin_id]).image_name, :class=>"img-circle", :size=>"100x100"%>
+
+        <h3><%= Admin.find(session[:admin_id]).name%></h3>
+        <%= link_to "Edit profile", edit_admin_path(session[:admin_id]) %><br/>
+        <%= link_to 'LOGOUT',logout_path, :method=>:delete, :id=>"logout_button"%>
+      </span>
+    </div>
+  </div>
+
+
+
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
 
     <div class="panel panel-success">
@@ -10,7 +24,6 @@
         </div>
       <% end %>
     </div>
-
 
     <div class="panel panel-success">
       <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
@@ -93,3 +106,28 @@
 
   </div>
 </div>
+
+
+<%= javascript_include_tag 'blur.js' %>
+
+
+<script type="text/javascript">
+
+  $(function(){
+    var image_name = $('#admin_pic').data('image');
+    image_name = "url(\'"+image_name+"\')";
+    $('#admin_pic').css('background-image', image_name);
+    $('#admin_pic').blurjs({
+        source: '#admin_pic',     //Background to blur
+        radius: 20,          //Blur Radius
+        overlay: 'rgba(28,251,50,0.3)',        //Overlay Color, follow CSS3's rgba() syntax
+        cache: false,                   //If set to true, blurred image will be cached and used in the future. If image is in cache already, it will be used.
+        cacheKeyPrefix: 'blurjs-'
+    });
+    $('#admin_pic').css('background-position', 'center center');
+  });
+    $('#admin_pic').height($('#admin_pic').width());
+
+
+</script>
+
