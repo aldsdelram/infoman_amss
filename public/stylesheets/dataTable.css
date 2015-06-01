@@ -91,6 +91,7 @@ table.dataTable{
     line-height: 1.428571429;
     text-decoration: none;
     color: #428bca;
+    color: #2ECC71;
     background-color: #ffffff;
     border: 1px solid #dddddd;
     margin-left: -1px;
@@ -104,6 +105,8 @@ table.dataTable{
   color: #ffffff;
   background-color: #428bca;
   border-color: #428bca;
+  background-color: #2ECC71;
+  border-color: #2ECC71;
   cursor: default;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -118,8 +121,8 @@ table.dataTable{
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
   z-index: 2;
   color: #ffffff;
-  background-color: #428bca;
-  border-color: #428bca;
+  background-color: #2ECC71;
+  border-color: #2ECC71;
   cursor: default;
 }
 
