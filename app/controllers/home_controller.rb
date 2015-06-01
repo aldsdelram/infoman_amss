@@ -11,6 +11,10 @@ class HomeController < ApplicationController
       @hired = Applicant.where(:status=> "Hired");
       @failed = Applicant.where(:status=> "Failed-Exam");
 
+      @positions = Position.all
+
+      @logs = AdminLog.where("admin_id = ?", session[:admin_id]).order("id desc").limit(10)
+
     end
   end
 

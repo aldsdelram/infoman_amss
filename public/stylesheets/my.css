@@ -376,8 +376,7 @@ input[type=number] button{
 #admin_pic{
   margin-bottom: 10px;
   position:relative;
-  height: 20vh;
-  overflow: hidden;
+  min-height: 30vh;
   background-image: url('/images/businessman_opaque_50.png');
   -webkit-background-size:cover;
        -moz-background-size:cover;
@@ -386,6 +385,7 @@ input[type=number] button{
   background-position: center center;
   z-index: 5;
   padding: 0;
+  padding-top: 15px;
 }
 
 
@@ -442,4 +442,6 @@ input[type=number] button{
 
 #applicant_stat{
   background: #cec;
+  border-bottom: 5px solid #dfd;
+  margin-bottom: 5px;
 }

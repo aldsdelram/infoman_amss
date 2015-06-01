@@ -1,4 +1,4 @@
-<h1 class="page-header">Admin Dashboard </h1>
+<h1 class="page-header" style="margin-bottom: 0;">Admin Dashboard </h1>
 
 <div class="col-md-12">
   <div class="row" id="applicant_stat">
@@ -54,8 +54,68 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-7">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Positions
+        </div>
+        <div class="panel-body">
+          <div class="row table-responsive">
+          <table class="table table-default table-hovered">
+          <tr>
+            <th> Positions</th>
+            <th> </th>
+          </tr>
+
+          <% @positions.each do |position| %>
+            <tr>
+              <td><%= position.title %></td>
+              <td><%= link_to 'Show Exams', position %> </td>
+            </tr>
+          <% end %>
+          </table>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <%= link_to 'Go to Position\'s maintenance page', positions_url %>
+        </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Logs
+        </div>
+        <div class="panel-body">
+          <div class="row table-responsive">
+          <table class="table table-default table-hovered">
+          <tr>
+            <th>Date</th>
+            <th>Log</th>
+          </tr>
+
+          <% @logs.each do |log| %>
+            <tr>
+              <% Time.zone = "Asia/Manila" %>
+              <td><%= log.created_at.strftime('%B %d, %Y - %H:%M:%S %') %></td>
+              <td><%= log.log %></td>
+            </tr>
+          <% end %>
+          </table>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <%= link_to "Show All Logs", admin_logs_path(session[:admin_id]) %>
+        </div>
+      </div>
+  </div>
+</div>
 <div class="col-md-12">
-  <%= link_to "Show logs", admin_logs_path(session[:admin_id]) %>
+
 </div>
 
 <% if session[:logged] %>
