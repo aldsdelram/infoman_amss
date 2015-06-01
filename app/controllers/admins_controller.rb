@@ -46,6 +46,7 @@ class AdminsController < ApplicationController
     
     respond_to do |format|
       if @admin.save
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created a new administrator -> "+@admin.id.to_s)
         format.html { redirect_to(admins_url, :notice => "Admin #{@admin.name} was successfully created.") }
         format.xml  { render :xml => @admin, :status => :created, :location => @admin }
       else
@@ -67,6 +68,7 @@ class AdminsController < ApplicationController
     end
     respond_to do |format|
       if @admin.update_attributes(params[:admin])
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Edited info of administrator -> "+@admin.id.to_s)
         format.html { redirect_to(admins_url, :notice => "Admin #{@admin.name}was successfully updated.") }
         format.xml  { head :ok }
       else
@@ -83,6 +85,7 @@ class AdminsController < ApplicationController
     if File.exists?("#{RAILS_ROOT}/public/images/#{@admin.image_name}") && !@admin.image_name.nil?
       File.delete("#{RAILS_ROOT}/public/images/#{@admin.image_name}")
     end
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed administrator -> "+@admin.id.to_s)
     @admin.destroy
 
     respond_to do |format|

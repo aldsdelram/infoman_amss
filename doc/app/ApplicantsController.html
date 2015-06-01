@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class ApplicantsController - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/applicants_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="ApplicantsHelper.html">ApplicantsHelper</a>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-assign_grade">#assign_grade</a>
+    
+    <li><a href="#method-i-assign_interviewer">#assign_interviewer</a>
+    
+    <li><a href="#method-i-create">#create</a>
+    
+    <li><a href="#method-i-destroy">#destroy</a>
+    
+    <li><a href="#method-i-edit">#edit</a>
+    
+    <li><a href="#method-i-get_info">#get_info</a>
+    
+    <li><a href="#method-i-get_interviewer">#get_interviewer</a>
+    
+    <li><a href="#method-i-header_search">#header_search</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+    <li><a href="#method-i-matched_db_applicants">#matched_db_applicants</a>
+    
+    <li><a href="#method-i-new">#new</a>
+    
+    <li><a href="#method-i-search_applicant">#search_applicant</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
+    <li><a href="#method-i-show_all">#show_all</a>
+    
+    <li><a href="#method-i-update">#update</a>
+    
+    <li><a href="#method-i-update_grade">#update_grade</a>
+    
+    <li><a href="#method-i-upload_image">#upload_image</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./SearchPaginationHelper.html">SearchPaginationHelper</a>
+  
+    <li><a href="./SearchPaginationHelper/LinkRenderer.html">SearchPaginationHelper::LinkRenderer</a>
+  
+    <li><a href="./Admin.html">Admin</a>
+  
+    <li><a href="./AdminLog.html">AdminLog</a>
+  
+    <li><a href="./AdminsController.html">AdminsController</a>
+  
+    <li><a href="./AdminsHelper.html">AdminsHelper</a>
+  
+    <li><a href="./Applicant.html">Applicant</a>
+  
+    <li><a href="./ApplicantReApplication.html">ApplicantReApplication</a>
+  
+    <li><a href="./ApplicantSchoolAssignment.html">ApplicantSchoolAssignment</a>
+  
+    <li><a href="./ApplicantsController.html">ApplicantsController</a>
+  
+    <li><a href="./ApplicantsHelper.html">ApplicantsHelper</a>
+  
+    <li><a href="./ApplicantsIndex.html">ApplicantsIndex</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Department.html">Department</a>
+  
+    <li><a href="./DepartmentsController.html">DepartmentsController</a>
+  
+    <li><a href="./DepartmentsHelper.html">DepartmentsHelper</a>
+  
+    <li><a href="./Exam.html">Exam</a>
+  
+    <li><a href="./ExamPositionAssignment.html">ExamPositionAssignment</a>
+  
+    <li><a href="./ExamsController.html">ExamsController</a>
+  
+    <li><a href="./ExamsHelper.html">ExamsHelper</a>
+  
+    <li><a href="./Grade.html">Grade</a>
+  
+    <li><a href="./GradeHistory.html">GradeHistory</a>
+  
+    <li><a href="./GradesController.html">GradesController</a>
+  
+    <li><a href="./GradesHelper.html">GradesHelper</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./HomeHelper.html">HomeHelper</a>
+  
+    <li><a href="./Interviewer.html">Interviewer</a>
+  
+    <li><a href="./InterviewersController.html">InterviewersController</a>
+  
+    <li><a href="./InterviewersHelper.html">InterviewersHelper</a>
+  
+    <li><a href="./Position.html">Position</a>
+  
+    <li><a href="./PositionsController.html">PositionsController</a>
+  
+    <li><a href="./PositionsHelper.html">PositionsHelper</a>
+  
+    <li><a href="./Schedule.html">Schedule</a>
+  
+    <li><a href="./SchedulesController.html">SchedulesController</a>
+  
+    <li><a href="./SchedulesHelper.html">SchedulesHelper</a>
+  
+    <li><a href="./School.html">School</a>
+  
+    <li><a href="./SchoolsController.html">SchoolsController</a>
+  
+    <li><a href="./SchoolsHelper.html">SchoolsHelper</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class ApplicantsController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-assign_grade" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">assign_grade</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="assign_grade-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 458</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">assign_grade</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-ivar">@exam</span> = <span class="ruby-constant">Exam</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:exam</span>])
+  <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">exams</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@exam</span>
+  <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Assigned Exam -&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@exam</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; to Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@applicant</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- assign_grade-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- assign_grade-method -->
+
+    
+      <div id="method-i-assign_interviewer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">assign_interviewer</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="assign_interviewer-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 344</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">assign_interviewer</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'cgi'</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:remove_interviewer</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Cancel'</span>
+    <span class="ruby-identifier">id</span> = <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+    <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>[<span class="ruby-string">'applicant'</span>][<span class="ruby-value">0</span>].<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">to_s</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment">#raise &quot;HELLo&quot;</span>
+    <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:commit</span>]
+      <span class="ruby-identifier">interviewer</span> = <span class="ruby-constant">Interviewer</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{params[:interviewer]}&quot;</span>).<span class="ruby-identifier">first</span>
+      <span class="ruby-identifier">interviewer</span>.<span class="ruby-identifier">applicants</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@applicant</span>
+      <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">status</span> = <span class="ruby-string">'On-Interview'</span>
+      <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Assigned interviewer -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">interviewer</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; to Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">applicants_assign_interviewer_path</span>(<span class="ruby-ivar">@applicant</span>) }
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:remove_interviewer</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Cancel'</span>
+      <span class="ruby-identifier">interviewer_remove</span> = <span class="ruby-constant">Interviewer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>[<span class="ruby-string">'interviewer'</span>][<span class="ruby-value">0</span>].<span class="ruby-identifier">to_i</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">schedules</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">'interviewer_id = ?'</span>, <span class="ruby-identifier">interviewer_remove</span>.<span class="ruby-identifier">id</span>).<span class="ruby-identifier">any?</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">schedules</span>.<span class="ruby-identifier">where</span>([<span class="ruby-string">'interviewer_id = ?'</span>, <span class="ruby-identifier">interviewer_remove</span>.<span class="ruby-identifier">id</span>]).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">destroy</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">interviewer_remove</span>.<span class="ruby-identifier">applicants</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-ivar">@applicant</span>)
+      <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Removed interviewer -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">interviewer_remove</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; to Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">applicants_assign_interviewer_path</span>(<span class="ruby-ivar">@applicant</span>) }
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'assign_interviewer'</span> }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- assign_interviewer-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- assign_interviewer-method -->
+
+    
+      <div id="method-i-create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>POST /applicants POST /applicants.xml</p>
+          
+
+          
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 127</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:consider</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Consider as NEW'</span>
+    <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:applicant</span>].<span class="ruby-identifier">attributes</span>)
+    <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Considered as new Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:school_id</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:firstname</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:firstname</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\s+/</span>, <span class="ruby-string">' '</span>)
+    <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:lastname</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:lastname</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\s+/</span>, <span class="ruby-string">' '</span>)
+    <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:middlename</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:middlename</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\s+/</span>, <span class="ruby-string">' '</span>)
+    <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>])
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@create_school</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@image_data</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:base64</span>]
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:cancel</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Cancel&quot;</span>
+      <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:new_school</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Create new school'</span>
+      <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">school_name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:school_name</span>]
+      <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">acronym</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:acronym</span>]
+
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Created new school -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@school</span>.<span class="ruby-identifier">school_name</span>)
+        <span class="ruby-ivar">@create_school</span> = <span class="ruby-string">&quot;success&quot;</span>;
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@school</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:created</span>, <span class="ruby-value">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@school</span> }
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:unprocessable_entity</span> }
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">matched_db_applicants</span> = []
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:consider</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">'Consider as NEW'</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">status</span> = <span class="ruby-string">'Pending'</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">skipped_exam</span> = <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">consider</span> = <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">image_name</span> = <span class="ruby-identifier">upload_image</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:image</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:base64</span>])
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:school_id</span>])
+
+        <span class="ruby-identifier">matched_db_applicants</span> = <span class="ruby-identifier">validate_applicant_identity</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>])
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">matched_db_applicants</span>.<span class="ruby-identifier">any?</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:image</span>].<span class="ruby-identifier">tempfile</span> = <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">rescue</span>
+
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-identifier">session</span>[<span class="ruby-value">:matched</span>] = <span class="ruby-identifier">matched_db_applicants</span>
+        <span class="ruby-identifier">session</span>[<span class="ruby-value">:applicant</span>] = <span class="ruby-ivar">@applicant</span>
+        <span class="ruby-identifier">session</span>[<span class="ruby-value">:school_id</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:school_id</span>]
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span>{<span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">applicants_verify_path</span>)}
+
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:consider</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">'Consider as NEW'</span>
+            <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Created new Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-identifier">session</span>[<span class="ruby-value">:applicant</span>] = <span class="ruby-keyword">nil</span>;
+          <span class="ruby-identifier">session</span>[<span class="ruby-value">:school_id</span>] = <span class="ruby-keyword">nil</span>;
+          <span class="ruby-identifier">session</span>[<span class="ruby-value">:matched</span>] = <span class="ruby-keyword">nil</span>;
+
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@applicant</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Applicant '</span> <span class="ruby-operator">+</span>
+                      <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">firstname</span> <span class="ruby-operator">+</span> <span class="ruby-string">' was successfully created.'</span>) }
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicant</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:created</span>, <span class="ruby-value">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicant</span> }
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-ivar">@school_session</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:school_id</span>]
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:unprocessable_entity</span> }
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create-method -->
+
+    
+      <div id="method-i-destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">destroy</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>DELETE /applicants/1 DELETE /applicants/1.xml</p>
+          
+
+          
+          <div class="method-source-code" id="destroy-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 254</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;destroy&quot;</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public/images/#{@applicant.image_name}&quot;</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public/images/#{@applicant.image_name}&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Removed a Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id_to_s</span>)
+  <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">destroy</span>
+  
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">applicants_show_all_url</span>) }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-value">:ok</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- destroy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- destroy-method -->
+
+    
+      <div id="method-i-edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /applicants/1/edit</p>
+          
+
+          
+          <div class="method-source-code" id="edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- edit-method -->
+
+    
+      <div id="method-i-get_info" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_info</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_info-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 393</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_info</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">xhr?</span>
+    <span class="ruby-identifier">info</span> = <span class="ruby-constant">Interviewer</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{params[:name]}&quot;</span>).<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">info</span>.<span class="ruby-identifier">image_name</span> = <span class="ruby-identifier">view_context</span>.<span class="ruby-identifier">image_path</span>(<span class="ruby-identifier">info</span>.<span class="ruby-identifier">image_name</span>)
+      <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
+                                              <span class="ruby-value">:info</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">info</span>
+                                              }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_info-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_info-method -->
+
+    
+      <div id="method-i-get_interviewer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_interviewer</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_interviewer-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 376</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_interviewer</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">xhr?</span>
+              <span class="ruby-ivar">@department_id</span> = <span class="ruby-constant">Department</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:first</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;department_name = ?&quot;</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:department_name</span>]]).<span class="ruby-identifier">id</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:selected_interviewers</span>].<span class="ruby-identifier">blank?</span>
+      <span class="ruby-identifier">params</span>[<span class="ruby-value">:selected_interviewers</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:selected_interviewers</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_i</span>}
+      <span class="ruby-identifier">options</span> = <span class="ruby-constant">Interviewer</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;department_id = (?) AND id NOT IN (?)&quot;</span>,
+        <span class="ruby-ivar">@department_id</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:selected_interviewers</span>])
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">options</span> = <span class="ruby-constant">Interviewer</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;department_id = (?)&quot;</span>, <span class="ruby-ivar">@department_id</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> {
+          <span class="ruby-value">:interviewers</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>
+                                              }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_interviewer-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_interviewer-method -->
+
+    
+      <div id="method-i-header_search" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">header_search</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="header_search-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 315</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">header_search</span>
+  <span class="ruby-ivar">@query</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant_name</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\s+/</span>, <span class="ruby-string">' '</span>)
+
+  <span class="ruby-ivar">@search</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:conditions=</span><span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;CONCAT_WS(\' \',firstname,middlename,lastname) LIKE ?&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-string">&quot; OR CONCAT_WS(\' \',firstname,lastname) LIKE ?&quot;</span> , <span class="ruby-node">&quot;%#{@query}%&quot;</span>, <span class="ruby-node">&quot;%#{@query}%&quot;</span>],
+      <span class="ruby-value">:page=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>],
+      <span class="ruby-value">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;lastname asc&quot;</span>,
+      <span class="ruby-value">:per_page=</span><span class="ruby-operator">&gt;</span> <span class="ruby-value">5</span>
+    )
+  <span class="ruby-comment"># @search = Applicant.find_by_sql(@sql)</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant_name</span>] = <span class="ruby-ivar">@query</span>
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'header_search'</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- header_search-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- header_search-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /applicants GET /applicants.xml</p>
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">all</span>
+  <span class="ruby-ivar">@datatable</span> = <span class="ruby-constant">ApplicantsIndex</span>
+  <span class="ruby-ivar">@latest_applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">last</span>
+
+
+   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># index.html.erb</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@datatable</span>.<span class="ruby-identifier">query</span>(<span class="ruby-identifier">params</span>).<span class="ruby-identifier">to_json</span> }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicants</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+      <div id="method-i-matched_db_applicants" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">matched_db_applicants</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="matched_db_applicants-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 403</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">matched_db_applicants</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:renew</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;true&quot;</span>
+
+    <span class="ruby-identifier">matched_applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+    <span class="ruby-identifier">applicant</span> = <span class="ruby-identifier">session</span>[<span class="ruby-value">:applicant</span>]
+    <span class="ruby-identifier">applicant</span>.<span class="ruby-identifier">school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:school_id</span>])
+
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:applicant</span>] = <span class="ruby-keyword">nil</span>;
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:school_id</span>] = <span class="ruby-keyword">nil</span>;
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:matched</span>] = <span class="ruby-keyword">nil</span>;
+
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public/images/#{matched_applicant.image_name}&quot;</span>)
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public/images/#{matched_applicant.image_name}&quot;</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">history</span> = <span class="ruby-constant">ApplicantReApplication</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-value">:applicant_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">matched_applicant</span>.<span class="ruby-identifier">id</span>,
+      <span class="ruby-value">:applied_for=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">matched_applicant</span>.<span class="ruby-identifier">position_id</span>
+      )
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">matched_applicant</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">applicant</span>.<span class="ruby-identifier">attributes</span>)
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">history</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-identifier">matched_applicant</span>.<span class="ruby-identifier">grades</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">store</span><span class="ruby-operator">|</span>
+          <span class="ruby-constant">GradeHistory</span>.<span class="ruby-identifier">create</span>(
+            <span class="ruby-value">:applicant_re_applications_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">history</span>.<span class="ruby-identifier">id</span>,
+            <span class="ruby-value">:exam_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">store</span>.<span class="ruby-identifier">exam_id</span>,
+            <span class="ruby-value">:score</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">store</span>.<span class="ruby-identifier">score</span>
+            )
+          <span class="ruby-identifier">store</span>.<span class="ruby-identifier">destroy</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">matched_applicant</span>.<span class="ruby-identifier">interviewers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rem</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">rem</span>.<span class="ruby-identifier">applicants</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">matched_applicant</span>)
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">matched_applicant</span>.<span class="ruby-identifier">schedules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rem</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">rem</span>.<span class="ruby-identifier">destroy</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">matched_applicant</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Applicant was successfully updated.'</span>) }
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-value">:ok</span> }
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@applicant_new</span> = <span class="ruby-identifier">session</span>[<span class="ruby-value">:applicant</span>]
+    <span class="ruby-ivar">@matched</span> = <span class="ruby-identifier">session</span>[<span class="ruby-value">:matched</span>]
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- matched_db_applicants-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- matched_db_applicants-method -->
+
+    
+      <div id="method-i-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /applicants/new GET /applicants/new.xml</p>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># new.html.erb</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicant</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-i-search_applicant" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">search_applicant</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="search_applicant-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 269</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">search_applicant</span>
+  <span class="ruby-ivar">@search</span> = []
+  <span class="ruby-ivar">@search_type</span> = <span class="ruby-string">&quot;&quot;</span>
+
+  <span class="ruby-comment">#custom search</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:custom</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;SEARCH&quot;</span>
+    <span class="ruby-ivar">@category</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:category</span>]
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:search_query</span>].<span class="ruby-identifier">blank?</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@category</span>.<span class="ruby-identifier">blank?</span>
+        <span class="ruby-keyword">case</span> <span class="ruby-ivar">@category</span>
+          <span class="ruby-keyword">when</span> <span class="ruby-string">'0'</span>
+            <span class="ruby-ivar">@search</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;firstname LIKE ?&quot;</span>, <span class="ruby-node">&quot;%#{params[:search_query]}%&quot;</span>])
+          <span class="ruby-keyword">when</span> <span class="ruby-string">'1'</span>
+            <span class="ruby-ivar">@search</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;lastname LIKE ?&quot;</span>, <span class="ruby-node">&quot;%#{params[:search_query]}%&quot;</span>])
+          <span class="ruby-keyword">when</span> <span class="ruby-string">'2'</span>
+            <span class="ruby-ivar">@search</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-value">:school</span>).<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;school_name LIKE ? OR acronym LIKE ?&quot;</span>,
+             <span class="ruby-node">&quot;%#{params[:search_query]}%&quot;</span>,<span class="ruby-node">&quot;%#{params[:search_query]}%&quot;</span>])
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-ivar">@search_type</span> = <span class="ruby-ivar">@category</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; SEARCH RESULTS&quot;</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">flash</span>.<span class="ruby-identifier">now</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-string">'Please specify search menu'</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">flash</span>.<span class="ruby-identifier">now</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-string">'Please input search query'</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-comment">#end_custom search</span>
+  <span class="ruby-comment">#by_date search</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:by_date</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;SEARCH&quot;</span>
+    <span class="ruby-ivar">@search_type</span> = <span class="ruby-string">&quot;SEARCH BY DATE RESULTS&quot;</span>
+    <span class="ruby-identifier">start_date</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:start_date</span>]
+    <span class="ruby-identifier">end_date</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:end_date</span>]
+    <span class="ruby-identifier">start_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">start_date</span>[<span class="ruby-value">:year</span>]<span class="ruby-operator">+</span><span class="ruby-string">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">start_date</span>[<span class="ruby-value">:month</span>]<span class="ruby-operator">+</span><span class="ruby-string">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">start_date</span>[<span class="ruby-value">:day</span>])
+    <span class="ruby-identifier">end_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">end_date</span>[<span class="ruby-value">:year</span>]<span class="ruby-operator">+</span><span class="ruby-string">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">end_date</span>[<span class="ruby-value">:month</span>]<span class="ruby-operator">+</span><span class="ruby-string">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">end_date</span>[<span class="ruby-value">:day</span>])
+    <span class="ruby-comment"># if start_date &gt; end_date</span>
+    <span class="ruby-comment">#   temp = start_date</span>
+    <span class="ruby-comment">#   start_date = end_date</span>
+    <span class="ruby-comment">#   end_date = temp</span>
+    <span class="ruby-comment"># end</span>
+    <span class="ruby-ivar">@search</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:created_at</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">start_date</span>.<span class="ruby-identifier">beginning_of_day</span><span class="ruby-operator">..</span><span class="ruby-identifier">end_date</span>.<span class="ruby-identifier">end_of_day</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-comment">#end by_date</span>
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'search_applicant'</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- search_applicant-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- search_applicant-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /applicants/1 GET /applicants/1.xml</p>
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+
+  <span class="ruby-ivar">@exam_list</span> = <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">position</span>.<span class="ruby-identifier">exams</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;exam_id NOT IN (&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-string">&quot;SELECT exam_id &quot;</span><span class="ruby-operator">+</span>
+      <span class="ruby-string">&quot;FROM grades &quot;</span><span class="ruby-operator">+</span>
+      <span class="ruby-string">&quot;WHERE applicant_id = ?)&quot;</span>, <span class="ruby-ivar">@applicant</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;Hired&quot;</span>
+
+    <span class="ruby-ivar">@interviewer_option</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:bypass_exams</span>]
+      <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">exams</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exam</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">exam</span>.<span class="ruby-identifier">grades</span>.<span class="ruby-identifier">find_by_applicant_id</span>(<span class="ruby-ivar">@applicant</span>).<span class="ruby-identifier">score</span>.<span class="ruby-identifier">nil?</span>
+          <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">exams</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">exam</span>)
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">skipped_exam</span> = <span class="ruby-value">1</span>
+      <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-ivar">@taken_all_exam</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">exams</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exam</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">exam</span>.<span class="ruby-identifier">grades</span>.<span class="ruby-identifier">find_by_applicant_id</span>(<span class="ruby-ivar">@applicant</span>).<span class="ruby-identifier">score</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-ivar">@taken_all_exam</span> = <span class="ruby-keyword">false</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">exam</span>.<span class="ruby-identifier">grades</span>.<span class="ruby-identifier">find_by_applicant_id</span>(<span class="ruby-ivar">@applicant</span>).<span class="ruby-identifier">score</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">exam</span>.<span class="ruby-identifier">grades</span>.<span class="ruby-identifier">find_by_applicant_id</span>(<span class="ruby-ivar">@applicant</span>).<span class="ruby-identifier">score</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">exam</span>.<span class="ruby-identifier">passing_score</span>
+          <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">status</span> = <span class="ruby-string">'Failed-Exam'</span>
+          <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:bypass_all</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Proceed to Interview'</span>
+    <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; proceed to Interview(bypass_all)&quot;</span>)
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">skipped_exam</span> = <span class="ruby-value">1</span>
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">applicants_assign_interviewer_path</span>(<span class="ruby-ivar">@applicant</span>)}
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:consider_interview</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Consider for Interview'</span>
+    <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; consider for Interview(exam_failed)&quot;</span>)
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">consider</span> = <span class="ruby-value">1</span>
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">applicants_assign_interviewer_path</span>(<span class="ruby-ivar">@applicant</span>)}
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:HIRE</span>]
+    <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Hired the Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">status</span> = <span class="ruby-string">&quot;Hired&quot;</span>
+    <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@applicant</span>}
+  <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># show.html.erb</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicant</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
+      <div id="method-i-show_all" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_all</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /applicants/1 GET /applicants/1.xml</p>
+          
+
+          
+          <div class="method-source-code" id="show_all-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_all</span>
+  <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">all</span>
+  <span class="ruby-ivar">@toShow</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:toShow</span>]
+  <span class="ruby-keyword">case</span> <span class="ruby-ivar">@toShow</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;all&quot;</span>
+              <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">all</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;pending&quot;</span>
+              <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;status = 'Pending'&quot;</span>])
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;hired&quot;</span>
+              <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;status = 'Hired'&quot;</span>])
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;failed-exam&quot;</span>
+              <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;status = 'Failed-Exam'&quot;</span>])
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;failed-interview&quot;</span>
+      <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;status = 'Failed-Interview'&quot;</span>])
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;on-interview&quot;</span>
+      <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;status = 'On-Interview'&quot;</span>])
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;for-hiring&quot;</span>
+      <span class="ruby-ivar">@applicants</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;status = 'For Hiring'&quot;</span>])
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># index.html.erb</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicants</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show_all-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_all-method -->
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>PUT /applicants/1 PUT /applicants/1.xml</p>
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-ivar">@create_school</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:cancel</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Cancel&quot;</span>
+        <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:new_school</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Create new school'</span>
+        <span class="ruby-ivar">@school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">school_name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:school_name</span>]
+        <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">acronym</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:acronym</span>]
+        <span class="ruby-keyword">if</span> <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">save</span>
+          <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">school</span> = <span class="ruby-ivar">@school</span>
+          <span class="ruby-ivar">@create_school</span> = <span class="ruby-string">&quot;success&quot;</span>;
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@school</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:created</span>, <span class="ruby-value">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@school</span> }
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
+          <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@school</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:unprocessable_entity</span> }
+        <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">image_name</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:imgName</span>]
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public/images/#{@applicant.image_name}&quot;</span>)
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public/images/#{@applicant.image_name}&quot;</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">image_name</span> =  <span class="ruby-identifier">upload_image</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>][<span class="ruby-value">:image</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:base64</span>])
+      <span class="ruby-keyword">end</span>
+        <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">school</span> = <span class="ruby-constant">School</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:school_id</span>])
+
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:applicant</span>])
+        <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Updated a Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>)
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@applicant</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Applicant was successfully updated.'</span>) }
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-value">:ok</span> }
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;edit&quot;</span> }
+        <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-value">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:unprocessable_entity</span> }
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update-method -->
+
+    
+      <div id="method-i-update_grade" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_grade</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_grade-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 466</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_grade</span>
+  <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-ivar">@exam</span> = <span class="ruby-constant">Exam</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:exam_id</span>])
+  <span class="ruby-ivar">@grade</span> = <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">exams</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@exam</span>).<span class="ruby-identifier">grades</span>.<span class="ruby-identifier">find_by_applicant_id</span>(<span class="ruby-ivar">@applicant</span>)
+
+  <span class="ruby-ivar">@grades</span> = <span class="ruby-constant">Grade</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@grade</span>)
+  <span class="ruby-ivar">@grades</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:grade</span>])
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@grades</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-constant">AdminLog</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:admin_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">session</span>[<span class="ruby-value">:admin_id</span>], <span class="ruby-value">:log=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Graded the exam -&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@exam</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; of Applicant -&gt; &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; with a score of &quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@grade</span>.<span class="ruby-identifier">score</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@applicant</span>}
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@applicant</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+      <span class="ruby-ivar">@exam_list</span> = <span class="ruby-ivar">@applicant</span>.<span class="ruby-identifier">position</span>.<span class="ruby-identifier">exams</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;exam_id NOT IN (&quot;</span> <span class="ruby-operator">+</span>
+          <span class="ruby-string">&quot;SELECT exam_id &quot;</span><span class="ruby-operator">+</span>
+          <span class="ruby-string">&quot;FROM grades &quot;</span><span class="ruby-operator">+</span>
+          <span class="ruby-string">&quot;WHERE applicant_id = ?)&quot;</span>, <span class="ruby-ivar">@applicant</span>)
+      <span class="ruby-ivar">@edit_grade</span> = <span class="ruby-ivar">@grades</span>
+      <span class="ruby-ivar">@edit_error</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> {<span class="ruby-identifier">render</span> <span class="ruby-string">'show'</span>}
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_grade-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_grade-method -->
+
+    
+      <div id="method-i-upload_image" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">upload_image</span><span
+            class="method-args">(image, base64)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="upload_image-source">
+            <pre><span class="ruby-comment"># File app/controllers/applicants_controller.rb, line 331</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">upload_image</span>(<span class="ruby-identifier">image</span>, <span class="ruby-identifier">base64</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'fileutils'</span>
+  <span class="ruby-identifier">data</span> =  <span class="ruby-identifier">base64</span>
+  <span class="ruby-identifier">image_data</span> = <span class="ruby-constant">Base64</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">data</span>[<span class="ruby-string">'data:image/png;base64,'</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">..</span> <span class="ruby-value">-1</span>])
+  <span class="ruby-identifier">who</span> = <span class="ruby-string">'applicants'</span>
+  <span class="ruby-identifier">file_name</span> = <span class="ruby-node">&quot;pic_#{Time.now.strftime(&quot;%Y%m%d%H%M%S&quot;)}.png&quot;</span>
+  <span class="ruby-identifier">file_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>, <span class="ruby-string">'public'</span>, <span class="ruby-string">'images'</span>, <span class="ruby-string">'upload_images'</span>, <span class="ruby-identifier">who</span>, <span class="ruby-identifier">file_name</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_path</span>, <span class="ruby-string">'wb'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">image_data</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;upload_images/#{who}/&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">file_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- upload_image-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- upload_image-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
