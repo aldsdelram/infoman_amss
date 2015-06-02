@@ -49,10 +49,13 @@
 		    	<td <% if m[1] == "true" %>style="color:red"<%end%> ><%= db_applicant.bday %></td>
 		    	<td <% if m[3] == "true" %>style="color:red"<%end%> ><%= db_applicant.contact %></td>
 		    	<td <% if m[2] == "true" %>style="color:red"<%end%> ><%= db_applicant.email_address %></td>
-		    	<td><%= link_to "RENEW", applicants_renew_path(db_applicant.id, :renew => "true"), :class=>"btn btn-primary" %></td>
+		    	<td><%= link_to "RENEW", applicants_renew_path(db_applicant.id, :renew => "true"), :class=>"btn btn-success" %></td>
 		    </tr>
 		<% end %>
 	</table>
 </div>
-<%= submit_tag 'Consider as NEW', :name=> 'consider', :class => "btn btn-success col-md-2 col-md-offset-10" %>
+<div class="col-md-0 col-md-offset-9">
+<%= link_to "Back to Applicants", applicants_show_all_url, :class => "btn btn-default col-md-6" %>
+<%= submit_tag 'Consider as NEW', :name=> 'consider', :class => "btn btn-success col-md-6" %>
+</div>
 <% end %>

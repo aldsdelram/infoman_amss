@@ -257,7 +257,7 @@ class ApplicantsController < ApplicationController
     if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
       File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
     end
-    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a Applicant -> "+@applicant.id_to_s)
+    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a Applicant -> "+@applicant.id.to_s)
     @applicant.destroy
     
     respond_to do |format|
@@ -343,7 +343,6 @@ class ApplicantsController < ApplicationController
 
   def assign_interviewer
     require 'cgi'
-
     if params[:remove_interviewer] == 'Cancel'
       id = CGI::parse(params[:id])
       @applicant = Applicant.find(id['applicant'][0].to_i.to_s)
@@ -352,24 +351,34 @@ class ApplicantsController < ApplicationController
       @applicant = Applicant.find(params[:id])
     end
     respond_to do |format|
-      if params[:commit]
-        interviewer = Interviewer.where(name: "#{params[:interviewer]}").first
-        interviewer.applicants << @applicant
-        @applicant.status = 'On-Interview'
-        @applicant.save
-        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Assigned interviewer -> "+interviewer.id.to_s+" to Applicant -> "+@applicant.id.to_s)
-        format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
-      elsif params[:remove_interviewer] == 'Cancel'
-        interviewer_remove = Interviewer.find(id['interviewer'][0].to_i)
-        if @applicant.schedules.where('interviewer_id = ?', interviewer_remove.id).any?
-          @applicant.schedules.where(['interviewer_id = ?', interviewer_remove.id]).first.destroy
-        end
-        interviewer_remove.applicants.delete(@applicant)
-        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed interviewer -> "+interviewer_remove.id.to_s+" to Applicant -> "+@applicant.id.to_s)
-        format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
+
+      if ["Hired", "Failed-Interview", "For Hiring"].any? {|status| status == @applicant.status}
+        notice = "Cannot process request, this applicant is already done on interview phase."
+      elsif @applicant.skipped_exam == 0 && @applicant.consider == 0
+        notice = "Cannot process request, this applicant is not in interview phase."
       else
-        format.html { render :action => 'assign_interviewer' }
+        if params[:commit]
+          interviewer = Interviewer.where(name: "#{params[:interviewer]}").first
+          interviewer.applicants << @applicant
+          @applicant.status = 'On-Interview'
+          @applicant.save
+          AdminLog.create(:admin_id=>session[:admin_id], :log=>"Assigned interviewer -> "+interviewer.id.to_s+" to Applicant -> "+@applicant.id.to_s)
+          format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
+        elsif params[:remove_interviewer] == 'Cancel'
+          interviewer_remove = Interviewer.find(id['interviewer'][0].to_i)
+          if @applicant.schedules.where('interviewer_id = ?', interviewer_remove.id).any?
+            @applicant.schedules.where(['interviewer_id = ?', interviewer_remove.id]).first.destroy
+          end
+          interviewer_remove.applicants.delete(@applicant)
+          AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed interviewer -> "+interviewer_remove.id.to_s+" to Applicant -> "+@applicant.id.to_s)
+          format.html { redirect_to applicants_assign_interviewer_path(@applicant) }
+        else
+          format.html { render :action => 'assign_interviewer' }
+        end
       end
+      format.html { redirect_to @applicant, 
+                    :notice => notice
+                  }
     end
   end
 

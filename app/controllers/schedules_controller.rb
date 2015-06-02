@@ -208,27 +208,26 @@ class SchedulesController < ApplicationController
     schedule.remarks = params[:remarks]
     schedule.det = true
     
-    if params[:trigger] == "For Hiring" || params[:trigger] == "Failed-Stop"
-
-      applicant.schedules.where("grade IS NULL").each do |sched|
-        sched.destroy
-        puts "Schedule removed"
-      end
-
-      applicant.interviewers.each do |interviewer|
-        if !interviewer.schedules.where("applicant_id = (?)", applicant.id).any?
-          interviewer.applicants.delete(applicant)
-          puts "Interviewer removed"
-        end
-      end
-    end
     respond_to do |format|
       @schedule = schedule
       if schedule.save
         AdminLog.create(:admin_id=>session[:admin_id], :log=>"Graded applicant -> "+applicant.id.to_s+" with a schedule of -> "+@schedule.id.to_s)
-        format.html {redirect_to @schedule, :notice=>'NOTICE' }
+        if params[:trigger] == "For Hiring" || params[:trigger] == "Failed-Stop"
+          applicant.schedules.where("grade IS NULL").each do |sched|
+            sched.destroy
+            puts "Schedule removed"
+          end
+
+          applicant.interviewers.each do |interviewer|
+            if !interviewer.schedules.where("applicant_id = (?)", applicant.id).any?
+              interviewer.applicants.delete(applicant)
+              puts "Interviewer removed"
+            end
+          end
+        end
+        format.html {redirect_to @schedule, :notice=>'Successfully graded.' }
       else
-        format.html {render :action => 'show', :notice=>'NOTICE' }
+        format.html {render :action => 'show', :notice=>'Something went wrong.' }
       end
     end
   end

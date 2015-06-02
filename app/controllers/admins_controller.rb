@@ -107,11 +107,6 @@ class AdminsController < ApplicationController
     return "upload_images/#{who}/"+file_name
   end
 
-  def get_logs
-
-    #raise "HELLO"
-  end
-
   def show_logs
     @logs = AdminLog.where("admin_id = ?", params[:id])
     @admin = Admin.find(params[:id])
