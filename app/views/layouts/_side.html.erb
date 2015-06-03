@@ -128,10 +128,10 @@
     image_name = "url(\'"+image_name+"\')";
     $('#admin_pic').css('background-image', image_name);
     $('#admin_pic').blurjs({
-        source: '#admin_pic',     //Background to blur
-        radius: 20,          //Blur Radius
+        source: '#admin_pic',                  //Background to blur
+        radius: 20,                            //Blur Radius
         overlay: 'rgba(28,251,50,0.3)',        //Overlay Color, follow CSS3's rgba() syntax
-        cache: false,                   //If set to true, blurred image will be cached and used in the future. If image is in cache already, it will be used.
+        cache: false,                          //If set to true, blurred image will be cached and used in the future. If image is in cache already, it will be used.
         cacheKeyPrefix: 'blurjs-'
     });
     $('#admin_pic').css('background-position', 'center center');

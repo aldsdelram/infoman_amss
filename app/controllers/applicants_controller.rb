@@ -9,6 +9,13 @@ class ApplicantsController < ApplicationController
     @datatable = ApplicantsIndex
     @latest_applicant = Applicant.last
 
+    @number = get_data_where_status_is("All");
+    @pending = get_data_where_status_is("Pending");
+    @failed_exam = get_data_where_status_is("Failed-Exam");
+    @hired = get_data_where_status_is("Hired");
+    @failed_interview = get_data_where_status_is("Failed-Interview");
+    @for_hiring = get_data_where_status_is("For Hiring");
+    @on_interview = get_data_where_status_is("On-Interview");
 
      respond_to do |format|
       format.html # index.html.erb
@@ -259,7 +266,7 @@ class ApplicantsController < ApplicationController
     end
     AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed a Applicant -> "+@applicant.id.to_s)
     @applicant.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to(applicants_show_all_url) }
       format.xml  { head :ok }
@@ -376,7 +383,7 @@ class ApplicantsController < ApplicationController
           format.html { render :action => 'assign_interviewer' }
         end
       end
-      format.html { redirect_to @applicant, 
+      format.html { redirect_to @applicant,
                     :notice => notice
                   }
     end
