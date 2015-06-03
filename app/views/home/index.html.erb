@@ -107,7 +107,7 @@
           <% @logs.each do |log| %>
             <tr>
               <% Time.zone = "Asia/Manila" %>
-              <td><%= log.created_at.strftime('%B %d, %Y - %H:%M:%S %') %></td>
+              <td><%= log.created_at.strftime('%B %d, %Y - %H:%M:%S %p') %></td>
               <td><%= log.log %></td>
             </tr>
           <% end %>
