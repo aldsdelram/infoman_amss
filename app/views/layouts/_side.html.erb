@@ -8,7 +8,10 @@
         <% if File.exists?("#{RAILS_ROOT}/public/images/#{@image_name}") %>
           <%= image_tag "#{@image_name}" , :size => "100x100" , :class=>"img-circle" %>
         <% else %>
-          <%= image_tag('404.jpg' , :size => "100x100") %>
+          <script type="text/javascript">
+            $('#admin_pic').attr('data-image', '/images/404.jpg');
+          </script>
+          <%= image_tag('404.jpg' , :size => "100x100", :class=>"img-circle") %>
         <% end %>
 
         <h3><%= Admin.find(session[:admin_id]).name%></h3>
