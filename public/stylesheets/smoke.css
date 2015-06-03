@@ -127,6 +127,8 @@
 }
 .smk-progressbar .progress-bar{
     background: #28A8E0;
+    background: #050;
+    z-index: 1000;
 }
 /*.progress-bar{
     -webkit-animation: myfirst 1s;

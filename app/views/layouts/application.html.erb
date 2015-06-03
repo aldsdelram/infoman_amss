@@ -37,6 +37,7 @@
   <%= javascript_include_tag 'idle.js' %>
   <%= javascript_include_tag 'jquery-ui.min.js' %>
   <%= javascript_include_tag 'jquery.dataTables.min.js' %>
+  <%= javascript_include_tag 'jquery.dataTablesExt.fnSetFilteringDelay.js' %>
   <%= javascript_include_tag 'jquery.foggy.min.js' %>
   <%= javascript_include_tag 'jquery-ui-timepicker-addon.js' %>
   <%= javascript_include_tag 'jquery.circliful.min.js' %>
@@ -59,7 +60,7 @@
     <%= render 'layouts/header' %>
   </div>
 
-  <div class="row">
+  <div class="row" id="bodyContent">
     <div class="col-md-2 col-sm-3 col-lg-2" id="side">
 
       <%= render 'layouts/side' %>
@@ -143,3 +144,20 @@ document.onBack=function(a,b);
   $("#div_idle").css("opacity","0.2")}if(b);
   $("#div_away").css("opacity","0.2")}};
  -->
+<script type="text/javascript">
+
+
+  $.smkProgressBar({
+    element: '#bodyContent',
+    status: 'start'
+  });
+
+$(document).ready(function(){
+  setTimeout(function() {
+    $.smkProgressBar({
+      element: '#bodyContent',
+      status: 'end'
+    });
+  }, 1000);
+});
+</script>
