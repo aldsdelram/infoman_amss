@@ -1,6 +1,8 @@
 
 AMSS::Application.routes.draw do
 
+  get 'applicants/applicant_summary/:id' => 'applicants#applicant_summary', :as => 'applicant/view_summary'
+
   get 'admins/log/:id' => 'admins#show_logs', :as=>'admin/logs'
   
   post 'schedules/interviewer_grade_decision/:id' => 'schedules#interviewer_grade_decision', :as => 'interviewer/grade_decision'

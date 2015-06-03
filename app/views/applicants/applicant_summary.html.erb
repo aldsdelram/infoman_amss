@@ -1,0 +1,127 @@
+<%= stylesheet_link_tag 'pdf.css', :media => 'print'%>
+
+<div class="container">
+	<div id="applicant_details">
+		<div id = "image">
+			<% if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}") %>
+			  <%= image_tag "#{@applicant.image_name}" , :size => "200x200" , :class=>"img-circle" %>
+			<% else %>
+			  <h3>Picture not available</h3>
+			<% end %>
+		</div>
+
+		<div id = "header">
+			<h1><%= @applicant.lastname %>, <%= @applicant.firstname %> <%= @applicant.middlename %></h1>
+				<div id="contacts">
+					Position Applying:<b> <%= @applicant.position.title %></b><br>
+					Email address: <%= @applicant.email_address %><br>
+					Contact: <%= @applicant.contact %>
+			</div>
+		</div>
+		
+		<div class = "info">
+
+			<div id="additional-info">
+				<h3>Personal Information</h3>
+				<table class="add-info">
+					<tr>
+						<td>Highest School Attainment: <%= @applicant.highest_school_attainment %></td>
+						<td>Address: <%= @applicant.address %></td>
+						<td>Gender: <%= @applicant.gender %></td>
+					</tr>
+					<tr>
+						<td>School: <%= @applicant.school.school_name %></td>
+						<td>Birthday: <%= @applicant.bday %></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<status>Status: <b><%= @applicant.status %></b></status>
+			<div class = "exams">
+				<h3>List of Exams</h3>
+				<% if @applicant.skipped_exam == 1 %>
+					<h4> *Skipped the exam. </h4>
+				<% elsif !@grades_exam.any? %>
+					<h4>No exams.</h4>
+				<% else %>
+					<table class="table-exam">
+						<tr>
+							<th>Exam id</th>
+							<th>Exam title</th>
+							<th>Passing Score</th>
+							<th>Total Score</th>
+							<th>Applicant Score</th>
+							<th>Remarks</th>
+						</tr>
+						<% @grades_exam.each do |grade| %>
+							<tr>
+								<td><%= grade.exam.id %></td>
+								<td><%= grade.exam.title %></td>
+								<td><%= grade.exam.passing_score %></td>
+								<td><%= grade.exam.total_score %></td>
+								<td><%= grade.score %></td>
+								<td><%= grade.remarks %></td>
+							</tr>
+						<% end %>
+					</table>
+					<% if @applicant.consider == 1 %>
+						<h4> *This Applicant failed the exam but considered for interview. </h4>
+					<% elsif @applicant.status == "Failed" %>
+						<h4> *This Applicant failed the exam. </h4>
+					<% end %>
+				<% end %>
+			</div>
+
+			<div class="interviewers">
+				<h3>Interviewers</h3>
+				<% if !@interviewers.any? %>
+					<h4>No assigned interviewer.</h4>
+				<% else %>
+					<table class="table-interviewer">
+						<tr>
+							<th>Interviewer id</th>
+							<th>Interviewer name</th>
+							<th>Department</th>
+							<th>Position Title</th>
+						</tr>
+						<% @interviewers.each do |interviewer| %>
+							<tr>
+								<td><%= interviewer.id %></td>
+								<td><%= interviewer.name %></td>
+								<td><%= interviewer.department.department_name %></td>
+								<td><%= interviewer.position_title %></td>
+							</tr>
+						<% end %>
+					</table>
+				<% end %>
+			</div>
+
+			<div class="schedules">
+				<h3>Schedules</h3>
+				<% if !@schedules.any? %>
+					<h4>No schedule.</h4>
+				<% else %>
+					<table class="table-schedule">
+						<tr>
+							<th>Schedule id</th>
+							<th>Interviewer name</th>
+							<th>Schedule</th>
+							<th>Grade</th>
+							<th>Remarks</th>
+						</tr>
+						<% @schedules.each do |schedule| %>
+							<tr>
+								<td><%= schedule.id %></td>
+								<td><%= schedule.interviewer.name %></td>
+								<td><%= schedule.sched_start.strftime('%a %b %d, %Y %H:%M:%S') %> <br>-<br> <%= schedule.sched_end.strftime('%a %b %d, %Y %H:%M:%S') %></td>
+								<td><%= schedule.grade %></td>
+								<td><%= schedule.remarks %></td>
+							</tr>
+						<% end %>
+					</table>
+				<% end %>
+			</div>
+
+		</div>
+	</div>
+</div>

@@ -9,7 +9,6 @@ class ApplicantsController < ApplicationController
     @datatable = ApplicantsIndex
     @latest_applicant = Applicant.last
 
-
      respond_to do |format|
       format.html # index.html.erb
       format.js { render :json => @datatable.query(params).to_json }
@@ -493,6 +492,17 @@ class ApplicantsController < ApplicationController
         @edit_error = true
         format.html {render 'show'}
       end
+    end
+  end
+
+  def applicant_summary
+    @applicant = Applicant.find(params[:id])
+    @interviewers = @applicant.interviewers
+    @schedules = @applicant.schedules
+    @grades_exam = @applicant.grades
+
+    respond_to do |format|
+      format.html {render :layout => "pdf"}
     end
   end
 end
