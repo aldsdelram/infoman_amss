@@ -376,7 +376,7 @@ input[type=number] button{
 #admin_pic{
   margin-bottom: 10px;
   position:relative;
-  min-height: 30vh;
+  /*min-height: 30vh;*/
   background-image: url('/images/businessman_opaque_50.png');
   -webkit-background-size:cover;
        -moz-background-size:cover;

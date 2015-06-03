@@ -2,7 +2,14 @@
   <div class="col-md-12" id="admin_pic" data-color='red' data-image=<%= "\"/images/#{Admin.find(session[:admin_id]).image_name}\"".html_safe %> >
     <div class="row text-center">
       <span class="text-center">
-      <%= image_tag Admin.find(session[:admin_id]).image_name, :class=>"img-circle", :size=>"100x100"%>
+
+        <%@image_name = Admin.find(session[:admin_id]).image_name%>
+
+        <% if File.exists?("#{RAILS_ROOT}/public/images/#{@image_name}") %>
+          <%= image_tag "#{@image_name}" , :size => "100x100" , :class=>"img-circle" %>
+        <% else %>
+          <%= image_tag('404.jpg' , :size => "100x100") %>
+        <% end %>
 
         <h3><%= Admin.find(session[:admin_id]).name%></h3>
         <%= link_to "Edit profile", edit_admin_path(session[:admin_id]) %><br/>
