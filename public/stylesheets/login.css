@@ -48,3 +48,33 @@ html, body {
             background-size:cover;
   }
 }
+
+input[type=text],
+input[type=password]{
+  background: transparent !important;
+  color: white !important;
+  border-width: 3px !important;
+  padding: 0.5em !important;
+  height: auto !important;
+  text-align: center;
+}
+
+input::-webkit-input-placeholder {
+   color: #eee!important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+   color: #eee!important;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+   color: #eee!important;
+}
+
+input:-ms-input-placeholder {
+   color: #eee!important;
+}
+
+input:focus{
+  border-color: white !important;
+}
