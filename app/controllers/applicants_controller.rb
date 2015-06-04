@@ -502,4 +502,15 @@ class ApplicantsController < ApplicationController
       end
     end
   end
+
+  def applicant_summary
+    @applicant = Applicant.find(params[:id])
+    @interviewers = @applicant.interviewers
+    @schedules = @applicant.schedules
+    @grades_exam = @applicant.grades
+
+    respond_to do |format|
+      format.html {render :layout => "pdf"}
+    end
+  end
 end

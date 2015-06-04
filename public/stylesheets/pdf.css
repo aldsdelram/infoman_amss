@@ -1,0 +1,91 @@
+@media print {
+
+	#applicant_details {
+		
+	}
+
+	#image{
+		float: left;
+		border-color: gray;
+		border-style: solid;
+	}
+
+	.info{
+		float: left;
+		padding-left: 25px;
+	}
+
+	#header{
+		padding-top: 15px;
+		padding-left: 250px;
+	}
+
+	#contacts{
+		padding-left: 50px;
+	}
+
+	#additional-info{
+		float:left;
+		margin-top: 20px;
+		margin-bottom: 30px;
+	}
+
+	status{
+		font-size: 1.1em;
+	}
+
+	h3{
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
+
+	h4{
+		padding: 10px;
+		padding-left: 40px;
+	}
+
+	table{
+		border-collapse: collapse;
+	}
+
+	table.add-info td{
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 285px;
+		height: 35px; 
+	}
+
+	table.table-exam,
+	table.table-interviewer,
+	table.table-schedule
+	{
+		margin-left: 15px;
+	}
+
+	table.table-exam td,
+	table.table-exam th
+	{
+		width: 115px;
+		text-align: center;
+		vertical-align: middle;
+		border: 1px solid black;
+	}
+
+	table.table-interviewer td,
+	table.table-interviewer th
+	{
+		width: 174px;
+		text-align: center;
+		vertical-align: middle;
+		border: 1px solid black;
+	}
+
+	table.table-schedule td,
+	table.table-schedule th
+	{
+		width: 139px;
+		text-align: center;
+		vertical-align: middle;
+		border: 1px solid black;
+	}
+}

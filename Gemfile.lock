@@ -48,8 +48,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mysql2 (0.2.6)
     mysql2 (0.2.6-x86-mingw32)
+    pdfkit (0.7.0)
     polyglot (0.3.5)
     rack (1.2.8)
     rack-mount (0.6.14)
@@ -89,5 +89,6 @@ DEPENDENCIES
   datatable (~> 0.2pre2)
   jquery-rails
   mysql2 (= 0.2.6)
+  pdfkit
   rails (= 3.0.9)
   will_paginate
