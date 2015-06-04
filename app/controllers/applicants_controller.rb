@@ -17,6 +17,11 @@ class ApplicantsController < ApplicationController
     @for_hiring = get_data_where_status_is("For Hiring");
     @on_interview = get_data_where_status_is("On-Interview");
 
+    @school = Applicant.joins(:school)
+      .where(['year(applicants.created_at) = ?', Date.today.year])
+      .group('school_name')
+      .count;
+
      respond_to do |format|
       format.html # index.html.erb
       format.js { render :json => @datatable.query(params).to_json }
