@@ -31,23 +31,14 @@ module ApplicationHelper
     			count+=1
     			applicant.destroy
   			end
-  		elsif model.to_s == "Admin"
-  			model.all.each do |admin|
-  				if File.exists?("#{RAILS_ROOT}/public/images/#{admin.image_name}") &&
-  					!admin.image_name.nil?
-      				File.delete("#{RAILS_ROOT}/public/images/#{admin.image_name}")
+  		elsif model.to_s == "Admin" || model.to_s == "Interviewer"
+  			model.all.each do |admin_or_interviewer|
+  				if File.exists?("#{RAILS_ROOT}/public/images/#{admin_or_interviewer.image_name}") &&
+  					!admin_or_interviewer.image_name.nil?
+      				File.delete("#{RAILS_ROOT}/public/images/#{admin_or_interviewer.image_name}")
     			end
     			count+=1
-    			admin.destroy
-  			end
-  		elsif model.to_s == "Interviewer"
-  			model.all.each do |interviewer|
-  				if File.exists?("#{RAILS_ROOT}/public/images/#{interviewer.image_name}") &&
-  					!interviewer.image_name.nil?
-      				File.delete("#{RAILS_ROOT}/public/images/#{interviewer.image_name}")
-    			end
-    			count+=1
-    		 	interviewer.destroy
+    			admin_or_interviewer.destroy
   			end
   		else
   			count = model.all.count
