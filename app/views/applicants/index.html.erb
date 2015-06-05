@@ -8,6 +8,7 @@
   <div id="dashboard">
     <div class="grid-sizer"></div>
 
+    <!-- Start: Data Table -->
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 dItem">
         <div class="panel panel-success">
           <div class="panel-heading">Table showing all applicants</div>
@@ -18,8 +19,9 @@
           </div>
         </div>
     </div>
+    <!-- End Data Table -->
 
-
+    <!-- Start: Latest Applicant -->
     <div class="col-xs-12 col-sm-6 col-md-3 dItem">
         <div class="panel panel-success">
           <div class="panel-heading">Latest Applicant</div>
@@ -72,7 +74,9 @@
           </div>
         </div>
     </div>
+    <!-- End: Latest Applicant -->
 
+    <!-- Start: Statistics -->
     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9 dItem">
       <div class="panel panel-success">
         <div class="panel-heading">Statistics</div>
@@ -88,8 +92,9 @@
             <div class="sItem">Item</div>
 
           </div> -->
-            <div class="col-md-12">
 
+          <div class="row">
+            <div class="col-md-12">
               <%= line_chart(
                 [
                   {
@@ -123,21 +128,27 @@
                 ], :discrete => true
                 ) %>
             </div>
-
-            <div class="col-md-12">
-
-
-            </div>
-
-
+          </div>
 
         </div>
       </div>
     </div>
+    <!-- End of Statistics -->
+
+    <!-- Start: School Statistics -->
+    <div class="col-xs-12 col-sm-6 col-md-3 dItem">
+        <div class="panel panel-success" id="panel_school">
+          <div class="panel-heading">Latest Applicant</div>
+          <div class="panel-body">
+              <%= pie_chart @school %>
+          </div>
+        </div>
+    </div>
+    <!-- End: School Statistics -->
 
 
-  </div>
-</div>
+  </div> <!-- End of Dashboard-->
+</div> <!-- End of row -->
 
 
 <script type="text/javascript">
@@ -168,4 +179,5 @@
   $('#datatable').on('draw.dt', function(){
     setTimeout(mason,1)
   } );
+
 </script>
