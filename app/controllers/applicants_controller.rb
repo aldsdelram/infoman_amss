@@ -177,7 +177,10 @@ class ApplicantsController < ApplicationController
           @applicant.status = 'Pending'
           @applicant.skipped_exam = 0
           @applicant.consider = 0
-          @applicant.image_name = upload_image(params[:applicant][:image], params[:base64])
+          
+          file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
+          @applicant.image_name = "upload_images/applicants/"+file_name
+
           @applicant.school = School.find(params[:school_id])
 
           matched_db_applicants = validate_applicant_identity(params[:applicant])
@@ -197,6 +200,7 @@ class ApplicantsController < ApplicationController
 
         else
           if @applicant.save
+            upload_image(file_name, params[:base64])
             if params[:consider] != 'Consider as NEW'
               AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new Applicant -> "+@applicant.id.to_s)
             end
@@ -241,15 +245,18 @@ class ApplicantsController < ApplicationController
             format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
           end
       else
-        if @applicant.image_name != params[:imgName]
-          if File.exists?("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
-            File.delete("#{RAILS_ROOT}/public/images/#{@applicant.image_name}")
-          end
-          @applicant.image_name =  upload_image(params[:applicant][:image], params[:base64])
+        if !@applicant.image_name.nil?
+          file_name = @applicant.image_name.split('/').last
+        else
+          file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
         end
-          @applicant.school = School.find(params[:school_id])
+        
+        @applicant.school = School.find(params[:school_id])
 
         if @applicant.update_attributes(params[:applicant])
+          if @applicant.image_name != params[:imgName]
+            upload_image(file_name, params[:base64])
+          end
           AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a Applicant -> "+@applicant.id.to_s)
           format.html { redirect_to(@applicant, :notice => 'Applicant was successfully updated.') }
           format.xml  { head :ok }
@@ -345,12 +352,11 @@ class ApplicantsController < ApplicationController
     data =  base64
     image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
     who = 'applicants'
-    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
+    file_name = image
     file_path = File.join(Rails.root, 'public', 'images', 'upload_images', who, file_name)
     File.open(file_path, 'wb') do |f|
       f.write image_data
     end
-    return "upload_images/#{who}/"+file_name
   end
 
   def assign_interviewer
