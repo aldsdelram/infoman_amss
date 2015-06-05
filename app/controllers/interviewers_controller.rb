@@ -47,11 +47,15 @@ class InterviewersController < ApplicationController
   # POST /interviewers.xml
   def create
     @interviewer = Interviewer.new(params[:interviewer])
-    @interviewer.image_name =  upload_image(params[:interviewer][:image], params[:base64])
+    
     @interviewer.department_id = params[:department_id]
+
+    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
+    @interviewer.image_name = "upload_images/interviewers/"+file_name
 
     respond_to do |format|
       if @interviewer.save
+        upload_image(file_name, params[:base64])
         AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created new interviewer -> "+@interviewer.id.to_s)
         format.html { redirect_to(@interviewer, :notice => 'Interviewer was successfully created.') }
         format.xml  { render :xml => @interviewer, :status => :created, :location => @interviewer }
@@ -67,16 +71,17 @@ class InterviewersController < ApplicationController
   def update
     @interviewer = Interviewer.find(params[:id])
     @interviewer.department_id = params[:department_id]
-
-    if @interviewer.image_name != params[:imgName]
-      if File.exists?("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
-        File.delete("#{RAILS_ROOT}/public/images/#{@interviewer.image_name}")
-      end
-      @interviewer.image_name =  upload_image(params[:interviewer][:image], params[:base64])
+    if !@interviewer.image_name.nil?
+      file_name = @interviewer.image_name.split('/').last
+    else
+      file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
     end
-
+  
     respond_to do |format|
       if @interviewer.update_attributes(params[:interviewer])
+        if @interviewer.image_name != params[:imgName]
+          upload_image(file_name, params[:base64])
+        end
         AdminLog.create(:admin_id=>session[:admin_id], :log=>"Updated a interviewer -> "+@interviewer.id.to_s)
         format.html { redirect_to(@interviewer, :notice => 'Interviewer was successfully updated.') }
         format.xml  { head :ok }
@@ -126,12 +131,11 @@ class InterviewersController < ApplicationController
     data =  base64
     image_data = Base64.decode64(data['data:image/png;base64,'.length .. -1])
     who = 'interviewers'
-    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
+    file_name = image
     file_path = File.join(Rails.root, 'public', 'images', 'upload_images', who, file_name)
     File.open(file_path, 'wb') do |f|
       f.write image_data
     end
-    return "upload_images/#{who}/"+file_name
   end
 
 end

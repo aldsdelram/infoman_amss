@@ -43,10 +43,13 @@ class AdminsController < ApplicationController
   def create
     @admin = Admin.new(params[:admin])
     @image_data = params[:base64]
-    @admin.image_name = upload_image(params[:admin][:image], params[:base64])
+    file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
+    @admin.image_name = "upload_images/admins/"+file_name
+
 
     respond_to do |format|
       if @admin.save
+        upload_image(file_name, params[:base64])
         AdminLog.create(:admin_id=>session[:admin_id], :log=>"Created a new administrator -> "+@admin.id.to_s)
         format.html { redirect_to(admins_url, :notice => "Admin #{@admin.name} was successfully created.") }
         format.xml  { render :xml => @admin, :status => :created, :location => @admin }
@@ -61,14 +64,17 @@ class AdminsController < ApplicationController
   # PUT /admins/1.xml
   def update
     @admin = Admin.find(params[:id])
-    if @admin.image_name != params[:imgName]
-      if File.exists?("#{RAILS_ROOT}/public/images/#{@admin.image_name}") && !@admin.image.nil?
-        File.delete("#{RAILS_ROOT}/public/images/#{@admin.image_name}")
-      end
-      @admin.image_name =  upload_image(params[:admin][:image], params[:base64])
+    if !@admin.image_name.nil?
+      file_name = @admin.image_name.split('/').last
+    else
+      file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
     end
+
     respond_to do |format|
       if @admin.update_attributes(params[:admin])
+        if @admin.image_name != params[:imgName]
+          upload_image(file_name, params[:base64])
+        end
         AdminLog.create(:admin_id=>session[:admin_id], :log=>"Edited info of administrator -> "+@admin.id.to_s)
         format.html { redirect_to(admins_url, :notice => "Admin #{@admin.name}was successfully updated.") }
         format.xml  { head :ok }

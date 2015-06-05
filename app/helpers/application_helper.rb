@@ -9,4 +9,43 @@ module ApplicationHelper
 
     will_paginate(collection, options)
   end
+
+  def delete_all_records
+  	
+  	Rails.application.eager_load!
+
+  	models = ActiveRecord::Base.descendants
+
+  	models.each do |model|
+  		count = 0
+  		if model.to_s == "Applicant"
+  			model.all.each do |applicant|
+  				interviewers = applicant.interviewers
+  				interviewers.each do |interviewer|
+  					interviewer.applicants.delete(applicant)
+  				end
+  				if File.exists?("#{RAILS_ROOT}/public/images/#{applicant.image_name}") &&
+  					!applicant.image_name.nil?
+      				File.delete("#{RAILS_ROOT}/public/images/#{applicant.image_name}")
+    			end
+    			count+=1
+    			applicant.destroy
+  			end
+  		elsif model.to_s == "Admin" || model.to_s == "Interviewer"
+  			model.all.each do |admin_or_interviewer|
+  				if File.exists?("#{RAILS_ROOT}/public/images/#{admin_or_interviewer.image_name}") &&
+  					!admin_or_interviewer.image_name.nil?
+      				File.delete("#{RAILS_ROOT}/public/images/#{admin_or_interviewer.image_name}")
+    			end
+    			count+=1
+    			admin_or_interviewer.destroy
+  			end
+  		else
+  			count = model.all.count
+  			model.delete_all
+  		end
+  		puts model.to_s+" => "+count.to_s
+  	end
+  end
+
 end
