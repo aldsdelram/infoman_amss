@@ -1,10 +1,14 @@
 
 AMSS::Application.routes.draw do
 
+  post "wizard/add_admin" => 'wizard#addAdmin'
+
+  get "wizard" => 'wizard#index', :as => :wizard
+
   get 'applicants/applicant_summary/:id' => 'applicants#applicant_summary', :as => 'applicant/view_summary'
 
   get 'admins/log/:id' => 'admins#show_logs', :as=>'admin/logs'
-  
+
   post 'schedules/interviewer_grade_decision/:id' => 'schedules#interviewer_grade_decision', :as => 'interviewer/grade_decision'
 
   get 'schedules/getSched/:filter' => 'schedules#getSched'

@@ -4,10 +4,14 @@ class ApplicationController < ActionController::Base
 
   protected
     def authorize
-      unless Admin.find_by_id(session[:admin_id])
-        redirect_to login_url, :notice => "Please Login"
+      if !File.exists?("#{RAILS_ROOT}/public/status.txt")
+        redirect_to wizard_path
       else
-        @admin = Admin.find(session[:admin_id])
+        unless Admin.find_by_id(session[:admin_id])
+          redirect_to login_url, :notice => "Please Login"
+        else
+          @admin = Admin.find(session[:admin_id])
+        end
       end
     end
 end

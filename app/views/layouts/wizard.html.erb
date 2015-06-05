@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AMSS</title>
+
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta content="ojt project" name="description" />
+  <meta content="infomaninc" name="author" />
+  <%= stylesheet_link_tag 'metro-bootstrap.css'%>
+  <%= stylesheet_link_tag 'wizard.css'%>
+  <%= stylesheet_link_tag 'smoke.css'%>
+
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+
+  <%= javascript_include_tag 'bootstrap.js' %>
+
+</head>
+
+<body>
+
+<div class = "container-fluid">
+  <%= yield %>
+</html>
