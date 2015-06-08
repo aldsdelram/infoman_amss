@@ -31,4 +31,37 @@ class WizardController < ApplicationController
       end
     end
   end
+
+  def addDept
+    if request.xhr?
+      @department = Department.new(params[:department])
+
+      respond_to do |format|
+        data = [];
+        if @department.save
+          data << {"ok"=> true}
+        else
+          data << {"ok"=> false}
+          data << @department.errors
+          data << {"errors" => @department.errors.count}
+        end
+
+        format.js { render :json => data.to_json}
+      end
+    end
+  end
+
+  def done
+    file = File.read("#{RAILS_ROOT}/public/status.json")
+    data = JSON.parse(file)
+    if params[:data] == "admin"
+      data[0][:admin] = true
+    elsif params[:data] == "dept"
+      data[0][:dept] = true
+    end
+
+      File.open("#{RAILS_ROOT}/public/status.json", "w+") do |f|
+        f.write(JSON.generate(data))
+      end
+  end
 end

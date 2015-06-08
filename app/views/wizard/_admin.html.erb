@@ -156,6 +156,19 @@
       },
       complete: function(){
         if(doContinue){
+
+          $.ajax({
+            url: '/wizard/done',
+            data: { data : "admin"},
+            method: "POST",
+            success: function(){
+              // alert ("admin");
+            },
+            error: function(a,b,c){
+              alert(c);
+            }
+          });
+
           step = $('.addAdmin').data('step');
           $('.step').animate({
             left: -((width*step)) + 'px'

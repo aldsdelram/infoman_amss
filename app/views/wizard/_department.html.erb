@@ -1,0 +1,123 @@
+<div id="error_explanation_dept" class="alert alert-danger" style="display: none">
+  <h2><span># errors</span> prohibited this admin from being saved:</h2>
+  <ul>
+    <li> sample error </li>
+  </ul>
+</div>
+
+
+<div class="col-md-6">
+<h3> List of Departments</h3>
+<ul class="list list-group" id="deptList">
+
+</ul>
+
+
+<%= form_tag '#', :id=>'dept_form' do%>
+  <div class="col-md-9">
+    <div class="form-group">
+      <%= text_field_tag :department_name, '' , :class=>'form-control', :placeholder=>"Department Name" , :tabindex=>'1', :required=>true%>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="row">
+      <a id="addDept" class="btn btn-success form-control">Add </a>
+    </div>
+  </div>
+<% end %>
+</div>
+
+<div class="clearfix"></div>
+<div class="col-xs-12">
+  <div class="col-xs-2 pull-right">
+    <a class="btn btn-primary btn-lg btnDeptNext" id="next" data-step = "3" style="display:none">Next</a>
+  </div>
+</div>
+<script type="text/javascript">
+
+  $('#addDept').click(function(){
+    if ($('#dept_form').smkValidate()) {
+      var department = {}
+      department["department_name"] = $('#department_name').val();
+
+      $.ajax({
+        url: '/wizard/add_dept',
+        data: {department},
+        method: 'POST',
+        dataType: 'json',
+        beforeSend: function(){
+          $('#addDept').text('Loading...');
+        },
+        success: function(data){
+          if (data[0].ok){
+            $('#addDept').text('Add')
+            $('.btnDeptNext').show();
+            doContinue = true;
+            $('#deptList')
+              .append(
+                $('<li class="list-group-item list-group-item-danger">')
+                .text(department["department_name"])
+              );
+          }
+          else{
+            $('#addDept').text('Try Again')
+
+            $('#error_explanation_dept').show()
+            var sError = 'error'
+            errorCount = data[2].errors
+            if(errorCount > 1)
+              sError += 's'
+
+            $('#error_explanation_dept h2 span').text(errorCount + ' ' + sError)
+            $('#error_explanation_dept ul').html('');
+
+            $.each(data[1], function(key, value){
+              console.log(key + ' ' + value)
+              $('#error_explanation_dept ul').append($('<li>').text(key + ' ' + value));
+              $('#' + key).css('border-color', 'red');
+              $('#' + key).css('background', 'rgba(255,0,0,0.1)');
+              $('#' + key).css('color', 'white');
+
+            })
+          }
+        },
+        error: function(a,b,c){
+          $('#addDept').text(c);
+        },
+        complete: function(){
+          if(doContinue){
+            $.ajax({
+              url: '/wizard/done',
+              data: { data : "dept"},
+              method: "POST",
+              success: function(){
+                // alert ("admin");
+              },
+              error: function(a,b,c){
+                alert(c);
+              }
+            });
+          }
+        }
+      })
+
+
+      $.smkAlert({
+        text: 'Validate!!',
+        type: 'success'
+      });
+    }
+  });
+
+  $('#dept_form').submit(function(){
+    if ($('#dept_form').smkValidate()) {
+      $.smkAlert({
+        text: 'Validate!!',
+        type: 'success'
+      });
+    }
+    else
+      return false;
+  });
+
+</script>

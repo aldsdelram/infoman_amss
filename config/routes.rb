@@ -1,6 +1,11 @@
 
 AMSS::Application.routes.draw do
 
+
+  post "wizard/done" => 'wizard#done'
+
+  post "wizard/add_dept" => 'wizard#addDept'
+
   post "wizard/add_admin" => 'wizard#addAdmin'
 
   get "wizard" => 'wizard#index', :as => :wizard
