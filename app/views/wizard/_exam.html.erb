@@ -1,0 +1,165 @@
+<div id="error_explanation_exams" class="alert alert-danger" style="display: none">
+  <h2><span># errors</span> prohibited this admin from being saved:</h2>
+  <ul>
+    <li> sample error </li>
+  </ul>
+</div>
+
+
+<div class="col-md-6">
+<h3> List of Exams</h3>
+<ul class="list list-group" id="examList">
+
+</ul>
+
+
+<%= form_tag '#', :id=>'exam_form' do%>
+  <div class="col-md-9">
+    <div class="form-group">
+      <%= text_field_tag :exam_title, '' , :class=>'form-control',
+          :placeholder=>"Exam Title" , :tabindex=>'6', :required=>true%>
+      </div>
+      <div class="form-group">
+      <%= text_field_tag :max_score, '' , :class=>'form-control',
+          :placeholder=>"Maximum Score" , :tabindex=>'7', :required=>true,
+          :type=>"number", "smk-type" => "number"%>
+      </div>
+      <div class="form-group">
+      <%= text_field_tag :passing_score, '' , :class=>'form-control',
+          :placeholder=>"Passing Score" , :tabindex=>'8', :required=>true,
+          :type=>"number", "smk-type" => "number"%>
+      </div>
+      <%= submit_tag '', :style=>"display:none"%>
+  </div>
+  <div class="col-md-9">
+    <div class="col-md-8 col-md-offset-4">
+      <div class="row">
+        <a id="addExam" class="btn btn-success form-control">Add </a>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+</div>
+
+<div class="clearfix"></div>
+<div class="col-xs-12">
+  <div class="col-xs-2 pull-right">
+    <a class="btn btn-primary btn-lg btnExamNext" id="next" data-step = "5"
+      style="display:none">Next</a>
+  </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+  $('#addExam').click(function(){
+    if ($('#exam_form').smkValidate()) {
+      addExam();
+    }
+  });
+
+  $('#exam_form').submit(function(){
+    console.log('adfasgdsh')
+    if ($('#exam_form').smkValidate()) {
+       addExam();
+    }
+    return false;
+  });
+
+  function addExam(){
+    var exam = {}
+    exam["title"] = $('#exam_title').val();
+    exam["total_score"] = $('#max_score').val();
+    exam["passing_score"] = $('#passing_score').val();
+
+    console.log(exam)
+
+    $.ajax({
+      url: '/wizard/add_exams',
+      data: {exam},
+      method: 'POST',
+      dataType: 'json',
+      beforeSend: function(){
+        $('#addExam').text('Loading...');
+        $('#error_explanation_exams').hide();
+      },
+      success: function(data){
+        if (data[0].ok){
+          $('#addExam').text('Add')
+          $('.btnExamNext').show();
+          doContinue = true;
+          $('#examList')
+            .append(
+              $('<li class="list-group-item list-group-item-danger">')
+              .text(exam["title"] +
+                '(' + exam["passing_score"] + '/' + exam["total_score"] + ')')
+            );
+          $.smkAlert({
+            text: exam["title"] + ' has been added',
+            type: 'success'
+          });
+          $('#exam_title').val('');
+          $('#max_score').val('');
+          $('#passing_score').val('');
+
+          $('#exam_title').css('border', '');
+          $('#exam_title').css('background', '');
+          $('#exam_title').css('color', '');
+
+          $('#max_score').css('border', '');
+          $('#max_score').css('background', '');
+          $('#max_score').css('color', '');
+
+          $('#passing_score').css('border', '');
+          $('#passing_score').css('background', '');
+          $('#passing_score').css('color', '');
+        }
+        else{
+          $('#addExam').text('Try Again')
+
+          $('#error_explanation_exams').show()
+          var sError = 'error'
+          errorCount = data[2].errors
+          if(errorCount > 1)
+            sError += 's'
+
+          $('#error_explanation_exams h2 span').text(errorCount + ' ' + sError)
+          $('#error_explanation_exams ul').html('');
+
+          $.each(data[1], function(key, value){
+            console.log(key + ' ' + value)
+            $('#error_explanation_exams ul').append($('<li>').text(key + ' ' +
+              value));
+            $('#' + key).css('border-color', 'red');
+            $('#' + key).css('background', 'rgba(255,0,0,0.1)');
+            $('#' + key).css('color', 'white');
+
+          })
+        }
+      },
+      error: function(a,b,c){
+        $('#addDept').text(c);
+      },
+      complete: function(){
+        if(doContinue){
+          $.ajax({
+            url: '/wizard/done',
+            data: { data : "exam"},
+            method: "POST",
+            success: function(){
+              // alert ("admin");
+            },
+            error: function(a,b,c){
+              alert(c);
+            }
+          });
+        }
+      }
+    })
+  }
+
+</script>

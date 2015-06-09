@@ -21,14 +21,20 @@ class ApplicationController < ActionController::Base
             redirect_to wizard_path(:current => "admin")
           elsif !data[0].has_key?("dept")
             redirect_to wizard_path(:current => "dept")
-          elsif !data[0].has_key?("position")
+          elsif !data[0].has_key?("pos")
             redirect_to wizard_path(:current => "pos")
+          elsif !data[0].has_key?("exam")
+            redirect_to wizard_path(:current => "exams")
+          else
+            redirect_to wizard_path(:current => "welc")
           end
         else
-          unless Admin.find_by_id(session[:admin_id])
-            redirect_to login_url, :notice => "Please Login"
-          else
-            @admin = Admin.find(session[:admin_id])
+          if params[:controller] != "sessions"
+            unless Admin.find_by_id(session[:admin_id])
+              redirect_to login_url, :notice => "Please Login"
+            else
+              @admin = Admin.find(session[:admin_id])
+            end
           end
         end
       end

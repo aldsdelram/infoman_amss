@@ -9,6 +9,7 @@
 </div>
 <div class="col-sm-10 col-xs-12">
   <div class="row" id="steps">
+
     <span class="step">
       <div class="col-md-10 col-md-offset-1">
         <h1 class="page-header">Oooooops!</h1>
@@ -20,12 +21,14 @@
         <h2> <a class="btn btn-primary btn-lg" id="next" data-step = "1">Click Here </a></h2>
         </div>
     </span>
+
     <span class="step">
       <div class="col-md-10 col-md-offset-1">
         <h1 class="page-header">Add New Admin</h1>
           <%= render 'admin' %>
       </div>
     </span>
+
     <span class="step">
       <div class="col-md-10 col-md-offset-1">
         <h1 class="page-header">Add New Department</h1>
@@ -34,12 +37,28 @@
     </span>
 
     <span class="step">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="col-md-10 col-md-offset-1">
+        <h1 class="page-header">Add New Job Position</h1>
+          <%= render 'position' %>
+      </div>
+    </span>
+
+    <span class="step">
+      <div class="col-md-10 col-md-offset-1">
+        <h1 class="page-header">Add New Exams</h1>
+          <%= render 'exam' %>
+      </div>
+    </span>
+
+    <span class="step">
+      <div class="col-md-10 col-md-offset-1">
+        <h1 class="page-header">Congratulations!</h1>
+          <h3> You're almost done. After clicking the button
+            below, you will be redirected to the login page. Just don't forget
+            to create new interviewers and assign the exams to the position.
+          </h3>
+          <h1><a class="btn btn-lg btn-success" id="btnWelc">Click Here</a></h1>
+      </div>
     </span>
 
   </div>
@@ -76,17 +95,34 @@
 </script>
 
 <script type="text/javascript">
+  width = $('#steps').width();
   <% if params[:current] == "admin" %>
-    width = $('#steps').width();
     step = 1;
-    $('.step').css("left", -width*step + 'px');
   <% elsif params[:current] == "dept" %>
-    width = $('#steps').width();
     step = 2;
-    $('.step').css("left", -width*step + 'px');
   <% elsif params[:current] == "pos" %>
-    width = $('#steps').width();
     step = 3;
-    $('.step').css("left", -width*step + 'px');
+  <% elsif params[:current] == "exams" %>
+    step = 4;
+  <% elsif params[:current] == "welc" %>
+    step = 5;
   <% end %>
+  $('.step').css("left", -width*step + 'px');
+</script>
+
+<script type="text/javascript">
+  $('#btnWelc').click(function(){
+    $.ajax({
+      url: '/wizard/done',
+      data: { data : "welc"},
+      method: "POST",
+      success: function(){
+        console.log('done')
+        location.href= '/'
+      },
+      error: function(a,b,c){
+        alert(c);
+      }
+    });
+  });
 </script>

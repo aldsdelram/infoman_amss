@@ -1,4 +1,4 @@
-<div id="error_explanation_dept" class="alert alert-danger" style="display: none">
+<div id="error_explanation_pos" class="alert alert-danger" style="display: none">
   <h2><span># errors</span> prohibited this admin from being saved:</h2>
   <ul>
     <li> sample error </li>
@@ -7,21 +7,21 @@
 
 
 <div class="col-md-6">
-<h3> List of Departments</h3>
-<ul class="list list-group" id="deptList">
+<h3> List of Positions</h3>
+<ul class="list list-group" id="posList">
 
 </ul>
 
 
-<%= form_tag '#', :id=>'dept_form' do%>
+<%= form_tag '#', :id=>'pos_form' do%>
   <div class="col-md-9">
     <div class="form-group">
-      <%= text_field_tag :department_name, '' , :class=>'form-control', :placeholder=>"Department Name" , :tabindex=>'4', :required=>true%>
+      <%= text_field_tag :position_title, '' , :class=>'form-control', :placeholder=>"New Position Title" , :tabindex=>'5', :required=>true%>
     </div>
   </div>
   <div class="col-md-3">
     <div class="row">
-      <a id="addDept" class="btn btn-success form-control">Add </a>
+      <a id="addPos" class="btn btn-success form-control"> Add </a>
     </div>
   </div>
 <% end %>
@@ -30,75 +30,69 @@
 <div class="clearfix"></div>
 <div class="col-xs-12">
   <div class="col-xs-2 pull-right">
-    <a class="btn btn-primary btn-lg btnDeptNext" id="next" data-step = "3" style="display:none">Next</a>
+    <a class="btn btn-primary btn-lg btnPosNext" id="next" data-step = "4" style="display:none">Next</a>
   </div>
 </div>
-
-
-
-
-
 <script type="text/javascript">
 
-  $('#addDept').click(function(){
-    if ($('#dept_form').smkValidate()) {
-      addDept();
+  $('#addPos').click(function(){
+    if ($('#pos_form').smkValidate()) {
+      addPos();
     }
   });
 
-  $('#dept_form').submit(function(){
-    if ($('#dept_form').smkValidate()) {
-       addDept();
+  $('#pos_form').submit(function(){
+    if ($('#pos_form').smkValidate()) {
+      addPos();
     }
     return false;
   });
 
-  function addDept(){
-    var department = {}
-    department["department_name"] = $('#department_name').val();
+
+  function addPos(){
+    var position = {}
+    position["title"] = $('#position_title').val();
 
     $.ajax({
-      url: '/wizard/add_dept',
-      data: {department},
+      url: '/wizard/add_pos',
+      data: {position},
       method: 'POST',
       dataType: 'json',
       beforeSend: function(){
-        $('#addDept').text('Loading...');
-        $('#error_explanation_dept').css('display','none');
+        $('#addPos').text('Loading...');
+        $('#error_explanation_pos').hide();
       },
       success: function(data){
         if (data[0].ok){
-          $('#addDept').text('Add')
-          $('.btnDeptNext').show();
+          $('#addPos').text('Add')
+          $('.btnPosNext').show();
           doContinue = true;
-          $('#deptList')
+          $('#posList')
             .append(
               $('<li class="list-group-item list-group-item-danger">')
-              .text(department["department_name"])
+              .text(position["title"])
             );
           $.smkAlert({
-            text: department["department_name"] + ' has been added',
+            text: position["title"] + ' has been added',
             type: 'success'
           });
-          $('#department_name').val('');
+          $('#position_title').val('');
         }
         else{
-          $('#addDept').text('Try Again')
+          $('#addPos').text('Try Again')
 
-          console.log('SHOWWWWWWWWWWWW');
-
-          $('#error_explanation_dept').show()
+          $('#error_explanation_pos').show()
           var sError = 'error'
           errorCount = data[2].errors
           if(errorCount > 1)
             sError += 's'
 
-          $('#error_explanation_dept h2 span').text(errorCount + ' ' + sError)
-          $('#error_explanation_dept ul').html('');
+          $('#error_explanation_pos h2 span').text(errorCount + ' ' + sError)
+          $('#error_explanation_pos ul').html('');
 
           $.each(data[1], function(key, value){
             console.log(key + ' ' + value)
-            $('#error_explanation_dept ul').append($('<li>').text(key + ' ' + value));
+            $('#error_explanation_pos ul').append($('<li>').text(key + ' ' + value));
             $('#' + key).css('border-color', 'red');
             $('#' + key).css('background', 'rgba(255,0,0,0.1)');
             $('#' + key).css('color', 'white');
@@ -113,10 +107,10 @@
         if(doContinue){
           $.ajax({
             url: '/wizard/done',
-            data: { data : "dept"},
+            data: { data : "pos"},
             method: "POST",
             success: function(){
-              // alert ("admin");
+              console.log('POSITION DONE');
             },
             error: function(a,b,c){
               alert(c);

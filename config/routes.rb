@@ -4,6 +4,10 @@ AMSS::Application.routes.draw do
 
   post "wizard/done" => 'wizard#done'
 
+  post "wizard/add_exams" => 'wizard#addExams'
+
+  post "wizard/add_pos" => 'wizard#addPos'
+
   post "wizard/add_dept" => 'wizard#addDept'
 
   post "wizard/add_admin" => 'wizard#addAdmin'

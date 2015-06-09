@@ -7,7 +7,7 @@
 
 
 <%= form_tag '#', :class=>"form", :id=>'admin_form', :multipart=> true do%>
-  <div class="field col-sm-4 ">
+  <div class="field col-sm-4 col-xs-6 text-center">
     <canvas id="myCanvas" class="thumbnail img-responsive"></canvas>
     <input id="base64" type="hidden" value="" name="base64"/>
     <input id="imgName" type="hidden" value="" name="imgName"/>
@@ -15,7 +15,7 @@
     onchange="readURL(this);" id = "uploader" class="btn" />
   </div>
 
-  <div class="col-md-5">
+  <div class="col-md-5 col-sm-8 col-xs-12">
     <br /><br />
     <div class="form-group">
       <%= text_field_tag :name, '' , :class=>'form-control', :placeholder=>"Username" , :tabindex=>'1'%>
@@ -34,7 +34,9 @@
   </div>
 
         <div class="clearfix"></div>
-        <a class="btn btn-primary btn-lg addAdmin" id="next" data-step = "2">Next</a>
+        <div class="col-xs-12 text-right">
+          <a class="btn btn-primary btn-lg addAdmin" id="next" data-step = "2">Next</a>
+        </div>
 
 <script type="text/javascript">
   $(window).load(function(){
@@ -139,7 +141,6 @@
 
           $('#error_explanation h2 span').text(errorCount + ' ' + sError)
           $('#error_explanation ul').html('');
-          $('#error_explanation ul').append($('li').text('hello'))
 
           $.each(data[1], function(key, value){
             console.log(key + ' ' + value)
@@ -173,6 +174,8 @@
           $('.step').animate({
             left: -((width*step)) + 'px'
           }, 1000);
+
+          $('#dept_form input').removeAttr('disabled')
         }
       }
     });
