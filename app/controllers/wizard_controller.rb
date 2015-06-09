@@ -108,6 +108,7 @@ class WizardController < ApplicationController
       File.new "#{RAILS_ROOT}/public/done.txt", "w+"
       File.open("#{RAILS_ROOT}/public/done.txt", "w+") do |f|
         f.write("done");
+        f.close
       end
     end
 
