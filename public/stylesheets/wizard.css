@@ -19,6 +19,8 @@
 .side{
   background: #570320;
   color: white;
+  overflow: hidden;
+  height: 100vh;
 }
 
 #steps{
@@ -81,4 +83,29 @@
 canvas{
   /*position: relative;*/
   margin: 0 auto;
+}
+
+#spectrum{
+  animation: spectrum 20.0s infinite linear;
+}
+
+@keyframes spectrum{
+  0%, 100%{background: #0392cf;}
+  16.67%{background: #7bc043;}
+  33.34%{background: #fee96c;}
+  50.01%{background: #f37736;}
+  66.68%{background: #ee4035;}
+  83.35%{background: #6c2a7d;}
+}
+
+a{
+  background: transparent !important;
+  border-width: 3px!important;
+  padding: 0.5em 3em!important;
+  transition: 1s ease;
+}
+
+a:hover{
+  background: rgba(230,230,230,0.5)!important;
+  color: black !important;
 }
