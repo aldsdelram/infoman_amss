@@ -124,7 +124,7 @@
                         <% end %>
                       </td>
                     <% else %>
-                      <% if @applicant.skipped_exam == 1 || @applicant.status == "Hired"%>
+                      <% if @applicant.skipped_exam == 1 || @applicant.status == "Hired" || @taken_all_exam %>
                         <td rowspan="2">--</td>
                       <% else %>
                       <td rowspan="2">

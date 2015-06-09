@@ -1,5 +1,6 @@
 
 <h1></h1>
+
 <%= form_for(@applicant) do |f| %>
 
 <div class="panel panel-primary">
@@ -15,7 +16,7 @@
 	      <th>Email Address</th>
 	    </tr>
 	    <tr>
-	    	<td><%= image_tag(@applicant_new.image_name, :size => "75x75") %></td>
+	    	<td><img src=<%=@image_data%> width="75", height="75" /></td>
 	    	<td><%= @applicant_new.lastname %></td>
 	    	<td><%= @applicant_new.firstname %></td>
 	    	<td><%= @applicant_new.middlename %></td>

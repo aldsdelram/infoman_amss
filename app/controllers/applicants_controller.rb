@@ -177,7 +177,7 @@ class ApplicantsController < ApplicationController
           @applicant.status = 'Pending'
           @applicant.skipped_exam = 0
           @applicant.consider = 0
-          
+
           file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
           @applicant.image_name = "upload_images/applicants/"+file_name
 
@@ -193,9 +193,13 @@ class ApplicantsController < ApplicationController
 
           end
 
+          file = File.open(Rails.root.join("public", "image_data"), "w") { |file| file.write(@image_data) }
+
           session[:matched] = matched_db_applicants
           session[:applicant] = @applicant
           session[:school_id] = params[:school_id]
+          session[:data_length] = file
+
           format.html{redirect_to(applicants_verify_path)}
 
         else
@@ -250,7 +254,7 @@ class ApplicantsController < ApplicationController
         else
           file_name = "pic_#{Time.now.strftime("%Y%m%d%H%M%S")}.png"
         end
-        
+
         @applicant.school = School.find(params[:school_id])
 
         if @applicant.update_attributes(params[:applicant])
@@ -368,11 +372,13 @@ class ApplicantsController < ApplicationController
       #raise "HELLo"
       @applicant = Applicant.find(params[:id])
     end
+    taken_all_exam = (@applicant.exams.count == @applicant.grades.count)
+
     respond_to do |format|
 
       if ["Hired", "Failed-Interview", "For Hiring"].any? {|status| status == @applicant.status}
         notice = "Cannot process request, this applicant is already done on interview phase."
-      elsif @applicant.skipped_exam == 0 && @applicant.consider == 0
+      elsif @applicant.skipped_exam == 0 && @applicant.consider == 0 && !taken_all_exam
         notice = "Cannot process request, this applicant is not in interview phase."
       else
         if params[:commit]
@@ -429,19 +435,25 @@ class ApplicantsController < ApplicationController
 
   def matched_db_applicants
 
+    file_path = Rails.root.join("public", "image_data")
+    @image_data = File.open(file_path, "r")
+    @image_data = @image_data.sysread(session[:data_length])
+
     if params[:renew] == "true"
 
       matched_applicant = Applicant.find(params[:id])
+      file_name = matched_applicant.image_name.split('/').last
+
       applicant = session[:applicant]
       applicant.school = School.find(session[:school_id])
+      applicant.image_name = matched_applicant.image_name
+
+      upload_image(file_name, @image_data)
 
       session[:applicant] = nil;
       session[:school_id] = nil;
       session[:matched] = nil;
-
-      if File.exists?("#{RAILS_ROOT}/public/images/#{matched_applicant.image_name}")
-          File.delete("#{RAILS_ROOT}/public/images/#{matched_applicant.image_name}")
-      end
+      session[:data_length] = nil;
 
       history = ApplicantReApplication.new(
         :applicant_id=>matched_applicant.id,
