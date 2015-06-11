@@ -89,15 +89,26 @@ class AdminsController < ApplicationController
   # DELETE /admins/1.xml
   def destroy
     @admin = Admin.find(params[:id])
-    if File.exists?("#{RAILS_ROOT}/public/images/#{@admin.image_name}") && !@admin.image_name.nil?
-      File.delete("#{RAILS_ROOT}/public/images/#{@admin.image_name}")
-    end
-    AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed administrator -> "+@admin.id.to_s)
-    @admin.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(admins_url) }
-      format.xml  { head :ok }
+    @image_name = @admin.image_name
+    @admin_id = @admin.id.to_s
+
+    begin
+        @admin.destroy
+        if File.exists?("#{RAILS_ROOT}/public/images/#{@image_name}") && !@image_name.nil?
+          File.delete("#{RAILS_ROOT}/public/images/#{@image_name}")
+        end
+        AdminLog.create(:admin_id=>session[:admin_id], :log=>"Removed administrator -> "+@admin_id)
+
+        respond_to do |format|
+          format.html { redirect_to(admins_url) }
+          format.xml  { head :ok }
+        end
+    rescue => e
+        respond_to do |format|
+          format.html { redirect_to admins_url, :alert => e.message }
+          format.xml  { head :ok }
+        end
     end
   end
 

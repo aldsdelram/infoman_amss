@@ -4,13 +4,15 @@ class Admin < ActiveRecord::Base
   attr_accessor :image
 
   has_many :admin_logs
-  
+
   validates :name, :presence => true, :uniqueness => true
 
   validates :password, :confirmation => true
   attr_accessor :password_confirmation
   attr_reader :password
   validate :password_must_be_present
+
+  after_destroy :enrure_an_admin_remains
 
   def Admin.authenticate(name, password)
     if user = find_by_name(name)
@@ -42,4 +44,9 @@ class Admin < ActiveRecord::Base
       self.salt = self.object_id.to_s + rand.to_s
     end
 
+    def enrure_an_admin_remains
+      if Admin.count.zero?
+        raise "Can't delete last admin"
+      end
+    end
 end
