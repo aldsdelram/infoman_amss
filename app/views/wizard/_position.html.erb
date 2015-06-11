@@ -69,7 +69,7 @@
           doContinue = true;
           $('#posList')
             .append(
-              $('<li class="list-group-item list-group-item-danger">')
+              $('<li class="list-group-item list-group-item-success">')
               .text(position["title"])
             );
           $.smkAlert({
@@ -77,6 +77,10 @@
             type: 'success'
           });
           $('#position_title').val('');
+
+          $('#position_title').css('border', '');
+          $('#position_title').css('background', '');
+          $('#position_title').css('color', '');
         }
         else{
           $('#addPos').text('Try Again')

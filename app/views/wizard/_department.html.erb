@@ -73,7 +73,7 @@
           doContinue = true;
           $('#deptList')
             .append(
-              $('<li class="list-group-item list-group-item-danger">')
+              $('<li class="list-group-item list-group-item-success">')
               .text(department["department_name"])
             );
           $.smkAlert({
@@ -81,6 +81,10 @@
             type: 'success'
           });
           $('#department_name').val('');
+
+          $('#department_name').css('border', '');
+          $('#department_name').css('background', '');
+          $('#department_name').css('color', '');
         }
         else{
           $('#addDept').text('Try Again')
