@@ -73,8 +73,8 @@ class SchedulesController < ApplicationController
       rescue ArgumentError
         hasError = true;
       else
-        params[:schedule][:sched_start] = DateTime.parse(date+' '+time_start+':00')
-        params[:schedule][:sched_end] = DateTime.parse(date+' '+time_end+':00')
+        params[:schedule][:sched_start] = ActiveSupport::TimeZone['Asia/Manila'].parse(date+' '+time_start+':00'+' Asia/Manila')
+        params[:schedule][:sched_end] = ActiveSupport::TimeZone['Asia/Manila'].parse(date+' '+time_end+':00'+' Asia/Manila')
       end
 
       if params[:new_schedule] == "Reschedule"
@@ -207,7 +207,7 @@ class SchedulesController < ApplicationController
 
     schedule.remarks = params[:remarks]
     schedule.det = true
-    
+
     respond_to do |format|
       @schedule = schedule
       if schedule.save
